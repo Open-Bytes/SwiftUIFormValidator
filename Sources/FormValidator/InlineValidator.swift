@@ -3,22 +3,27 @@
 // Copyright (c) 2021 sha. All rights reserved.
 //
 
-import Combine
+import Foundation
 
-public class NonEmptyValidator: FormValidator {
+public typealias ValidationCallback = (String) -> Bool
+
+public class InlineValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
+    private let condition: ValidationCallback
+
+    public init(condition: @escaping ValidationCallback) {
+        self.condition = condition
+    }
+
     public func validate(
             value: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
     ) -> Validation {
-        if value.isEmpty {
-            return .failure(message: errorMessage())
-        }
-        return .success
+        condition(value) ? .success : .failure(message: errorMessage())
     }
 
 }

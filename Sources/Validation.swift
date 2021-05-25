@@ -3,7 +3,7 @@
 //  SwiftUI-Validation
 //
 // Created by Shaban on 24/05/2021.
-//  Copyright © 2020 Jack Newcombe. All rights reserved.
+//  Copyright © 2020 Sha. All rights reserved.
 //
 
 import Foundation

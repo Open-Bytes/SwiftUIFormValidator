@@ -16,31 +16,35 @@ class FormInfo: ObservableObject {
     @Published var house: String = ""
     @Published var firstLine: String = ""
     @Published var secondLine: String = ""
-    @Published var addressCountry: String = ""
+    @Published var country: String = ""
 
     // 2
-    let form = FormValidation()
+    lazy var form = {
+        FormValidation(validationType: .immediate)
+    }()
 
     // 3
-    lazy var firstNameValidation: ValidationPublisher = {
+    lazy var firstNameValidation: ValidationContainer = {
         $firstName.nonEmptyValidator(form: form)
     }()
 
-    lazy var lastNamesValidation: ValidationPublisher = {
-        $lastNames.nonEmptyValidator(form: form)
+    lazy var lastNamesValidation: ValidationContainer = {
+        $lastNames.inlineValidator(form: form) { value in
+            if value.isEmpty { return false }
+            return true
+        }
     }()
 
-    lazy var birthdayValidation: ValidationPublisher = {
+    lazy var birthdayValidation: ValidationContainer = {
         $birthday.dateValidator(form: form, before: Date(), errorMessage: "Date must be before today")
     }()
 
-    lazy var street: ValidationPublisher = {
+    lazy var street: ValidationContainer = {
         $house.nonEmptyValidator(form: form)
     }()
 
-    lazy var streetValidation: ValidationPublisher = {
+    lazy var streetValidation: ValidationContainer = {
         $firstLine.nonEmptyValidator(form: form)
     }()
-
 
 }

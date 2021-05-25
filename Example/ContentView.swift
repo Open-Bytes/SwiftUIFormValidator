@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject var formInfo = FormInfo()
+    @StateObject var formInfo = FormInfo()
     @State var isSaveDisabled = true
 
     var body: some View {
@@ -32,27 +32,29 @@ struct ContentView: View {
                 }
 
                 Section(header: Text("Address")) {
-                    TextField("Street Number or Name", text: $formInfo.addressHouseNumberOrName)
+                    TextField("Street Number or Name", text: $formInfo.house)
                             .validation(formInfo.street)
 
-                    TextField("First Line", text: $formInfo.addressFirstLine)
+                    TextField("First Line", text: $formInfo.firstLine)
                             .validation(formInfo.streetValidation)
 
-                    TextField("Second Line", text: $formInfo.addressSecondLine)
+                    TextField("Second Line", text: $formInfo.secondLine)
 
-                    TextField("Country", text: $formInfo.addressCountry)
+                    TextField("Country", text: $formInfo.country)
                 }
 
                 Button(action: {
-                    print(formInfo.form.allValidationMessagesString())
+                   let valid = formInfo.form.triggerValidation()
+                    print("Form valid: \(valid)")
+//                    print(formInfo.form.allValidationMessagesString())
                 }, label: {
                     HStack {
                         Text("Submit")
                         Spacer()
                         Image(systemName: "checkmark.circle.fill")
                     }
-                }).disabled(isSaveDisabled)
-
+                })
+//                        .disabled(isSaveDisabled)
             }
                     .navigationBarTitle("Form")
                     .onReceive(formInfo.form.$allValid) { isValid in
@@ -60,7 +62,7 @@ struct ContentView: View {
                     }
                     // React to validation messages changes
                     .onReceive(formInfo.form.$validationMessages) { messages in
-                       print(messages)
+                        print(messages)
                     }
 
         }

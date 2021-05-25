@@ -3,26 +3,41 @@
 //  SwiftUI-Validation
 //
 // Created by Shaban on 24/05/2021.
-//  Copyright © 2020 Jack Newcombe. All rights reserved.
+//  Copyright © 2020 Sha. All rights reserved.
 //
 
 import Foundation
 import SwiftUI
 
+public struct ValidationContainer {
+    public let publisher: ValidationPublisher
+    public let subject: ValidationSubject
+}
+
+public extension View {
+
+    func validation(_ container: ValidationContainer) -> some View {
+        self.modifier(ValidationModifier(container: container))
+    }
+
+}
+
 public struct ValidationModifier: ViewModifier {
     @State var latestValidation: Validation = .success
 
-    public let publisher: ValidationPublisher
+    public let container: ValidationContainer
 
-    public init(publisher: ValidationPublisher) {
-        self.publisher = publisher
+    public init(container: ValidationContainer) {
+        self.container = container
     }
 
     public func body(content: Content) -> some View {
         VStack(alignment: .leading) {
             content
             validationMessage
-        }.onReceive(publisher) { validation in
+        }.onReceive(container.publisher) { validation in
+            self.latestValidation = validation
+        }.onReceive(container.subject) { validation in
             self.latestValidation = validation
         }
     }
@@ -38,12 +53,4 @@ public struct ValidationModifier: ViewModifier {
             return AnyView(text)
         }
     }
-}
-
-public extension View {
-
-    func validation(_ validationPublisher: ValidationPublisher) -> some View {
-        self.modifier(ValidationModifier(publisher: validationPublisher))
-    }
-
 }

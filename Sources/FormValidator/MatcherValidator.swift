@@ -6,6 +6,8 @@
 import Combine
 
 public class MatcherValidator: FormValidator {
+    public var publisher: ValidationPublisher!
+    public var subject: ValidationSubject = .init()
     public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 

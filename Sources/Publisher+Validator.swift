@@ -3,16 +3,27 @@
 //  SwiftUI-Validation
 //
 // Created by Shaban on 24/05/2021.
-//  Copyright © 2020 Jack Newcombe. All rights reserved.
+//  Copyright © 2020 Sha. All rights reserved.
 //
 
 import Combine
 
 public extension Published.Publisher where Value == String {
 
+    func inlineValidator(
+            form: FormValidation,
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Required",
+            callback: @escaping ValidationCallback) -> ValidationContainer {
+        ValidationPublishers.create(
+                form: form,
+                validator: InlineValidator(condition: callback),
+                for: self,
+                errorMessage: errorMessage())
+    }
+
     func nonEmptyValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Required") -> ValidationPublisher {
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Required") -> ValidationContainer {
         let validator = NonEmptyValidator()
         return ValidationPublishers.create(
                 form: form,
@@ -21,11 +32,11 @@ public extension Published.Publisher where Value == String {
                 errorMessage: errorMessage())
     }
 
-    func matcherValidator(
+    func patternValidator(
             form: FormValidation,
             pattern: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid pattern"
-    ) -> ValidationPublisher {
+    ) -> ValidationContainer {
         let validator = MatcherValidator(pattern: try! NSRegularExpression(pattern: pattern))
         return ValidationPublishers.create(
                 form: form,
@@ -37,7 +48,7 @@ public extension Published.Publisher where Value == String {
     func emailValidator(
             form: FormValidation,
             errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid email address"
-    ) -> ValidationPublisher {
+    ) -> ValidationContainer {
         let validator = EmailValidator()
         return ValidationPublishers.create(
                 form: form,
@@ -54,7 +65,7 @@ public extension Published.Publisher where Value == Date {
             before: Date = .distantFuture,
             after: Date = .distantPast,
             errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid date"
-    ) -> ValidationPublisher {
+    ) -> ValidationContainer {
         let validator = DateValidator(before: before, after: after)
         return ValidationPublishers.create(
                 form: form,

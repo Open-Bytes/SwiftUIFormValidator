@@ -11,7 +11,12 @@ public class FormValidation: ObservableObject {
     @Published public var allValid: Bool = false
     @Published public var validationMessages: [String] = []
 
-    public init() {
+    public let validationType: ValidationType
+    public let subject = ValidationSubject()
+
+
+    public init(validationType: ValidationType) {
+        self.validationType = validationType
     }
 
     public func append(_ validator: FormValidatorProtocol) {
@@ -43,4 +48,24 @@ public class FormValidation: ObservableObject {
             }
         }
     }
+
+    public func triggerValidation() -> Bool {
+        switch validationType {
+        case .immediate: break
+        case .deferred:
+            validators.forEach {
+                $0.triggerValidation()
+            }
+        }
+        return isAllValid()
+    }
+}
+
+public extension FormValidation {
+
+    enum ValidationType {
+        case immediate
+        case deferred
+    }
+
 }

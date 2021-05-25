@@ -3,13 +3,14 @@
 //  SwiftUI-Validation
 //
 // Created by Shaban on 24/05/2021.
-//  Copyright © 2020 Jack Newcombe. All rights reserved.
+//  Copyright © 2020 Sha. All rights reserved.
 //
 
 import Foundation
 import Combine
 
 public typealias ValidationPublisher = AnyPublisher<Validation, Never>
+public typealias ValidationSubject = PassthroughSubject<Validation, Never>
 
 public class ValidationPublishers {
 
@@ -18,16 +19,24 @@ public class ValidationPublishers {
             validator: VALIDATOR,
             for publisher: Published<VALIDATOR.VALUE>.Publisher,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
-    ) -> ValidationPublisher {
+    ) -> ValidationContainer {
         form.append(validator)
-        return publisher.map { value in
+        let pub: ValidationPublisher = publisher.map { value in
                     let validation = validator.validate(value: value, errorMessage: errorMessage())
                     var val = validator
                     val.latestValidation = validation
                     val.onChanged?(val.latestValidation)
-                    return validation
+
+                    switch form.validationType {
+                    case .immediate:
+                        return validation
+                    case .deferred:
+                        // Send success to simulate deferred validation
+                        return .success
+                    }
                 }.dropFirst()
                 .eraseToAnyPublisher()
+        return ValidationContainer(publisher: pub, subject: validator.subject)
     }
 }
 
