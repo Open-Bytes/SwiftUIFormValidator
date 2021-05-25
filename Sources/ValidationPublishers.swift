@@ -12,8 +12,18 @@ import Combine
 public typealias ValidationPublisher = AnyPublisher<Validation, Never>
 public typealias ValidationSubject = PassthroughSubject<Validation, Never>
 
+/// Create ValidationContainer object to
+/// be passed to validation modifier
 public class ValidationPublishers {
 
+    /// Create ValidationContainer object to
+    /// be passed to validation modifier
+    /// - Parameters:
+    ///   - form: The FormValidation object
+    ///   - validator: The FormValidator concrete class
+    ///   - publisher: The root publisher which is validated
+    ///   - errorMessage: The error string
+    /// - Returns: ValidationContainer
     public static func create<VALIDATOR: FormValidator>(
             form: FormValidation,
             validator: VALIDATOR,

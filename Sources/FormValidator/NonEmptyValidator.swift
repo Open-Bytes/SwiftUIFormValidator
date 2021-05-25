@@ -5,6 +5,7 @@
 
 import Combine
 
+/// This validator Checks if a string is empty of blank
 public class NonEmptyValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
@@ -15,7 +16,7 @@ public class NonEmptyValidator: FormValidator {
             value: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
     ) -> Validation {
-        if value.isEmpty {
+        if value.trimmingCharacters(in: .whitespaces).isEmpty {
             return .failure(message: errorMessage())
         }
         return .success

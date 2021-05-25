@@ -5,6 +5,7 @@
 
 import Combine
 
+/// This validator Checks if the email is valid or not.
 public class EmailValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

@@ -5,6 +5,7 @@
 
 import Combine
 
+/// This validator Checks if a patten is matched or not
 public class MatcherValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

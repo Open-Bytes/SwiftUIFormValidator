@@ -16,12 +16,20 @@ public struct ValidationContainer {
 
 public extension View {
 
+    ///A modifier used for validating a root publisher.
+    /// Whenever the publisher changes, the value will be validated
+    /// and propagated to this view.
+    /// In case it's invalid, an error message will be displayed under the view
+    ///
+    /// - Parameter container:
+    /// - Returns:
     func validation(_ container: ValidationContainer) -> some View {
         self.modifier(ValidationModifier(container: container))
     }
 
 }
 
+/// A modifier for applying the validation to a view.
 public struct ValidationModifier: ViewModifier {
     @State var latestValidation: Validation = .success
 

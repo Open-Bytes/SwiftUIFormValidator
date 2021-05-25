@@ -8,6 +8,7 @@
 
 import Foundation
 
+/// This enum represents the validation result
 public enum Validation {
     case success
     case failure(message: String)

@@ -8,6 +8,8 @@
 
 import Combine
 
+/// These extensions include simple functions for
+/// different validators
 public extension Published.Publisher where Value == String {
 
     func inlineValidator(

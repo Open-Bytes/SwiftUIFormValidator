@@ -50,12 +50,8 @@ public class FormValidation: ObservableObject {
     }
 
     public func triggerValidation() -> Bool {
-        switch validationType {
-        case .immediate: break
-        case .deferred:
-            validators.forEach {
-                $0.triggerValidation()
-            }
+        validators.forEach {
+            $0.triggerValidation()
         }
         return isAllValid()
     }

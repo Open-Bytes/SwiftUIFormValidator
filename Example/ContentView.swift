@@ -6,7 +6,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject var formInfo = FormInfo()
+    @ObservedObject var formInfo = FormInfo()
     @State var isSaveDisabled = true
 
     var body: some View {
@@ -54,9 +54,11 @@ struct ContentView: View {
                         Image(systemName: "checkmark.circle.fill")
                     }
                 })
+//                You can disable the button, and only enable it when the form is valid
 //                        .disabled(isSaveDisabled)
             }
                     .navigationBarTitle("Form")
+//                    observe the form validation and enable submit button only if it's valid
                     .onReceive(formInfo.form.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
                     }
