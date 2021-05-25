@@ -14,9 +14,12 @@ public class FormValidation: ObservableObject {
     public let validationType: ValidationType
     public let subject = ValidationSubject()
 
+    public var messages: ValidationMessagesProtocol = DefaultValidationMessages()
 
-    public init(validationType: ValidationType) {
+    public init(validationType: ValidationType,
+                messages: ValidationMessagesProtocol = DefaultValidationMessages()) {
         self.validationType = validationType
+        self.messages = messages
     }
 
     public func append(_ validator: FormValidatorProtocol) {

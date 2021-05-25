@@ -14,49 +14,54 @@ public extension Published.Publisher where Value == String {
 
     func inlineValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Required",
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = "",
             callback: @escaping ValidationCallback) -> ValidationContainer {
-        ValidationPublishers.create(
+        let message = errorMessage()
+        return ValidationPublishers.create(
                 form: form,
                 validator: InlineValidator(condition: callback),
                 for: self,
-                errorMessage: errorMessage())
+                errorMessage: !message.isEmpty ? message : form.messages.required)
     }
 
     func nonEmptyValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Required") -> ValidationContainer {
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
+    ) -> ValidationContainer {
         let validator = NonEmptyValidator()
+        let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
                 for: self,
-                errorMessage: errorMessage())
+                errorMessage: !message.isEmpty ? message : form.messages.required)
     }
 
     func patternValidator(
             form: FormValidation,
             pattern: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid pattern"
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
     ) -> ValidationContainer {
         let validator = MatcherValidator(pattern: try! NSRegularExpression(pattern: pattern))
+        let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
                 for: self,
-                errorMessage: errorMessage())
+                errorMessage: !message.isEmpty ? message : form.messages.invalidPattern)
     }
 
     func emailValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid email address"
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
     ) -> ValidationContainer {
         let validator = EmailValidator()
+        let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
                 for: self,
-                errorMessage: errorMessage())
+                errorMessage: !message.isEmpty ? message : form.messages.invalidEmailAddress)
     }
 
 }
@@ -66,13 +71,14 @@ public extension Published.Publisher where Value == Date {
             form: FormValidation,
             before: Date = .distantFuture,
             after: Date = .distantPast,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = "Invalid date"
+            errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
     ) -> ValidationContainer {
         let validator = DateValidator(before: before, after: after)
+        let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
                 for: self,
-                errorMessage: errorMessage())
+                errorMessage: !message.isEmpty ? message : form.messages.invalidDate)
     }
 }

@@ -18,9 +18,10 @@ class FormInfo: ObservableObject {
     @Published var secondLine: String = ""
     @Published var country: String = ""
 
+
     // 2
     lazy var form = {
-        FormValidation(validationType: .immediate)
+        FormValidation(validationType: .immediate, messages: ValidationMessages())
     }()
 
     // 3
@@ -47,4 +48,10 @@ class FormInfo: ObservableObject {
         $firstLine.nonEmptyValidator(form: form)
     }()
 
+}
+
+class ValidationMessages: DefaultValidationMessages {
+    public override var required: String {
+        "Required field"
+    }
 }
