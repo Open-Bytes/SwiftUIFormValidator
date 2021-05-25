@@ -21,7 +21,7 @@ class FormInfo: ObservableObject {
 
     // 2
     lazy var form = {
-        FormValidation(validationType: .immediate, messages: ValidationMessages())
+        FormValidation(validationType: .deferred, messages: ValidationMessages())
     }()
 
     // 3
