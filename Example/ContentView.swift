@@ -6,9 +6,7 @@
 import SwiftUI
 
 struct ContentView: View {
-
     @ObservedObject var formInfo = FormInfo()
-
     @State var isSaveDisabled = true
 
     var body: some View {
@@ -17,7 +15,7 @@ struct ContentView: View {
 
                 Section(header: Text("Name")) {
                     TextField("First Name", text: $formInfo.firstName)
-                            .validation(formInfo.firstNameValidation)
+                            .validation(formInfo.firstNameValidation) // 4
 
                     TextField("Middle Names", text: $formInfo.middleNames)
 
@@ -35,17 +33,19 @@ struct ContentView: View {
 
                 Section(header: Text("Address")) {
                     TextField("Street Number or Name", text: $formInfo.addressHouseNumberOrName)
-                            .validation(formInfo.addressHouseNumberOrNameValidation)
+                            .validation(formInfo.street)
 
                     TextField("First Line", text: $formInfo.addressFirstLine)
-                            .validation(formInfo.addressFirstLineValidation)
+                            .validation(formInfo.streetValidation)
 
                     TextField("Second Line", text: $formInfo.addressSecondLine)
 
                     TextField("Country", text: $formInfo.addressCountry)
                 }
 
-                Button(action: {}, label: {
+                Button(action: {
+                    print(formInfo.form.allValidationMessagesString())
+                }, label: {
                     HStack {
                         Text("Submit")
                         Spacer()
@@ -57,6 +57,10 @@ struct ContentView: View {
                     .navigationBarTitle("Form")
                     .onReceive(formInfo.form.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
+                    }
+                    // React to validation messages changes
+                    .onReceive(formInfo.form.$validationMessages) { messages in
+                       print(messages)
                     }
 
         }
