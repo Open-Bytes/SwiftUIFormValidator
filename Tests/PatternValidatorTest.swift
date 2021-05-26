@@ -11,7 +11,6 @@ class PatternValidatorTest: XCTestCase {
 
     override func setUp() {
         validator = PatternValidator(pattern: createPattern())
-
     }
 
     func testValidator_shouldBeValid() {
