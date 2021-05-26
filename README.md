@@ -15,7 +15,7 @@ SwiftUIFormValidator
 To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
 
 ```swift
-.package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.8.0"))
+.package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git")
 ```
 
 and then specify `"SwiftUIFormValidator"` as a dependency of the Target in which you wish to use SwiftUIFormValidator.
@@ -33,7 +33,7 @@ let package = Package(
             targets: ["MyPackage"]),
     ],
     dependencies: [
-        .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator", .upToNextMajor(from: "0.8.0"))
+        .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator")
     ],
     targets: [
         .target(
