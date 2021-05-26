@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'SwiftUIFormValidator'
-  s.version          = '0.2.0'
+  s.version          = '0.3.0'
   s.summary          = 'A declarative form validation for SwiftUI'
   s.description      = <<-DESC
 A declarative form validation for SwiftUI. Clean, simple, and customizable.
