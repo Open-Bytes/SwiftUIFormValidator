@@ -187,12 +187,16 @@ public extension Published.Publisher where Value == String {
 - 1- Implement `FormValidator` protocol.
 - 2- Add the validator logic in an extension to `Published.Publisher`.
 
-## License
 
+## Credit
+
+[Validation with SwiftUI & Combine](https://newcombe.io/2020/03/05/validation-with-swiftui-combine-part-1/)
 <details>
     <summary>
         click to reveal License
     </summary>
+
+## License
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
