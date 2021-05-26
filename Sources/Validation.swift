@@ -9,7 +9,7 @@
 import Foundation
 
 /// This enum represents the validation result
-public enum Validation {
+public enum Validation: Equatable {
     case success
     case failure(message: String)
 
@@ -17,6 +17,16 @@ public enum Validation {
         switch self {
         case .success: return true
         case .failure: return false
+        }
+    }
+
+    static public func ==(lhs: Validation, rhs: Validation) -> Bool {
+        switch (lhs, rhs) {
+        case (.success, success):
+            return true
+        case (.failure(let a), .failure(let b)):
+            return a == b
+        default: return false
         }
     }
 }

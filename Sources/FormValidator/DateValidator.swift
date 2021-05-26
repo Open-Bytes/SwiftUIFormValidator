@@ -25,7 +25,7 @@ public class DateValidator: FormValidator {
             value: Date,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
     ) -> Validation {
-        value > after && value < before ?
+        value > before && value < after ?
                 Validation.success :
                 Validation.failure(message: errorMessage())
     }

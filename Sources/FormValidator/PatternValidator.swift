@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 /// This validator Checks if a patten is matched or not
-public class MatcherValidator: FormValidator {
+public class PatternValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var latestValidation: Validation = .failure(message: "")

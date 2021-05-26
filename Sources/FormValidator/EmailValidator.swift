@@ -13,27 +13,25 @@ public class EmailValidator: FormValidator {
     public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
+    public init() {
+    }
+
     public func validate(
             value: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
     ) -> Validation {
-        do {
-            guard !value.isEmpty else {
-                return .failure(message: errorMessage())
-            }
-
-            if try NSRegularExpression(
-                    pattern: "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
-                    options: .caseInsensitive).firstMatch(in: value, options: [],
-                    range: NSRange(location: 0, length: value.count)
-            ) == nil {
-                return .failure(message: errorMessage())
-            }
-            return .success
-
-        } catch {
+        guard !value.isEmpty else {
             return .failure(message: errorMessage())
         }
+
+        let nsPattern = try! NSRegularExpression(
+                pattern: "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
+                options: .caseInsensitive)
+        let match = nsPattern.firstMatch(in: value, options: [], range: NSRange(location: 0, length: value.count))
+        if match == nil {
+            return .failure(message: errorMessage())
+        }
+        return .success
     }
 
 }

@@ -43,7 +43,7 @@ public extension Published.Publisher where Value == String {
             pattern: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
     ) -> ValidationContainer {
-        let validator = MatcherValidator(pattern: try! NSRegularExpression(pattern: pattern))
+        let validator = PatternValidator(pattern: try! NSRegularExpression(pattern: pattern))
         let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,

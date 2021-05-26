@@ -12,6 +12,9 @@ public class NonEmptyValidator: FormValidator {
     public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
+    public init() {
+    }
+
     public func validate(
             value: String,
             errorMessage: @autoclosure @escaping ValidationErrorClosure
