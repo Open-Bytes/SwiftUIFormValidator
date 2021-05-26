@@ -3,9 +3,9 @@
 // Copyright (c) 2021 sha. All rights reserved.
 //
 
-import Combine
+import Foundation
 
-/// This validator Checks if a string is empty of blank
+/// This validator Validates if a string is empty of blank.
 public class NonEmptyValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

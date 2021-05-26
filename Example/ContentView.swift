@@ -6,6 +6,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    // 4
     @ObservedObject var formInfo = FormInfo()
     @State var isSaveDisabled = true
 
@@ -15,7 +16,7 @@ struct ContentView: View {
 
                 Section(header: Text("Name")) {
                     TextField("First Name", text: $formInfo.firstName)
-                            .validation(formInfo.firstNameValidation) // 4
+                            .validation(formInfo.firstNameValidation) // 5
 
                     TextField("Middle Names", text: $formInfo.middleNames)
 
@@ -58,7 +59,7 @@ struct ContentView: View {
 //                        .disabled(isSaveDisabled)
             }
                     .navigationBarTitle("Form")
-//                    observe the form validation and enable submit button only if it's valid
+//                   observe the form validation and enable submit button only if it's valid
                     .onReceive(formInfo.form.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
                     }

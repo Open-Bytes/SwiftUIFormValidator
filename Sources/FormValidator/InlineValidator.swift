@@ -7,7 +7,7 @@ import Foundation
 
 public typealias ValidationCallback = (String) -> Bool
 
-/// This validator Checks if a condition is valid or not
+/// This validator Validates if a condition is valid or not.
 public class InlineValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

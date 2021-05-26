@@ -18,20 +18,19 @@ class FormInfo: ObservableObject {
     @Published var secondLine: String = ""
     @Published var country: String = ""
 
-
     // 2
-    lazy var form = {
-        FormValidation(validationType: .deferred, messages: ValidationMessages())
-    }()
+    @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
 
     // 3
     lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form)
+        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
     }()
 
     lazy var lastNamesValidation: ValidationContainer = {
         $lastNames.inlineValidator(form: form) { value in
-            if value.isEmpty { return false }
+            if value.isEmpty {
+                return false
+            }
             return true
         }
     }()

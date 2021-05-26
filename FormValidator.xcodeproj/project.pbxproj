@@ -32,6 +32,7 @@
 		58B83C647F0233DD8882FB18 /* FormValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83F7637909432DE8FFB3D /* FormValidator.swift */; };
 		58B83DE02BE0B0E074465F1E /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B830DA36896C518BED3456 /* ContentView.swift */; };
 		58B83E215D58FDEE5A2CE7AD /* PatternValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83A5C0EE7D35DBCEF98B7 /* PatternValidatorTest.swift */; };
+		58B83E469A7F72F5ED10F104 /* CustomValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B8302E091B2FB261A89202 /* CustomValidator.swift */; };
 		58B83E97F16E66C4F4E2A305 /* DateValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83188092EF190C7728496 /* DateValidator.swift */; };
 		58B83FD5854B9F98C59C9933 /* DateValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B830B5AED428760D4FD47F /* DateValidatorTest.swift */; };
 		58B83FFB1703BEEFBC9B5578 /* PatternValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B8357EDFC5549969138BB7 /* PatternValidator.swift */; };
@@ -88,6 +89,7 @@
 		04A4DE25239AD0CC00AA26B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1A54FBDBFEE81BC84F3718EB /* Package.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Package.swift; sourceTree = "<group>"; };
 		1A54FBE1E997F88975C3BD8C /* Cartfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Cartfile; sourceTree = "<group>"; };
+		58B8302E091B2FB261A89202 /* CustomValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomValidator.swift; sourceTree = "<group>"; };
 		58B830B5AED428760D4FD47F /* DateValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValidatorTest.swift; sourceTree = "<group>"; };
 		58B830DA36896C518BED3456 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		58B831473C305A7E5364B4FE /* NonEmptyValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonEmptyValidatorTest.swift; sourceTree = "<group>"; };
@@ -205,6 +207,7 @@
 				04A4DE25239AD0CC00AA26B7 /* Info.plist */,
 				58B830DA36896C518BED3456 /* ContentView.swift */,
 				58B834377A485C8EFEE1169C /* FormInfo.swift */,
+				58B8302E091B2FB261A89202 /* CustomValidator.swift */,
 			);
 			path = Example;
 			sourceTree = "<group>";
@@ -410,6 +413,7 @@
 				04A4DE1A239AD0C900AA26B7 /* SceneDelegate.swift in Sources */,
 				58B83DE02BE0B0E074465F1E /* ContentView.swift in Sources */,
 				58B839940D299D9BDAB7D5B3 /* FormInfo.swift in Sources */,
+				58B83E469A7F72F5ED10F104 /* CustomValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
