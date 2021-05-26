@@ -4,7 +4,7 @@ import PackageDescription
 let buildTests = false
 
 let package = Package(
-        name: "FormValidator",
+        name: "SwiftUIFormValidator",
         products: [
             .library(name: "FormValidator", targets: ["FormValidator"])
         ],
