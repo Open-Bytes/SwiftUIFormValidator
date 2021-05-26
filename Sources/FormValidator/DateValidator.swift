@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 
 /// This validator Checks if a date falls within `after` & `before`.
 public class DateValidator: FormValidator {

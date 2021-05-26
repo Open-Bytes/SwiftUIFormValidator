@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 
 /// This validator Checks if the email is valid or not.
 public class EmailValidator: FormValidator {

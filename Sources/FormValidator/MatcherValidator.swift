@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 
 /// This validator Checks if a patten is matched or not
 public class MatcherValidator: FormValidator {

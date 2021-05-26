@@ -7,6 +7,7 @@
 //
 
 import Combine
+import Foundation
 
 /// These extensions include simple functions for
 /// different validators
