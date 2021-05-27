@@ -8,6 +8,8 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 - [Usage](#usage)
 - [Validators](#validators)
 - [Custom Validators](#custom-validators)
+- [Validation Messages](#validation-messages)
+- [Contribution](#contribution)
 - [License](#license)
 
 ## Installation
@@ -189,16 +191,58 @@ public extension Published.Publisher where Value == String {
 - 1- Implement `FormValidator` protocol.
 - 2- Add the validator logic in an extension to `Published.Publisher`.
 
+## Validation Messages
+
+You can provide a validation message for every field by providing `errorMessage`
+
+```swift
+$firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+```
+
+If you don't provide a message, a default one will be used for built-in providers.
+All default messages are located in `DefaultValidationMessages` class.
+
+```swift
+$firstName.nonEmptyValidator(form: form) // will use the default message
+```
+
+In this example, `DefaultValidationMessages.required` will be used.
+
+### Overriding Default Validation Messages
+
+You can override the default validation messages by inheriting from `DefaultValidationMessages`
+
+```swift
+class ValidationMessages: DefaultValidationMessages {
+    public override var required: String {
+        "Required field"
+    }
+  // Override any message ...
+}
+```
+
+Or if you need to override all the messages, you can implement `ValidationMessagesProtocol`.
+
+And provide the messages to `FormValidation`
+
+```swift
+FormValidation(validationType: .immediate, messages: ValidationMessages())
+```
 
 ## Credit
 
 [Validation with SwiftUI & Combine](https://newcombe.io/2020/03/05/validation-with-swiftui-combine-part-1/)
+
+## Contribution
+
+All PRs are welcome. Help us make this library better.
+
+## License
+
 <details>
     <summary>
         click to reveal License
     </summary>
-
-## License
 
 ```
 Licensed under the Apache License, Version 2.0 (the "License");
