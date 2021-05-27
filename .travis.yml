@@ -10,5 +10,5 @@ language: objective-c
 # - gem install cocoapods # Since Travis is not always on latest version
 # - pod install --project-directory=Example
 script:
-- set -o pipefail && xcodebuild test -enableCodeCoverage YES -project FormValidator.xcodeproj -scheme Example -sdk iphonesimulator13.2 ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2.2' | xcpretty
+- set -o pipefail && xcodebuild test -enableCodeCoverage YES -project FormValidator.xcodeproj -scheme Example -sdk iphonesimulator14.4 ONLY_ACTIVE_ARCH=NO -destination 'platform=iOS Simulator,name=iPhone 11,OS=13.2.2' | xcpretty
 - pod lib lint
