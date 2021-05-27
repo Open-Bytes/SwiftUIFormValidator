@@ -4,13 +4,71 @@ SwiftUIFormValidator
 
 A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 
-- [Installation](#installation)
 - [Usage](#usage)
+- [Installation](#installation)
 - [Validators](#validators)
 - [Custom Validators](#custom-validators)
 - [Validation Messages](#validation-messages)
 - [Contribution](#contribution)
 - [License](#license)
+
+## Usage
+
+```
+// 1
+class FormInfo: ObservableObject {
+    @Published var firstName: String = ""
+     // 2
+    lazy var form = {
+        FormValidation(validationType: .immediate)
+    }()
+     // 3
+    lazy var firstNameValidation: ValidationContainer = {
+        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+    }()
+    
+struct ContentView: View {
+    // 4
+    @ObservedObject var formInfo = FormInfo()
+    
+    var body: some View {
+         TextField("First Name", text: $formInfo.firstName)
+             .validation(formInfo.firstNameValidation) // 5
+    }
+}
+```
+
+- 1- Declare an `ObservableObject` for the form with any name, for example, FormInfo, LoginInfo, or any name.
+- 2- Declare `FormValidation` object and choose a validation type.
+- 3- Declare a `ValidationContainer` for the field you need to validate.
+- 4- In your view, declare the `FormValidation` object.
+- 5- Declare `validation(formInfo.firstNameValidation)` with the validation of the field.
+
+**Congratulation!!** your field is now validated for you!
+
+### Validation Types
+
+You can choose between 2 different validation types: `FormValidation(validationType: .immediate)` and `FormValidation(validationType: .deffered)`
+
+- 1- **immediate**: the validation is triggered every time the field is changed. An error
+  message will be shown in case the value is invalid.
+- 2- **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
+  The error messages will be displayed only after triggering the validation manually.
+
+### Manual Validation
+
+You can trigger the form validation any time by calling `FormValidation.triggerValidation()`. After the validation, each field in the form will
+display error message if it's invalid.
+
+### React to Validation Change
+
+You can react to validation change using `FormValidation.$allValid` and `FormValidation.$validationMessages`
+
+```
+VStack {} // parent view of the form
+      .onReceive(formInfo.form.$allValid) { isValid in self.isSaveDisabled = !isValid }
+      .onReceive(formInfo.form.$validationMessages) { messages in print(messages) }
+```
 
 ## Installation
 
@@ -80,64 +138,6 @@ Then run `carthage update`.
 
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
-## Usage
-
-```
-// 1
-class FormInfo: ObservableObject {
-    @Published var firstName: String = ""
-     // 2
-    lazy var form = {
-        FormValidation(validationType: .immediate)
-    }()
-     // 3
-    lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
-    }()
-    
-struct ContentView: View {
-    // 4
-    @ObservedObject var formInfo = FormInfo()
-    
-    var body: some View {
-         TextField("First Name", text: $formInfo.firstName)
-             .validation(formInfo.firstNameValidation) // 5
-    }
-}
-```
-
-- 1- Declare an `ObservableObject` for the form with any name, for example, FormInfo, LoginInfo, or any name.
-- 2- Declare `FormValidation` object and choose a validation type.
-- 3- Declare a `ValidationContainer` for the field you need to validate.
-- 4- In your view, declare the `FormValidation` object.
-- 5- Declare `validation(formInfo.firstNameValidation)` with the validation of the field.
-
-**Congratulation!!** your field is now validated for you!
-
-### Validation Types
-
-You can choose between 2 different validation types: `FormValidation(validationType: .immediate)` and `FormValidation(validationType: .deffered)`
-
-- 1- **immediate**: the validation is triggered every time the field is changed. An error
-  message will be shown in case the value is invalid.
-- 2- **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
-  The error messages will be displayed only after triggering the validation manually.
-
-### Manual Validation
-
-You can trigger the form validation any time by calling `FormValidation.triggerValidation()`. After the validation, each field in the form will
-display error message if it's invalid.
-
-### React to Validation Change
-
-You can react to validation change using `FormValidation.$allValid` and `FormValidation.$validationMessages`
-
-```
-VStack {} // parent view of the form
-      .onReceive(formInfo.form.$allValid) { isValid in self.isSaveDisabled = !isValid }
-      .onReceive(formInfo.form.$validationMessages) { messages in print(messages) }
-```
-
 ## Validators
 
 |       **Validator**       |                    **Description**                         |
@@ -147,8 +147,6 @@ VStack {} // parent view of the form
 |   **DateValidator**       | Validates if a date falls within `after` & `before` dates. |
 |   **PatternValidator**    | Validates if a patten is matched or not.                   |
 |   **InlineValidator**     | Validates if a condition is valid or not.                  |
-
-
 
 ## Custom Validators
 In easy steps, you can add a custom validator:
