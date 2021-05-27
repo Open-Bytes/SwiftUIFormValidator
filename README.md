@@ -257,7 +257,7 @@ FormValidation(validationType: .immediate, messages: ValidationMessages())
 
 ## Contribution
 
-All PRs are welcome. Help us make this library better.
+All Pull Requests (PRs) are welcome. Help us make this library better.
 
 ## License
 
