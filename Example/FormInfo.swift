@@ -28,10 +28,7 @@ class FormInfo: ObservableObject {
 
     lazy var lastNamesValidation: ValidationContainer = {
         $lastNames.inlineValidator(form: form) { value in
-            if value.isEmpty {
-                return false
-            }
-            return true
+            !value.isEmpty
         }
     }()
 

@@ -5,7 +5,16 @@ SwiftUIFormValidator
 A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 
 - [Usage](#usage)
+  - [Basic Setup](#basic-setup)
+  - [Validation Types](#validation-types)
+  - [Inline Validation](#inline-validation)
+  - [Manual Validation](#manual-validation)
+  - [React to Validation Change](#react-to-validation-change)
 - [Installation](#installation)
+  - [CocoaPods](#cocoapods)
+  - [Swift Package Manager](#swift-package-manager)
+  - [Accio](#accio)
+  - [Carthage](#carthage)
 - [Validators](#validators)
 - [Custom Validators](#custom-validators)
 - [Validation Messages](#validation-messages)
@@ -14,45 +23,62 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 
 ## Usage
 
+### Basic Setup
 ```
-// 1
-class FormInfo: ObservableObject {
-    @Published var firstName: String = ""
-     // 2
-    lazy var form = {
-        FormValidation(validationType: .immediate)
-    }()
-     // 3
-    lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
-    }()
-    
-struct ContentView: View {
-    // 4
-    @ObservedObject var formInfo = FormInfo()
-    
-    var body: some View {
-         TextField("First Name", text: $formInfo.firstName)
-             .validation(formInfo.firstNameValidation) // 5
-    }
-}
+  import FormValidator
+  
+  // 1
+  class FormInfo: ObservableObject {
+      @Published var firstName: String = ""
+       // 2
+      lazy var form = {
+          FormValidation(validationType: .immediate)
+      }()
+       // 3
+      lazy var firstNameValidation: ValidationContainer = {
+          $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+      }()
+      
+  struct ContentView: View {
+      // 4
+      @ObservedObject var formInfo = FormInfo()
+      
+      var body: some View {
+           TextField("First Name", text: $formInfo.firstName)
+               .validation(formInfo.firstNameValidation) // 5
+      }
+  }
 ```
 
-- 1- Declare an `ObservableObject` for the form with any name, for example, FormInfo, LoginInfo, or any name.
-- 2- Declare `FormValidation` object and choose a validation type.
-- 3- Declare a `ValidationContainer` for the field you need to validate.
-- 4- In your view, declare the `FormValidation` object.
-- 5- Declare `validation(formInfo.firstNameValidation)` with the validation of the field.
+1. Import `FormValidator`.
+2. Declare an `ObservableObject` for the form with any name, for example, FormInfo, LoginInfo, or any name.
+3. Declare `FormValidation` object and choose a validation type.
+4. Declare a `ValidationContainer` for the field you need to validate.
+5. In your view, declare the `FormValidation` object.
+6. Declare `validation(formInfo.firstNameValidation)` with the validation of the field.
 
 **Congratulation!!** your field is now validated for you!
+
+### Inline Validation
+
+For fast validation, you can use `InlineValidator` and provide your validation logic in line:
+
+```swift
+ lazy var lastNamesValidation: ValidationContainer = {
+        $lastNames.inlineValidator(form: form) { value in
+          // Put validation logic here
+            !value.isEmpty
+        }
+    }()
+```
 
 ### Validation Types
 
 You can choose between 2 different validation types: `FormValidation(validationType: .immediate)` and `FormValidation(validationType: .deffered)`
 
-- 1- **immediate**: the validation is triggered every time the field is changed. An error
+1. **immediate**: the validation is triggered every time the field is changed. An error
   message will be shown in case the value is invalid.
-- 2- **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
+2. **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
   The error messages will be displayed only after triggering the validation manually.
 
 ### Manual Validation
@@ -72,9 +98,20 @@ VStack {} // parent view of the form
 
 ## Installation
 
+### CocoaPods
+
+Use the following entry in your Podfile:
+
+```rb
+pod 'SwiftUIFormValidator'
+```
+
+Then run `pod install`.
+
+
 ### Swift Package Manager
 
-To integrate using Apple's Swift package manager, add the following as a dependency to your `Package.swift`:
+Add the following as a dependency to your `Package.swift`:
 
 ```swift
 .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git")
@@ -104,23 +141,10 @@ let package = Package(
     ]
 )
 ```
-Don't forget to add `import FormValidator` to use the framework.
 
 ### Accio
 
 [Accio](https://github.com/JamitLabs/Accio) is a dependency manager based on SwiftPM which can build frameworks for iOS/macOS/tvOS/watchOS. Therefore the integration steps of SwiftUIFormValidator are exactly the same as described above. Once your `Package.swift` file is configured, run `accio update` instead of `swift package update`.
-
-Don't forget to add `import FormValidator` to use the framework.
-
-### CocoaPods
-
-For SwiftUIFormValidator, use the following entry in your Podfile:
-
-```rb
-pod 'SwiftUIFormValidator'
-```
-
-Then run `pod install`.
 
 Don't forget to add `import FormValidator` to use the framework.
 
@@ -186,8 +210,8 @@ public extension Published.Publisher where Value == String {
 }
 ```
 
-- 1- Implement `FormValidator` protocol.
-- 2- Add the validator logic in an extension to `Published.Publisher`.
+1. Implement `FormValidator` protocol.
+2. Add the validator logic in an extension to `Published.Publisher`.
 
 ## Validation Messages
 
