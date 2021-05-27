@@ -26,28 +26,31 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 ## Usage
 
 ### Basic Setup
-```
+
+```swift
+  // 1 
   import FormValidator
   
-  // 1
+  // 2
   class FormInfo: ObservableObject {
-      @Published var firstName: String = ""
-       // 2
-      lazy var form = {
-          FormValidation(validationType: .immediate)
-      }()
-       // 3
-      lazy var firstNameValidation: ValidationContainer = {
-          $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
-      }()
-      
+    @Published var firstName: String = ""
+    // 3
+    lazy var form = {
+      FormValidation(validationType: .immediate)
+    }()
+    // 4
+    lazy var firstNameValidation: ValidationContainer = {
+      $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+    }()
+  }
+
   struct ContentView: View {
-      // 4
+      // 5
       @ObservedObject var formInfo = FormInfo()
       
       var body: some View {
            TextField("First Name", text: $formInfo.firstName)
-               .validation(formInfo.firstNameValidation) // 5
+               .validation(formInfo.firstNameValidation) // 6
       }
   }
 ```
@@ -92,7 +95,7 @@ display error message if it's invalid.
 
 You can react to validation change using `FormValidation.$allValid` and `FormValidation.$validationMessages`
 
-```
+```swift
 VStack {} // parent view of the form
       .onReceive(formInfo.form.$allValid) { isValid in self.isSaveDisabled = !isValid }
       .onReceive(formInfo.form.$validationMessages) { messages in print(messages) }
@@ -156,7 +159,7 @@ Carthage users can point to this repository and use generated `SwiftUIFormValida
 
 Make the following entry in your Cartfile:
 
-```
+```rb
 github "ShabanKamell/SwiftUIFormValidator"
 ```
 
@@ -176,7 +179,8 @@ If this is your first time using Carthage in the project, you'll need to go thro
 
 ## Custom Validators
 In easy steps, you can add a custom validator:
-```
+
+```swift
 // 1
 class CountValidator: FormValidator {
     public var publisher: ValidationPublisher!
