@@ -6,7 +6,7 @@ SwiftUIFormValidator
 <br />
 
 ## Form Screenshot
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="200">
+<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="600">
 
 A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 
