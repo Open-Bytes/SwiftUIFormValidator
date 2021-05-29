@@ -13,6 +13,10 @@
 	<a href="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/LICENSE"><img src="https://img.shields.io/badge/price-FREE-0098f7.svg" height="20"/></a>
 </p><br/><br/>
 
+[![Stargazers repo roster for @ShabanKamell/SwiftUIFormValidator](https://reporoster.com/stars/ShabanKamell/SwiftUIFormValidator)](https://github.com/ShabanKamell/SwiftUIFormValidator/stargazers)
+
+# SwiftUIFormValidator
+
 A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 
 **Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
