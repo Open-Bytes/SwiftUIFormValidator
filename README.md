@@ -1,15 +1,26 @@
-SwiftUIFormValidator
-================
-[![Build Status](https://travis-ci.com/ShabanKamell/SwiftUIFormValidator.svg?branch=master)](https://travis-ci.com/ShabanKamell/SwiftUIFormValidator) ![platforms](https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg) [![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage) [![Swift Package Manager compatible](https://img.shields.io/badge/Swift%20Package%20Manager-compatible-brightgreen.svg)](https://github.com/apple/swift-package-manager)
+<p align="center"><a href="https://github.com/nastyox/Rando.js#nastyox"><img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/logo.png?raw=true" alt="Gray shape shifter" height="200"/></a></p>
+<h1 align="center">SwiftUIFormValidator</h1>
+<p align="center">The world's easiest, most clean SwiftUI form validation.</p>
 
-<a href="https://www.producthunt.com/posts/swiftuiformvalidator?utm_source=badge-featured&utm_medium=badge&utm_souce=badge-swiftuiformvalidator" target="_blank"><img src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=297784&theme=light" alt="SwiftUIFormValidator - Declarative SwiftUI Form Validator | Product Hunt" style="width: 250px; height: 54px;" width="250" height="54" align="right" /></a>
+<p align="center">
+<a href="https://twitter.com/intent/tweet?text=SwiftUIFormValidator,%20a%20declarative%20SwiftUI%20form%20validation.%20Clean,%20simple,%20and%20customizable&url=https://github.com/ShabanKamell/SwiftUIFormValidator&hashtags=swiftui,ios,macos,tvos,developers"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" height="20"/></a>
+</p>
 
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/logo.png?raw=true" height="200">
-
-## Form Screenshot
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="600">
+<p align="center">
+	<a href="https://travis-ci.com/ShabanKamell/SwiftUIFormValidator"> <img src="https://travis-ci.com/ShabanKamell/SwiftUIFormValidator.svg?branch=master" height="20"/></a>
+	<a href=""><img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" height="20"/></a>
+	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" height="20"/></a>
+	<a href="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/LICENSE"><img src="https://img.shields.io/badge/price-FREE-0098f7.svg" height="20"/></a>
+</p><br/><br/>
 
 A declarative **SwiftUI** form validation. Clean, simple, and customizable.
+
+**Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
+
+# Form Screenshot
+<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="600">
+
+# Table of contents
 
 - [Usage](#usage)
   - [Basic Setup](#basic-setup)
