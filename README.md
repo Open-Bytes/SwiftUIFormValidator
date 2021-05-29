@@ -39,7 +39,7 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 - [Contribution](#contribution)
 - [License](#license)
 
-## Usage
+## :zap: Usage
 
 ### Basic Setup
 
@@ -117,7 +117,7 @@ VStack {} // parent view of the form
         .onReceive(formInfo.form.$validationMessages) { messages in print(messages) }
 ```
 
-## Installation
+## :tada: Installation
 
 ### CocoaPods
 
@@ -273,11 +273,11 @@ And provide the messages to `FormValidation`
 FormValidation(validationType: .immediate, messages: ValidationMessages())
 ```
 
-## Credit
+##  Credit
 
 [Validation with SwiftUI & Combine](https://newcombe.io/2020/03/05/validation-with-swiftui-combine-part-1/)
 
-## Contribution
+## :clap: Contribution
 
 All Pull Requests (PRs) are welcome. Help us make this library better.
 
