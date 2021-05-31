@@ -17,7 +17,7 @@ public class NonEmptyValidator: FormValidator {
 
     public func validate(
             value: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         if value.trimmingCharacters(in: .whitespaces).isEmpty {
             return .failure(message: errorMessage())

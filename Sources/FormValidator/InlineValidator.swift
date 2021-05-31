@@ -22,7 +22,7 @@ public class InlineValidator: FormValidator {
 
     public func validate(
             value: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         condition(value) ? .success : .failure(message: errorMessage())
     }

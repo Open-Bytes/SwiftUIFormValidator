@@ -21,7 +21,7 @@ public class PatternValidator: FormValidator {
 
     public func validate(
             value: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         let range = NSRange(location: 0, length: value.count)
         guard pattern.firstMatch(in: value, options: [], range: range) != nil else {

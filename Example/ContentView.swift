@@ -24,6 +24,12 @@ struct ContentView: View {
                             .validation(formInfo.lastNamesValidation)
                 }
 
+                Section(header: Text("Password")) {
+                    TextField("Password", text: $formInfo.password)
+                            .validation(formInfo.passwordValidation)
+                    TextField("Confirm Password", text: $formInfo.confirmPassword)
+                }
+
                 Section(header: Text("Personal Information")) {
                     DatePicker(
                             selection: $formInfo.birthday,
@@ -33,11 +39,11 @@ struct ContentView: View {
                 }
 
                 Section(header: Text("Address")) {
-                    TextField("Street Number or Name", text: $formInfo.house)
-                            .validation(formInfo.street)
+                    TextField("Street Number or Name", text: $formInfo.street)
+                            .validation(formInfo.streetValidation)
 
                     TextField("First Line", text: $formInfo.firstLine)
-                            .validation(formInfo.streetValidation)
+                            .validation(formInfo.firstLineValidation)
 
                     TextField("Second Line", text: $formInfo.secondLine)
 
@@ -47,7 +53,6 @@ struct ContentView: View {
                 Button(action: {
                    let valid = formInfo.form.triggerValidation()
                     print("Form valid: \(valid)")
-//                    print(formInfo.form.allValidationMessagesString())
                 }, label: {
                     HStack {
                         Text("Submit")

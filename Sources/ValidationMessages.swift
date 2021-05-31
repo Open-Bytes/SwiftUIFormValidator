@@ -10,6 +10,7 @@ public protocol ValidationMessagesProtocol {
     var invalidPattern: String { get }
     var invalidEmailAddress: String { get }
     var invalidDate: String { get }
+    var passwordsNotMatching: String { get }
 }
 
 open class DefaultValidationMessages: ValidationMessagesProtocol {
@@ -30,6 +31,10 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
 
     open var invalidDate: String {
         "Invalid date"
+    }
+
+    open var passwordsNotMatching: String {
+        "Passwords don't match"
     }
 
 }

@@ -13,10 +13,13 @@ class FormInfo: ObservableObject {
     @Published var middleNames: String = ""
     @Published var lastNames: String = ""
     @Published var birthday: Date = Date()
-    @Published var house: String = ""
+    @Published var street: String = ""
     @Published var firstLine: String = ""
     @Published var secondLine: String = ""
     @Published var country: String = ""
+
+    @Published var password: String = ""
+    @Published var confirmPassword: String = ""
 
     // 2
     @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
@@ -36,12 +39,20 @@ class FormInfo: ObservableObject {
         $birthday.dateValidator(form: form, before: Date(), errorMessage: "Date must be before today")
     }()
 
-    lazy var street: ValidationContainer = {
-        $house.nonEmptyValidator(form: form)
+    lazy var streetValidation: ValidationContainer = {
+        $street.nonEmptyValidator(form: form)
     }()
 
-    lazy var streetValidation: ValidationContainer = {
+    lazy var firstLineValidation: ValidationContainer = {
         $firstLine.nonEmptyValidator(form: form)
+    }()
+
+    lazy var passwordValidation: ValidationContainer = {
+        $password.passwordMatchValidator(
+                form: form,
+                firstPassword: self.password,
+                secondPassword: self.confirmPassword,
+                secondPasswordPublisher: self.$confirmPassword)
     }()
 
 }

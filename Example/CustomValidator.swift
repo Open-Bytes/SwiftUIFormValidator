@@ -15,7 +15,7 @@ class CountValidator: FormValidator {
 
     func validate(
             value: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         guard value.count == 2 else {
             return .failure(message: errorMessage())
@@ -28,14 +28,14 @@ class CountValidator: FormValidator {
 public extension Published.Publisher where Value == String {
     func countValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure = ""
+            errorMessage: @autoclosure @escaping StringProducerClosure = ""
     ) -> ValidationContainer {
         let validator = CountValidator()
         let message = errorMessage()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
-                for: self,
+                for: self.eraseToAnyPublisher(),
                 errorMessage: !message.isEmpty ? message : "Count must be 2")
     }
 }

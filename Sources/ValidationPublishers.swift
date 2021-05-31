@@ -27,8 +27,8 @@ public class ValidationPublishers {
     public static func create<VALIDATOR: FormValidator>(
             form: FormValidation,
             validator: VALIDATOR,
-            for publisher: Published<VALIDATOR.VALUE>.Publisher,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            for publisher: AnyPublisher<VALIDATOR.VALUE, Never>,
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> ValidationContainer {
         form.append(validator)
         let pub: ValidationPublisher = publisher.map { value in

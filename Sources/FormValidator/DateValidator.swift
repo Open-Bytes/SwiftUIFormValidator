@@ -23,7 +23,7 @@ public class DateValidator: FormValidator {
 
     public func validate(
             value: Date,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         value < before && value > after ?
                 Validation.success :

@@ -18,7 +18,7 @@ public class EmailValidator: FormValidator {
 
     public func validate(
             value: String,
-            errorMessage: @autoclosure @escaping ValidationErrorClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure
     ) -> Validation {
         guard !value.isEmpty else {
             return .failure(message: errorMessage())

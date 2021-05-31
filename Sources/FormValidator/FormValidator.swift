@@ -5,7 +5,7 @@
 
 import Foundation
 
-public typealias ValidationErrorClosure = () -> String
+public typealias StringProducerClosure = () -> String
 
 /// A protocol representing a form validator.
 public protocol FormValidatorProtocol {
@@ -39,7 +39,7 @@ public protocol FormValidator: FormValidatorProtocol {
     ///   - value: The value type.
     ///   - errorMessage: The error message.
     /// - Returns: Validation object.
-    func validate(value: VALUE, errorMessage: @autoclosure @escaping ValidationErrorClosure) -> Validation
+    func validate(value: VALUE, errorMessage: @autoclosure @escaping StringProducerClosure) -> Validation
 }
 
 public extension FormValidator {
