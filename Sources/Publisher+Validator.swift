@@ -12,12 +12,44 @@ import Foundation
 /// These extensions include simple functions for
 /// different validators
 public extension Published.Publisher where Value == String {
+    func anyValid(
+            validators: [StringValidator],
+            form: FormValidation,
+            errorMessage: @autoclosure @escaping StringProducerClosure = ""
+    ) -> ValidationContainer {
+        let message = errorMessage()
+        return ValidationPublishers.create(
+                form: form,
+                validators: validators,
+                type: .any,
+                for: self.eraseToAnyPublisher(),
+                errorMessage: !message.isEmpty ? message : form.messages.required)
+    }
+}
 
+public extension Published.Publisher where Value == String {
+    func allValid(
+            validators: [StringValidator],
+            form: FormValidation,
+            errorMessage: @autoclosure @escaping StringProducerClosure = ""
+    ) -> ValidationContainer {
+        let message = errorMessage()
+        return ValidationPublishers.create(
+                form: form,
+                validators: validators,
+                type: .all,
+                for: self.eraseToAnyPublisher(),
+                errorMessage: !message.isEmpty ? message : form.messages.required)
+    }
+}
+
+public extension Published.Publisher where Value == String {
     func passwordMatchValidator(
             form: FormValidation,
             firstPassword: @autoclosure @escaping StringProducerClosure,
             secondPassword: @autoclosure @escaping StringProducerClosure,
             secondPasswordPublisher: Published<String>.Publisher,
+            pattern: NSRegularExpression? = nil,
             errorMessage: @autoclosure @escaping StringProducerClosure = ""
     ) -> ValidationContainer {
         let message = errorMessage()
@@ -33,20 +65,13 @@ public extension Published.Publisher where Value == String {
                 .eraseToAnyPublisher()
         return ValidationPublishers.create(
                 form: form,
-                validator: PasswordMatcherValidator(firstPassword: firstPassword(), secondPassword: secondPassword()),
+                validator: PasswordMatcherValidator(firstPassword: firstPassword(), secondPassword: secondPassword(), pattern: pattern),
                 for: merged,
                 errorMessage: !message.isEmpty ? message : form.messages.passwordsNotMatching)
     }
+}
 
-/*
- let other = otherPassword
-            guard !value.isEmpty else {
-                return false
-            }
-            guard !other.isEmpty else {
-                return false
-            }
- */
+public extension Published.Publisher where Value == String {
     func inlineValidator(
             form: FormValidation,
             errorMessage: @autoclosure @escaping StringProducerClosure = "",
@@ -58,7 +83,9 @@ public extension Published.Publisher where Value == String {
                 for: self.eraseToAnyPublisher(),
                 errorMessage: !message.isEmpty ? message : form.messages.required)
     }
+}
 
+public extension Published.Publisher where Value == String {
     func nonEmptyValidator(
             form: FormValidation,
             errorMessage: @autoclosure @escaping StringProducerClosure = ""
@@ -71,7 +98,9 @@ public extension Published.Publisher where Value == String {
                 for: self.eraseToAnyPublisher(),
                 errorMessage: !message.isEmpty ? message : form.messages.required)
     }
+}
 
+public extension Published.Publisher where Value == String {
     func patternValidator(
             form: FormValidation,
             pattern: String,
@@ -85,7 +114,9 @@ public extension Published.Publisher where Value == String {
                 for: self.eraseToAnyPublisher(),
                 errorMessage: !message.isEmpty ? message : form.messages.invalidPattern)
     }
+}
 
+public extension Published.Publisher where Value == String {
     func emailValidator(
             form: FormValidation,
             errorMessage: @autoclosure @escaping StringProducerClosure = ""
@@ -98,7 +129,23 @@ public extension Published.Publisher where Value == String {
                 for: self.eraseToAnyPublisher(),
                 errorMessage: !message.isEmpty ? message : form.messages.invalidEmailAddress)
     }
+}
 
+public extension Published.Publisher where Value == String {
+    func countValidator(
+            form: FormValidation,
+            count: Int,
+            type: CountValidator.ValidationType,
+            errorMessage: @autoclosure @escaping StringProducerClosure = ""
+    ) -> ValidationContainer {
+        let validator = CountValidator(count: count, type: type)
+        let message = errorMessage()
+        return ValidationPublishers.create(
+                form: form,
+                validator: validator,
+                for: self.eraseToAnyPublisher(),
+                errorMessage: !message.isEmpty ? message : form.messages.invalidCount(count, type: type))
+    }
 }
 
 public extension Published.Publisher where Value == Date {

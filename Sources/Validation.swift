@@ -13,6 +13,10 @@ public enum Validation: Equatable {
     case success
     case failure(message: String)
 
+    public var isFailure: Bool {
+        !isSuccess
+    }
+
     public var isSuccess: Bool {
         switch self {
         case .success: return true

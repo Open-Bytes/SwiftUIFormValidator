@@ -8,10 +8,9 @@ import Foundation
 public typealias ValidationCallback = (String) -> Bool
 
 /// This validator Validates if a condition is valid or not.
-public class InlineValidator: FormValidator {
+public class InlineValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
     private let condition: ValidationCallback
@@ -20,10 +19,12 @@ public class InlineValidator: FormValidator {
         self.condition = condition
     }
 
-    public func validate(
-            value: String,
-            errorMessage: @autoclosure @escaping StringProducerClosure
-    ) -> Validation {
+    public var errorMessage: StringProducerClosure = {
+        ""
+    }
+    public var value: String = ""
+
+    public func validate() -> Validation {
         condition(value) ? .success : .failure(message: errorMessage())
     }
 

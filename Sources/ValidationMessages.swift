@@ -11,6 +11,7 @@ public protocol ValidationMessagesProtocol {
     var invalidEmailAddress: String { get }
     var invalidDate: String { get }
     var passwordsNotMatching: String { get }
+    func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String
 }
 
 open class DefaultValidationMessages: ValidationMessagesProtocol {
@@ -35,6 +36,21 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
 
     open var passwordsNotMatching: String {
         "Passwords don't match"
+    }
+
+    open func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String {
+        switch type {
+        case .equals:
+            return "Must equal \(count)"
+        case .lessThan:
+            return "Must be less than \(count)"
+        case .lessThanOrEquals:
+            return "Must be less than or equal to \(count)"
+        case .greaterThan:
+            return "Must be greater than \(count)"
+        case .greaterThanOrEquals:
+            return "Must be greater than or equal to \(count)"
+        }
     }
 
 }

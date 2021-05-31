@@ -40,11 +40,15 @@ class FormInfo: ObservableObject {
     }()
 
     lazy var streetValidation: ValidationContainer = {
-        $street.nonEmptyValidator(form: form)
+        let validators: [StringValidator] = [
+            CountValidator(count: 6, type: .greaterThanOrEquals),
+            PrefixValidator(prefix: "st.")
+        ]
+        return $street.allValid(validators: validators, form: form)
     }()
 
     lazy var firstLineValidation: ValidationContainer = {
-        $firstLine.nonEmptyValidator(form: form)
+        $firstLine.countValidator(form: form, count: 6, type: .greaterThanOrEquals)
     }()
 
     lazy var passwordValidation: ValidationContainer = {

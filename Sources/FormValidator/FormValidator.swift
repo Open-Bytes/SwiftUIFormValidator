@@ -8,11 +8,12 @@ import Foundation
 public typealias StringProducerClosure = () -> String
 
 /// A protocol representing a form validator.
-public protocol FormValidatorProtocol {
-    /// The latest triggered validation.
-    var latestValidation: Validation { get set }
+public protocol Validatable {
+    func validate() -> Validation
 
-    // The root published whose value is validated.
+    var errorMessage: StringProducerClosure { get set }
+
+// The root published whose value is validated.
     // For example: when the used edits the value of a TextFiled,
     // the validation is triggered.
     var publisher: ValidationPublisher! { get set }
@@ -28,10 +29,18 @@ public protocol FormValidatorProtocol {
     func triggerValidation()
 }
 
+public extension Validatable {
+    // Default implementation of triggerValidation().
+    func triggerValidation() {
+        subject.send(validate())
+    }
+}
+
 /// A protocol representing a form validator.
-public protocol FormValidator: FormValidatorProtocol {
+public protocol FormValidator: Validatable {
     /// The value type of this validator
     associatedtype VALUE
+    var value: VALUE { get set }
 
     /// This functions is called internally to trigger validation.
     ///
@@ -39,12 +48,19 @@ public protocol FormValidator: FormValidatorProtocol {
     ///   - value: The value type.
     ///   - errorMessage: The error message.
     /// - Returns: Validation object.
-    func validate(value: VALUE, errorMessage: @autoclosure @escaping StringProducerClosure) -> Validation
+    func validate() -> Validation
 }
 
-public extension FormValidator {
-    // Default implementation of triggerValidation().
-    func triggerValidation() {
-        subject.send(latestValidation)
-    }
+/// A protocol representing a form validator.
+public protocol StringValidator: Validatable {
+    /// The value type of this validator
+    var value: String { get set }
+
+    /// This functions is called internally to trigger validation.
+    ///
+    /// - Parameters:
+    ///   - value: The value type.
+    ///   - errorMessage: The error message.
+    /// - Returns: Validation object.
+    func validate() -> Validation
 }

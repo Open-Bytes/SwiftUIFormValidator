@@ -19,31 +19,53 @@ public struct PasswordInfo {
 public class PasswordMatcherValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
     private let firstPassword: StringProducerClosure
     private let secondPassword: StringProducerClosure
+    private let pattern: NSRegularExpression?
 
     public init(firstPassword: @autoclosure @escaping StringProducerClosure,
-                secondPassword: @autoclosure @escaping StringProducerClosure) {
+                secondPassword: @autoclosure @escaping StringProducerClosure,
+                pattern: NSRegularExpression? = nil) {
         self.firstPassword = firstPassword
         self.secondPassword = secondPassword
+        self.pattern = pattern
     }
 
-    public func validate(
-            value: ValidatedPassword,
-            errorMessage: @autoclosure @escaping StringProducerClosure
-    ) -> Validation {
+    public var errorMessage: StringProducerClosure = {
+        ""
+    }
+    public var value: ValidatedPassword = ValidatedPassword(password: "", type: 0)
+
+    public func validate() -> Validation {
+        let isMatching = validateMatching()
+        let isPatternValid = validatePattern()
+
+        let isValid = isMatching && isPatternValid
+        return isValid ? .success : .failure(message: errorMessage())
+    }
+
+    private func validateMatching() -> Bool {
         let p1 = value.type == 0 ? value.password : firstPassword()
         let p2 = value.type == 1 ? value.password : secondPassword()
         guard !p1.isEmpty else {
-            return .failure(message: errorMessage())
+            return false
         }
         guard !p2.isEmpty else {
-            return .failure(message: errorMessage())
+            return false
         }
-        return p1 == p2 ? .success : .failure(message: errorMessage())
+        return p1 == p2
     }
+
+    private func validatePattern() -> Bool {
+        guard let pattern = pattern else {
+            return true
+        }
+        let patternValidator = PatternValidator(pattern: pattern)
+        patternValidator.value = value.password
+        return patternValidator.validate().isSuccess
+    }
+
 
 }

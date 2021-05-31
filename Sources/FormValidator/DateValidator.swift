@@ -10,7 +10,6 @@ import Foundation
 public class DateValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
     private let before: Date
@@ -21,10 +20,12 @@ public class DateValidator: FormValidator {
         self.after = after
     }
 
-    public func validate(
-            value: Date,
-            errorMessage: @autoclosure @escaping StringProducerClosure
-    ) -> Validation {
+    public var errorMessage: StringProducerClosure = {
+        ""
+    }
+    public var value: Date = Date()
+
+    public func validate() -> Validation {
         value < before && value > after ?
                 Validation.success :
                 Validation.failure(message: errorMessage())

@@ -7,19 +7,20 @@ import Combine
 import Foundation
 
 /// This validator Validates if the email is valid or not.
-public class EmailValidator: FormValidator {
+public class EmailValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var latestValidation: Validation = .failure(message: "")
     public var onChanged: ((Validation) -> Void)? = nil
 
     public init() {
     }
 
-    public func validate(
-            value: String,
-            errorMessage: @autoclosure @escaping StringProducerClosure
-    ) -> Validation {
+    public var errorMessage: StringProducerClosure = {
+        ""
+    }
+    public var value: String = ""
+
+    public func validate() -> Validation {
         guard !value.isEmpty else {
             return .failure(message: errorMessage())
         }

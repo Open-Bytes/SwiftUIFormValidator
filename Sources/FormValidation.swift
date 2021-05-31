@@ -10,7 +10,7 @@ import Combine
 /// choose a validation type. And check if the form is valid.
 public class FormValidation: ObservableObject {
     /// All the validators added to the form.
-    public var validators: [FormValidatorProtocol] = []
+    public var validators: [Validatable] = []
 
     /// Indicates all form fields valid or not.
     /// You can observe using $allValid
@@ -39,7 +39,7 @@ public class FormValidation: ObservableObject {
     }
 
     /// Used internally for adding a validator
-    public func append(_ validator: FormValidatorProtocol) {
+    public func append(_ validator: Validatable) {
         var val = validator
         val.onChanged = onChanged
         validators.append(validator)
@@ -58,7 +58,7 @@ public class FormValidation: ObservableObject {
     /// - Returns: Bool
     public func isAllValid() -> Bool {
         validators.first {
-            !$0.latestValidation.isSuccess
+            !$0.validate().isSuccess
         } == nil
     }
 
@@ -74,7 +74,7 @@ public class FormValidation: ObservableObject {
     /// - Returns: String array
     public func allValidationMessages() -> [String] {
         validators.compactMap {
-            switch $0.latestValidation {
+            switch $0.validate() {
             case .success: return nil
             case .failure(let message): return message.isEmpty ? nil : message
             }
