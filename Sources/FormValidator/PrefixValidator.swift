@@ -16,9 +16,10 @@ public class PrefixValidator: StringValidator {
     }
     public var value: String = ""
     public var prefix: String = ""
-    public var ignoreCase: Bool = true
+    public var ignoreCase: Bool
 
     public init(prefix: String, ignoreCase: Bool = true) {
+        self.ignoreCase = ignoreCase
         self.prefix = ignoreCase ? prefix.lowercased() : prefix
     }
 
