@@ -11,6 +11,9 @@ public class EmailValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var onChanged: ((Validation) -> Void)? = nil
+    let regex = try! NSRegularExpression(
+            pattern: "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
+            options: .caseInsensitive)
 
     public init() {
     }
@@ -21,10 +24,7 @@ public class EmailValidator: StringValidator {
     public var value: String = ""
 
     public func validate() -> Validation {
-        let nsPattern = try! NSRegularExpression(
-                pattern: "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
-                options: .caseInsensitive)
-        let patternValidator = PatternValidator(pattern: nsPattern)
+        let patternValidator = PatternValidator(pattern: regex)
         patternValidator.value = value
         patternValidator.errorMessage = errorMessage
         return patternValidator.validate()
