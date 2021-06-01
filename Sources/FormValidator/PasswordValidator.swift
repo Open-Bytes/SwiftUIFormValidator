@@ -8,6 +8,11 @@ import Foundation
 public struct ValidatedPassword {
     let password: String
     let type: Int
+
+    public init(password: String, type: Int) {
+        self.password = password
+        self.type = type
+    }
 }
 
 public struct PasswordInfo {
@@ -16,7 +21,7 @@ public struct PasswordInfo {
 }
 
 /// This validator validates if a condition is valid or not.
-public class PasswordMatcherValidator: FormValidator {
+public class PasswordValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var onChanged: ((Validation) -> Void)? = nil

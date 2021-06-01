@@ -65,7 +65,7 @@ public extension Published.Publisher where Value == String {
                 .eraseToAnyPublisher()
         return ValidationPublishers.create(
                 form: form,
-                validator: PasswordMatcherValidator(firstPassword: firstPassword(), secondPassword: secondPassword(), pattern: pattern),
+                validator: PasswordValidator(firstPassword: firstPassword(), secondPassword: secondPassword(), pattern: pattern),
                 for: merged,
                 errorMessage: !message.isEmpty ? message : form.messages.passwordsNotMatching)
     }
