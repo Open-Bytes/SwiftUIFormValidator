@@ -201,11 +201,14 @@ explained [over at Carthage](https://github.com/Carthage/Carthage#adding-framewo
 
 |       **Validator**       |                    **Description**                         |
 | ------------------------- | -----------------------------------------------------------|
-|   **NonEmptyValidator**   | Validates if a string is empty of blank                    |
-|   **EmailValidator**      | Validates if the email is valid or not.                    |
+|   **NonEmptyValidator**   | Validates if a string is empty or blank                    |
+|   **EmailValidator**      | Validates if the email is valid.                           |
 |   **DateValidator**       | Validates if a date falls within `after` & `before` dates. |
-|   **PatternValidator**    | Validates if a patten is matched or not.                   |
-|   **InlineValidator**     | Validates if a condition is valid or not.                  |
+|   **PatternValidator**    | Validates if a patten is matched.                          |
+|   **InlineValidator**     | Validates if a condition is valid.                         |
+|   **PasswordValidator**   | Validates if a password is valid.                          |
+|   **PrefixValidator**     | Validates if the text has a prefix.                          |
+|   **SuffixValidator**     | Validates if the text has a suffix.                          |
 
 ## Custom Validators
 
