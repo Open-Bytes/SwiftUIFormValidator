@@ -16,9 +16,10 @@ public class SuffixValidator: StringValidator {
     }
     public var value: String = ""
     public var suffix: String = ""
-    public var ignoreCase: Bool = true
+    public var ignoreCase: Bool
 
     public init(suffix: String, ignoreCase: Bool = true) {
+        self.ignoreCase = ignoreCase
         self.suffix = ignoreCase ? suffix.lowercased() : suffix
     }
 
