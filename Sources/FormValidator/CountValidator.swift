@@ -24,19 +24,19 @@ public class CountValidator: StringValidator {
     }
 
     public func validate() -> Validation {
-        let value = value.trimmingCharacters(in: .whitespaces)
+        let val = value.trimmingCharacters(in: .whitespaces)
         var isValid: Bool
         switch type {
         case .equals:
-            isValid = value.count == count
+            isValid = val.count == count
         case .lessThan:
-            isValid = value.count < count
+            isValid = val.count < count
         case .lessThanOrEquals:
-            isValid = value.count <= count
+            isValid = val.count <= count
         case .greaterThan:
-            isValid = value.count > count
+            isValid = val.count > count
         case .greaterThanOrEquals:
-            isValid = value.count >= count
+            isValid = val.count >= count
         }
 
         guard isValid else {
