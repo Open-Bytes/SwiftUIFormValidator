@@ -17,7 +17,11 @@ class InlineValidatorTest: XCTestCase {
         validator = InlineValidator { value in
             value == "sh3ban.kamel@gmail.com"
         }
-        let valid = validator.validate(value: "sh3ban.kamel@gmail.com", errorMessage: "invalid")
+        validator.value = "sh3ban.kamel@gmail.com"
+        validator.errorMessage = {
+            "invalid"
+        }
+        let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
@@ -25,7 +29,11 @@ class InlineValidatorTest: XCTestCase {
         validator = InlineValidator { value in
             value == "x"
         }
-        let valid = validator.validate(value: "sh3ban.kamel", errorMessage: "invalid")
+        validator.value = "sh3ban.kamel"
+        validator.errorMessage = {
+            "invalid"
+        }
+        let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }
 

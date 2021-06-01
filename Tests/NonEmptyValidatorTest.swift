@@ -14,12 +14,20 @@ class NonEmptyValidatorTest: XCTestCase {
     }
 
     func testValidator_shouldBeValid() {
-        let valid = validator.validate(value: "sh3ban.kamel@gmail.com", errorMessage: "invalid")
+        validator.value = "sh3ban.kamel@gmail.com"
+        validator.errorMessage = {
+            "invalid"
+        }
+        let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_shouldNotBeValid() {
-        let valid = validator.validate(value: "", errorMessage: "invalid")
+        validator.value = ""
+        validator.errorMessage = {
+            "invalid"
+        }
+        let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }
 
