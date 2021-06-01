@@ -15,7 +15,7 @@ public struct PasswordInfo {
     let pass2: String
 }
 
-/// This validator Validates if a condition is valid or not.
+/// This validator validates if a condition is valid or not.
 public class PasswordMatcherValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

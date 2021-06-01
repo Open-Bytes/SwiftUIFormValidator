@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-/// This validator Validates if a date falls within `after` & `before`.
+/// This validator validates if a date falls within `after` & `before`.
 public class DateValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

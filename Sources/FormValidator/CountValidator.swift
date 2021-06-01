@@ -5,6 +5,7 @@
 
 import Foundation
 
+/// This validator validates if a count is correct according to the type provided.
 public class CountValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

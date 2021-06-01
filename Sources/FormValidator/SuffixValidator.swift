@@ -5,7 +5,7 @@
 
 import Foundation
 
-/// This validator Validates if a string is empty of blank.
+/// This validator validates if a string is empty of blank.
 public class SuffixValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
@@ -29,5 +29,4 @@ public class SuffixValidator: StringValidator {
         }
         return .success
     }
-
 }

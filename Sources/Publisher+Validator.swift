@@ -10,7 +10,7 @@ import Combine
 import Foundation
 
 /// These extensions include simple functions for
-/// different validators
+/// different validators creation
 public extension Published.Publisher where Value == String {
     func anyValid(
             validators: [StringValidator],

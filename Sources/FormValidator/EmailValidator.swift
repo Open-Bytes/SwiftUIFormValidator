@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-/// This validator Validates if the email is valid or not.
+/// This validator validates if the email is valid or not.
 public class EmailValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()

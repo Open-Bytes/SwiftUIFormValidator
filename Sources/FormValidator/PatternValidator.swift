@@ -6,7 +6,7 @@
 import Combine
 import Foundation
 
-/// This validator Validates if a patten is matched or not.
+/// This validator validates if a patten is matched or not.
 public class PatternValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
