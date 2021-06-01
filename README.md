@@ -42,6 +42,7 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
 - [Custom Validators](#custom-validators)
 - [Validation Messages](#validation-messages)
 - [Contribution](#contribution)
+- [Changelog](#changelog)
 - [License](#license)
 
 ## :zap: Usage
@@ -302,6 +303,9 @@ FormValidation(validationType: .immediate, messages: ValidationMessages())
 ## :clap: Contribution
 
 All Pull Requests (PRs) are welcome. Help us make this library better.
+
+## Changelog
+Look at [Changelog](https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/CHANGELOG.md) for release notes.
 
 ## License
 
