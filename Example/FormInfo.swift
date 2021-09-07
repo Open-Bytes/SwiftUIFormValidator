@@ -26,7 +26,13 @@ class FormInfo: ObservableObject {
 
     // 3
     lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+        $firstName.nonEmptyValidator(
+                form: form,
+                errorMessage: "First name is not valid",
+                disableValidation: {
+                    true
+                }
+        )
     }()
 
     lazy var lastNamesValidation: ValidationContainer = {

@@ -5,12 +5,17 @@
 
 import Combine
 
+public struct ValidatorContainer {
+    let validator: Validatable
+    let disableValidation: DisableValidationClosure
+}
+
 /// You can use to control the validation form.
 /// For example, you can trigger the validation manually. And
 /// choose a validation type. And check if the form is valid.
 public class FormValidation: ObservableObject {
     /// All the validators added to the form.
-    public var validators: [Validatable] = []
+    public var validators: [ValidatorContainer] = []
 
     /// Indicates all form fields valid or not.
     /// You can observe using $allValid
@@ -39,8 +44,8 @@ public class FormValidation: ObservableObject {
     }
 
     /// Used internally for adding a validator
-    public func append(_ validator: Validatable) {
-        var val = validator
+    public func append(_ validator: ValidatorContainer) {
+        var val = validator.validator
         val.onChanged = onChanged
         validators.append(validator)
     }
@@ -58,7 +63,10 @@ public class FormValidation: ObservableObject {
     /// - Returns: Bool
     public func isAllValid() -> Bool {
         validators.first {
-            !$0.validate().isSuccess
+            if $0.disableValidation() {
+                return true
+            }
+            return !$0.validator.validate().isSuccess
         } == nil
     }
 
@@ -74,7 +82,10 @@ public class FormValidation: ObservableObject {
     /// - Returns: String array
     public func allValidationMessages() -> [String] {
         validators.compactMap {
-            switch $0.validate() {
+            if $0.disableValidation() {
+                return nil
+            }
+            switch $0.validator.validate() {
             case .success: return nil
             case .failure(let message): return message.isEmpty ? nil : message
             }
@@ -86,7 +97,7 @@ public class FormValidation: ObservableObject {
     /// - Returns: Bool indicating the form is valid or not.
     public func triggerValidation() -> Bool {
         validators.forEach {
-            $0.triggerValidation()
+            $0.validator.triggerValidation(isDisabled: $0.disableValidation())
         }
         return isAllValid()
     }

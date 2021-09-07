@@ -26,12 +26,16 @@ public protocol Validatable {
     var onChanged: ((Validation) -> Void)? { get set }
 
     /// Calls the subject to manually trigger validation.
-    func triggerValidation()
+    func triggerValidation(isDisabled: Bool)
 }
 
 public extension Validatable {
     // Default implementation of triggerValidation().
-    func triggerValidation() {
+    func triggerValidation(isDisabled: Bool = false) {
+        guard !isDisabled else {
+            subject.send(.success)
+            return
+        }
         subject.send(validate())
     }
 }
