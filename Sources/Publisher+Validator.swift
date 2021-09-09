@@ -71,9 +71,15 @@ public extension Published.Publisher where Value == String {
         let merged = pub1.merge(with: pub2)
                 .dropFirst()
                 .eraseToAnyPublisher()
+
+        let validator = PasswordMatchValidator(
+                firstPassword: firstPassword(),
+                secondPassword: secondPassword(),
+                pattern: pattern
+        )
         return ValidationPublishers.create(
                 form: form,
-                validator: PasswordValidator(firstPassword: firstPassword(), secondPassword: secondPassword(), pattern: pattern),
+                validator: validator,
                 for: merged,
                 errorMessage: !message.isEmpty ? message : form.messages.passwordsNotMatching)
     }
