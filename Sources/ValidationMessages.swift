@@ -10,6 +10,7 @@ public protocol ValidationMessagesProtocol {
     var invalidPattern: String { get }
     var invalidEmailAddress: String { get }
     var invalidDate: String { get }
+    var passwordRegexDescription: String { get }
     var passwordsNotMatching: String { get }
     func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String
 }
@@ -32,6 +33,10 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
 
     open var invalidDate: String {
         "Invalid date"
+    }
+
+    open var passwordRegexDescription: String {
+        "Minimum 8 characters, at least 1 uppercase letter, \n 1 lowercase letter, 1 number and 1 special character."
     }
 
     open var passwordsNotMatching: String {

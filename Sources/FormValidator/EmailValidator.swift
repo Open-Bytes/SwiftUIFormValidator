@@ -12,7 +12,7 @@ public class EmailValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: ((Validation) -> Void)? = nil
     let regex = try! NSRegularExpression(
-            pattern: "^[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$",
+            pattern: Regex.email.rawValue,
             options: .caseInsensitive)
 
     public init() {
