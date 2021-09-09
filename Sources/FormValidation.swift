@@ -64,7 +64,7 @@ public class FormValidation: ObservableObject {
     public func isAllValid() -> Bool {
         validators.first {
             if $0.disableValidation() {
-                return true
+                return false
             }
             return !$0.validator.validate().isSuccess
         } == nil
