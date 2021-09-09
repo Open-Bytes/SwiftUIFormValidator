@@ -65,10 +65,6 @@ public extension Published.Publisher where Value == String {
     }
 }
 
-public struct Password {
-    public static let pattern = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[$@$!%*#?&])[A-Za-z\\d$@$!%*#?&]{8,}$"
-}
-
 public extension Published.Publisher where Value == String {
     func passwordMatchValidator(
             form: FormValidation,
