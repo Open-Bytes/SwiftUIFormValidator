@@ -23,8 +23,11 @@ public extension View {
     ///
     /// - Parameter container:
     /// - Returns:
-    func validation(_ container: ValidationContainer) -> some View {
-        self.modifier(ValidationModifier(container: container))
+    func validation(_ container: ValidationContainer?) -> some View {
+        guard let container = container else {
+            return AnyView(self)
+        }
+        return AnyView(self.modifier(ValidationModifier(container: container)))
     }
 
 }
