@@ -6,6 +6,7 @@
 import Foundation
 
 public typealias StringProducerClosure = () -> String
+public typealias OnValidationChange = (Validation) -> Void
 
 /// A protocol representing a form validator.
 public protocol Validatable {
@@ -13,7 +14,7 @@ public protocol Validatable {
 
     var errorMessage: StringProducerClosure { get set }
 
-// The root published whose value is validated.
+    // The root published whose value is validated.
     // For example: when the used edits the value of a TextFiled,
     // the validation is triggered.
     var publisher: ValidationPublisher! { get set }
@@ -23,10 +24,12 @@ public protocol Validatable {
 
     /// This callback is called when a validation is triggered.
     /// Don't provide a closure because it's used internally.
-    var onChanged: ((Validation) -> Void)? { get set }
+    var onChanged: [OnValidationChange] { get set }
 
     /// Calls the subject to manually trigger validation.
     func triggerValidation(isDisabled: Bool)
+    func valueChanged(_ value: Validation)
+    mutating func observeChange(_ callback: @escaping OnValidationChange)
 }
 
 public extension Validatable {
@@ -36,7 +39,19 @@ public extension Validatable {
             subject.send(.success)
             return
         }
-        subject.send(validate())
+        let value = validate()
+        subject.send(value)
+        valueChanged(value)
+    }
+
+    func valueChanged(_ value: Validation) {
+        onChanged.forEach { item in
+            item(value)
+        }
+    }
+
+    mutating func observeChange(_ callback: @escaping OnValidationChange) {
+        onChanged.append(callback)
     }
 }
 

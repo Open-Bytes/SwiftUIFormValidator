@@ -9,7 +9,7 @@ import Foundation
 public class NonEmptyValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var onChanged: ((Validation) -> Void)? = nil
+    public var onChanged: [OnValidationChange] = []
 
     public init() {
     }

@@ -11,7 +11,7 @@ public typealias ValidationCallback = (String) -> Bool
 public class InlineValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var onChanged: ((Validation) -> Void)? = nil
+    public var onChanged: [OnValidationChange] = []
 
     private let condition: ValidationCallback
 

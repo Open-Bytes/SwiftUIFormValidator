@@ -23,14 +23,14 @@ public class CompositeValidator {
         case .all:
             let anyFails = validators.first {
                 let validation = $0.validate()
-                $0.onChanged?(validation)
+                $0.valueChanged(validation)
                 return validation.isFailure
             }
             return anyFails == nil ? .success : .failure(message: errorMessage())
         case .any:
             for validator in validators {
                 let validation = validator.validate()
-                validator.onChanged?(validation)
+                validator.valueChanged(validation)
                 if validation.isSuccess {
                     return .success
                 }

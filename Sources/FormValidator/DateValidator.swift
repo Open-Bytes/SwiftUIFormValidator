@@ -10,7 +10,7 @@ import Foundation
 public class DateValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var onChanged: ((Validation) -> Void)? = nil
+    public var onChanged: [OnValidationChange] = []
 
     private let before: Date
     private let after: Date

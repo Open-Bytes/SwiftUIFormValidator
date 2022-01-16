@@ -24,7 +24,7 @@ public struct PasswordInfo {
 public class PasswordMatchValidator: FormValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var onChanged: ((Validation) -> Void)? = nil
+    public var onChanged: [OnValidationChange] = []
 
     private let firstPassword: StringProducerClosure
     private let secondPassword: StringProducerClosure

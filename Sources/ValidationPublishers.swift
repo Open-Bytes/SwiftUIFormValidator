@@ -29,7 +29,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: VALIDATOR,
             for publisher: AnyPublisher<VALIDATOR.VALUE, Never>,
-            disableValidation: @escaping DisableValidationClosure = { 
+            disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             errorMessage: @autoclosure @escaping StringProducerClosure
@@ -58,7 +58,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: StringValidator,
             for publisher: AnyPublisher<String, Never>,
-            disableValidation: @escaping DisableValidationClosure = { 
+            disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             errorMessage: @autoclosure @escaping StringProducerClosure
@@ -87,7 +87,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: Validatable,
             for publisher: AnyPublisher<VALUE, Never>,
-            disableValidation: @escaping DisableValidationClosure = { 
+            disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             errorMessage: @autoclosure @escaping StringProducerClosure,
@@ -97,7 +97,7 @@ public class ValidationPublishers {
         let pub: ValidationPublisher = publisher.map { value in
                     setupValidator(value)
                     let validation = validator.validate()
-                    validator.onChanged?(validation)
+                    validator.valueChanged(validation)
 
                     guard !disableValidation() else {
                         return .success
@@ -120,7 +120,7 @@ public class ValidationPublishers {
             validators: [StringValidator],
             type: CompositeValidator.ValidationType,
             for publisher: AnyPublisher<String, Never>,
-            disableValidation: @escaping DisableValidationClosure = { 
+            disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             errorMessage: @autoclosure @escaping StringProducerClosure
@@ -149,8 +149,19 @@ public class ValidationPublishers {
                     }
                 }.dropFirst()
                 .eraseToAnyPublisher()
-        return ValidationContainer(publisher: pub, subject: validators.first!.subject)
+        let subject = ValidationSubject()
+
+        // Send each validator's subject value to our subject
+        // to notify the view with the validation
+        for var validator in validators {
+            validator.observeChange { value in
+                subject.send(value)
+            }
+        }
+
+        return ValidationContainer(publisher: pub, subject: subject)
     }
+
 }
 
 

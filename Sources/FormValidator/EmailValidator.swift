@@ -10,7 +10,7 @@ import Foundation
 public class EmailValidator: StringValidator {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
-    public var onChanged: ((Validation) -> Void)? = nil
+    public var onChanged: [OnValidationChange] = []
     let regex = try! NSRegularExpression(
             pattern: Regex.email.rawValue,
             options: .caseInsensitive)
