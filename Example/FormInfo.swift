@@ -25,7 +25,6 @@ class FormInfo: ObservableObject {
     @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
 
     // 3
-
     lazy var firstNameValidation: ValidationContainer = {
         let validators: [StringValidator] = [
             CountValidator(count: 6, type: .greaterThanOrEquals),
