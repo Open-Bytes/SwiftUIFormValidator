@@ -25,15 +25,6 @@ class FormInfo: ObservableObject {
     @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
 
     // 3
-//    lazy var firstNameValidation: ValidationContainer = {
-//        $firstName.nonEmptyValidator(
-//                form: form,
-//                errorMessage: "First name is not valid",
-//                disableValidation: {
-//                    true
-//                }
-//        )
-//    }()
 
     lazy var firstNameValidation: ValidationContainer = {
         let validators: [StringValidator] = [
