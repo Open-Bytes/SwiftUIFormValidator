@@ -16,6 +16,7 @@ let package = Package(
             .target(
                     name: "FormValidator",
                     dependencies: [],
+                    path: "Sources",
                     exclude: ["Tests"])
         ]
 )
