@@ -25,14 +25,22 @@ class FormInfo: ObservableObject {
     @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
 
     // 3
+//    lazy var firstNameValidation: ValidationContainer = {
+//        $firstName.nonEmptyValidator(
+//                form: form,
+//                errorMessage: "First name is not valid",
+//                disableValidation: {
+//                    true
+//                }
+//        )
+//    }()
+
     lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(
-                form: form,
-                errorMessage: "First name is not valid",
-                disableValidation: {
-                    true
-                }
-        )
+        let validators: [StringValidator] = [
+            CountValidator(count: 6, type: .greaterThanOrEquals),
+            PrefixValidator(prefix: "st.")
+        ]
+        return $firstName.allValid(validators: validators, form: form)
     }()
 
     lazy var lastNamesValidation: ValidationContainer = {

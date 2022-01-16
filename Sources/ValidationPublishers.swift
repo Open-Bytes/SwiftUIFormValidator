@@ -149,7 +149,7 @@ public class ValidationPublishers {
                     }
                 }.dropFirst()
                 .eraseToAnyPublisher()
-        return ValidationContainer(publisher: pub, subject: .init())
+        return ValidationContainer(publisher: pub, subject: validators.first!.subject)
     }
 }
 
