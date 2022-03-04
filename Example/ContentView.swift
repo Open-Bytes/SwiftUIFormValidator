@@ -25,8 +25,10 @@ struct ContentView: View {
 
                     TextField("Middle Names", text: $formInfo.middleNames)
 
-                    TextField("Last Name", text: $formInfo.lastNames)
-                            .validation(formInfo.lastNamesValidation)
+                    RoundedTextField(
+                            "Last Name",
+                            text: $formInfo.lastNames,
+                            validation: formInfo.lastNamesValidation)
                 }
 
                 Section(header: Text("Password")) {
