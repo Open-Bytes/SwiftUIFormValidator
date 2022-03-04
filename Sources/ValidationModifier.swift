@@ -23,8 +23,9 @@ public extension View {
     /// and propagated to this view.
     /// In case it's invalid, an error message will be displayed under the view
     ///
-    /// - Parameter container:
-    /// - Returns:
+    /// - Parameter container: the validation container
+    ///   - errorView: a custom error view
+    /// - Returns: a view after applying the validation modifier
     func validation<ErrorView: View>(
             _ container: ValidationContainer?,
             errorView: ValidationErrorView<ErrorView>? = nil) -> some View {
@@ -40,8 +41,8 @@ public extension View {
     /// and propagated to this view.
     /// In case it's invalid, an error message will be displayed under the view
     ///
-    /// - Parameter container:
-    /// - Returns:
+    /// - Parameter container: the validation container
+    /// - Returns: a view after applying the validation modifier
     func validation(_ container: ValidationContainer?) -> some View {
         guard let container = container else {
             return eraseToAnyView()
