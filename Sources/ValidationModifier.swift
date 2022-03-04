@@ -9,6 +9,8 @@
 import Foundation
 import SwiftUI
 
+public typealias ValidationErrorView<ErrorView: View> = (_ message: String) -> ErrorView
+
 public struct ValidationContainer {
     public let publisher: ValidationPublisher
     public let subject: ValidationSubject
@@ -23,23 +25,45 @@ public extension View {
     ///
     /// - Parameter container:
     /// - Returns:
+    func validation<ErrorView: View>(
+            _ container: ValidationContainer?,
+            errorView: ValidationErrorView<ErrorView>? = nil) -> some View {
+        guard let container = container else {
+            return eraseToAnyView()
+        }
+        let validationModifier = ValidationModifier(container: container, errorView: errorView)
+        return modifier(validationModifier).eraseToAnyView()
+    }
+
+    ///A modifier used for validating a root publisher.
+    /// Whenever the publisher changes, the value will be validated
+    /// and propagated to this view.
+    /// In case it's invalid, an error message will be displayed under the view
+    ///
+    /// - Parameter container:
+    /// - Returns:
     func validation(_ container: ValidationContainer?) -> some View {
         guard let container = container else {
-            return AnyView(self)
+            return eraseToAnyView()
         }
-        return AnyView(self.modifier(ValidationModifier(container: container)))
+        let validationModifier = ValidationModifier<EmptyView>(container: container, errorView: nil)
+        return modifier(validationModifier).eraseToAnyView()
     }
 
 }
 
 /// A modifier for applying the validation to a view.
-public struct ValidationModifier: ViewModifier {
+public struct ValidationModifier<ErrorView: View>: ViewModifier {
     @State var latestValidation: Validation = .success
 
     public let container: ValidationContainer
+    private let errorView: ValidationErrorView<ErrorView>?
 
-    public init(container: ValidationContainer) {
+    public init(
+            container: ValidationContainer,
+            errorView: ValidationErrorView<ErrorView>? = nil) {
         self.container = container
+        self.errorView = errorView
     }
 
     public func body(content: Content) -> some View {
@@ -56,12 +80,15 @@ public struct ValidationModifier: ViewModifier {
     public var validationMessage: some View {
         switch latestValidation {
         case .success:
-            return AnyView(EmptyView())
+            return EmptyView().eraseToAnyView()
         case .failure(let message):
-            let text = Text(message)
-                    .foregroundColor(Color.red)
-                    .font(.caption)
-            return AnyView(text)
+            guard let view = errorView?(message) else {
+                let text = Text(message)
+                        .foregroundColor(Color.red)
+                        .font(.caption)
+                return text.eraseToAnyView()
+            }
+            return view.eraseToAnyView()
         }
     }
 }

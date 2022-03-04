@@ -16,7 +16,12 @@ struct ContentView: View {
 
                 Section(header: Text("Name")) {
                     TextField("First Name", text: $formInfo.firstName)
-                            .validation(formInfo.firstNameValidation) // 5
+                            .validation(formInfo.firstNameValidation) { message in
+                                // Optionally provide your own custom error view.
+                                Text(message.uppercased())
+                                        .foregroundColor(Color.red)
+                                        .font(.caption)
+                            } // 5
 
                     TextField("Middle Names", text: $formInfo.middleNames)
 
@@ -51,7 +56,7 @@ struct ContentView: View {
                 }
 
                 Button(action: {
-                   let valid = formInfo.form.triggerValidation()
+                    let valid = formInfo.form.triggerValidation()
                     print("Form valid: \(valid)")
                 }, label: {
                     HStack {
@@ -64,7 +69,7 @@ struct ContentView: View {
 //                        .disabled(isSaveDisabled)
             }
                     .navigationBarTitle("Form")
-//                   observe the form validation and enable submit button only if it's valid
+                    //                   observe the form validation and enable submit button only if it's valid
                     .onReceive(formInfo.form.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
                     }
