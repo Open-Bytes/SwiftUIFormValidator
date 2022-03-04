@@ -1,25 +1,21 @@
 
-## Version 0.10.0
+## Version 0.14.0
 
-- [ ] Add CompositeValidator
-- [ ] Add PasswordValidator
-- [ ] Add CountValidator
-- [ ] Add PrefixValidator
-- [ ] Add SuffixValidator
+- [ ] Provide an option for customizing the error view.
 
-## Version 0.11.0)
+## Version 0.13.1
 
-- [ ] Add disable validation feature
+- [ ] Support macOS 10_15 as a minimum version.
 
-## Version 0.11.1)
+## Version 0.13.0
 
-- [ ] Ignore validating disabled validator in FormValidation.isAllValid
+- [ ] Support nullable validation container
 
-## Version 0.12.0
+## Version 0.12.4
 
-- [ ] Add password validation
+- [ ] Fix issue #1 error message not displayed with composite validators
 
-## Version 0.12.1
+## Version 0.12.3
 
 - [ ] Fix exclude in Package.swift
 
@@ -27,20 +23,26 @@
 
 - [ ] Fix exclude in Package.swift
 
-## Version 0.12.3
+## Version 0.12.1
 
 - [ ] Fix exclude in Package.swift
 
-## Version 0.12.4
+## Version 0.12.0
 
-- [ ] Fix issue #1 error message not displayed with composite validators
+- [ ] Add password validation
 
-## Version 0.13.0
+## Version 0.11.1)
 
-- [ ] Support nullable validation container
+- [ ] Ignore validating disabled validator in FormValidation.isAllValid
 
-## Version 0.13.1
+## Version 0.11.0)
 
-- [ ] Support macOS 10_15 as a minimum version.
+- [ ] Add disable validation feature
 
+## Version 0.10.0
 
+- [ ] Add CompositeValidator
+- [ ] Add PasswordValidator
+- [ ] Add CountValidator
+- [ ] Add PrefixValidator
+- [ ] Add SuffixValidator
