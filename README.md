@@ -86,6 +86,19 @@ struct ContentView: View {
 
 **Congratulation!!** your field is now validated for you!
 
+### Custom Error View
+
+You can provide your own custom error view by providing the view with the `validation` modifier
+
+```swift
+TextField("First Name", text: $formInfo.firstName)
+        .validation(formInfo.firstNameValidation) { message in
+            Text(message.uppercased())
+                    .foregroundColor(Color.red)
+                    .font(.caption)
+        }
+```
+
 ### Inline Validation
 
 For fast validation, you can use `InlineValidator` and provide your validation logic in line:
@@ -135,8 +148,8 @@ VStack {
 
 ### Xcode Projects
 
-Select `File` -> `Swift Packages` -> `Add Package Dependency` and enter `https://github.com/ShabanKamell/SwiftUIFormValidator.git`.
-
+Select `File` -> `Swift Packages` -> `Add Package Dependency` and
+enter `https://github.com/ShabanKamell/SwiftUIFormValidator.git`.
 
 ### Swift Package Manager Projects
 
@@ -145,11 +158,11 @@ SwiftUIFormValidator` as a package dependency in your `Package.swift` file:
 
 ```swift
 let package = Package(
-    //...
-    dependencies: [
-      .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.14.0"))
-    ]
-    //...
+        //...
+        dependencies: [
+            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.14.0"))
+        ]
+        //...
 )
 ```
 
@@ -158,13 +171,13 @@ From there, refer to `SwiftUIFormValidator` in target dependencies:
 ```swift
 targets: [
     .target(
-        name: "YourLibrary",
-        dependencies: [
-          .product(name: "FormValidator", package: "SwiftUIFormValidator"),
-        ]
-        //...
+            name: "YourLibrary",
+            dependencies: [
+                .product(name: "FormValidator", package: "SwiftUIFormValidator"),
+            ]
+            //...
     ),
-   // ...
+    // ...
 ]
 ```
 
@@ -261,6 +274,7 @@ extension Published.Publisher where Value == String {
 2. Add the validator logic in an extension to `Published.Publisher`.
 
 #### Note
+
 `NonEmptyValidator` is a built-in validator in the library.
 
 ## Validation Messages
@@ -310,6 +324,7 @@ FormValidation(validationType: .immediate, messages: ValidationMessages())
 All Pull Requests (PRs) are welcome. Help us make this library better.
 
 ## Changelog
+
 Look at [Changelog](https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/CHANGELOG.md) for release notes.
 
 ## License
