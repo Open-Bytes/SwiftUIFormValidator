@@ -33,7 +33,7 @@ A declarative **SwiftUI** form validation. Clean, simple, and customizable.
     - [Inline Validation](#inline-validation)
     - [Manual Validation](#manual-validation)
     - [React to Validation Change](#react-to-validation-change)
-- [Installation](#installation)
+- [Installation](#tada-installation)
     - [CocoaPods](#cocoapods)
     - [Swift Package Manager](#swift-package-manager)
     - [Accio](#accio)
@@ -131,6 +131,45 @@ VStack {
 
 ## :tada: Installation
 
+### Swift Package Manager
+
+### Xcode Projects
+
+Select `File` -> `Swift Packages` -> `Add Package Dependency` and enter `https://github.com/ShabanKamell/SwiftUIFormValidator.git`.
+
+
+### Swift Package Manager Projects
+
+You can add `
+SwiftUIFormValidator` as a package dependency in your `Package.swift` file:
+
+```swift
+let package = Package(
+    //...
+    dependencies: [
+      .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.13.0"))
+    ]
+    //...
+)
+```
+
+From there, refer to `SwiftUIFormValidator` in target dependencies:
+
+```swift
+targets: [
+    .target(
+        name: "YourLibrary",
+        dependencies: [
+          .product(name: "FormValidator", package: "SwiftUIFormValidator"),
+        ]
+        //...
+    ),
+   // ...
+]
+```
+
+Then simply `import SwiftUIFormValidator` wherever you’d like to use the library.
+
 ### CocoaPods
 
 Use the following entry in your Podfile:
@@ -140,40 +179,6 @@ pod 'SwiftUIFormValidator'
 ```
 
 Then run `pod install`.
-
-### Swift Package Manager
-
-Add the following as a dependency to your `Package.swift`:
-
-```swift
-.package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git")
-```
-
-and then specify `"SwiftUIFormValidator"` as a dependency of the Target in which you wish to use SwiftUIFormValidator.
-Here's an example `PackageDescription`:
-
-```swift
-// swift-tools-version:5.1
-
-import PackageDescription
-
-let package = Package(
-        name: "MyPackage",
-        products: [
-            .library(
-                    name: "MyPackage",
-                    targets: ["MyPackage"]),
-        ],
-        dependencies: [
-            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator")
-        ],
-        targets: [
-            .target(
-                    name: "MyPackage",
-                    dependencies: ["SwiftUIFormValidator"])
-        ]
-)
-```
 
 ### Accio
 
