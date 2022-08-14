@@ -114,7 +114,7 @@ public extension FormValidation {
     ///     message will be shown in case the value is invalid.
     ///  2) deferred: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
     ///     The error messages will be displayed only after triggering the validation manually.
-    ///  3) silent: In this case, no validation message is displayed and it's your responsibility to display them
+    ///  3) silent: In this case, no validation message is displayed, and it's your responsibility to display them
     ///     using `FormValidation.validationMessages()`.
     enum ValidationType {
         case immediate

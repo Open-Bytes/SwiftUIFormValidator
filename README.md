@@ -115,13 +115,15 @@ For fast validation, you can use `InlineValidator` and provide your validation l
 
 ### Validation Types
 
-You can choose between 2 different validation types: `FormValidation(validationType: .immediate)`
-and `FormValidation(validationType: .deffered)`
+You can choose between 3 different validation types: `FormValidation(validationType: .immediate)`
+and `FormValidation(validationType: .deffered)` `FormValidation(validationType: .silent)`
 
 1. **immediate**: the validation is triggered every time the field is changed. An error message will be shown in case
    the value is invalid.
 2. **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
    The error messages will be displayed only after triggering the validation manually.
+3. **silent**: In this case, no validation message is displayed, and it's your responsibility to display them 
+   using `FormValidation.validationMessages()`.
 
 ### Manual Validation
 
