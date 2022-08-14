@@ -1,4 +1,8 @@
 
+## Version 0.16.0
+
+- [ ] Add FormValidation.errorsDescription() to get a description for all errors messages separated with new line.
+- 
 ## Version 0.15.0
 
 - [ ] Add ValidationType.silent to allow handling the errors by library user.
