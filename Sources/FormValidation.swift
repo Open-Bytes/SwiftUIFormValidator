@@ -104,6 +104,18 @@ public class FormValidation: ObservableObject {
         }
         return isAllValid()
     }
+
+    public func errorsDescription() -> String {
+        guard !validationMessages.isEmpty else {
+            return ""
+        }
+        return validationMessages.reduce("") { partialResult, s in
+            if partialResult.isEmpty {
+                return s
+            }
+            return "\(partialResult)\n\(s)"
+        }
+    }
 }
 
 public extension FormValidation {
