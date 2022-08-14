@@ -106,11 +106,13 @@ public class ValidationPublishers {
                     switch form.validationType {
                     case .immediate:
                         return validation
-                    case .deferred:
+                    case .deferred,
+                         .silent:
                         // Send success to simulate deferred validation
                         return .success
                     }
-                }.dropFirst()
+                }
+                .dropFirst()
                 .eraseToAnyPublisher()
         return ValidationContainer(publisher: pub, subject: validator.subject)
     }
@@ -143,22 +145,29 @@ public class ValidationPublishers {
                     switch form.validationType {
                     case .immediate:
                         return validation
-                    case .deferred:
+                    case .deferred,
+                         .silent:
                         // Send success to simulate deferred validation
                         return .success
                     }
-                }.dropFirst()
+                }
+                .dropFirst()
                 .eraseToAnyPublisher()
         let subject = ValidationSubject()
 
         // Send each validator's subject value to our subject
         // to notify the view with the validation
-        for var validator in validators {
-            validator.observeChange { value in
-                subject.send(value)
+        switch form.validationType {
+        case .immediate:
+            for var validator in validators {
+                validator.observeChange { value in
+                    subject.send(value)
+                }
             }
+        case .deferred,
+             .silent:
+            break
         }
-
         return ValidationContainer(publisher: pub, subject: subject)
     }
 

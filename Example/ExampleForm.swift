@@ -8,7 +8,7 @@ import UIKit
 import FormValidator
 
 // 1
-class FormInfo: ObservableObject {
+class ExampleForm: ObservableObject {
     @Published var firstName: String = ""
     @Published var middleNames: String = ""
     @Published var lastNames: String = ""

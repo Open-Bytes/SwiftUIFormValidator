@@ -97,7 +97,10 @@ public class FormValidation: ObservableObject {
     /// - Returns: Bool indicating the form is valid or not.
     public func triggerValidation() -> Bool {
         validators.forEach {
-            $0.validator.triggerValidation(isDisabled: $0.disableValidation())
+            $0.validator.triggerValidation(
+                    isDisabled: $0.disableValidation(),
+                    shouldShowError: validationType.shouldShowError()
+            )
         }
         return isAllValid()
     }
@@ -111,9 +114,23 @@ public extension FormValidation {
     ///     message will be shown in case the value is invalid.
     ///  2) deferred: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
     ///     The error messages will be displayed only after triggering the validation manually.
+    ///  3) silent: In this case, no validation message is displayed and it's your responsibility to display them
+    ///     using `FormValidation.validationMessages()`.
     enum ValidationType {
         case immediate
         case deferred
+        case silent
+
+        func shouldShowError() -> Bool {
+            switch self {
+            case .immediate,
+                 .deferred:
+                return true
+            case .silent:
+                return false
+            }
+        }
     }
+
 
 }

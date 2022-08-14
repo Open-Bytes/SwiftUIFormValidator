@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ContentView: View {
     // 4
-    @ObservedObject var formInfo = FormInfo()
+    @ObservedObject var form = ExampleForm()
     @State var isSaveDisabled = true
 
     var body: some View {
@@ -15,50 +15,50 @@ struct ContentView: View {
             Form {
 
                 Section(header: Text("Name")) {
-                    TextField("First Name", text: $formInfo.firstName)
-                            .validation(formInfo.firstNameValidation) { message in
+                    TextField("First Name", text: $form.firstName)
+                            .validation(form.firstNameValidation) { message in
                                 // Optionally provide your own custom error view.
                                 Text(message.uppercased())
                                         .foregroundColor(Color.red)
                                         .font(.caption)
                             } // 5
 
-                    TextField("Middle Names", text: $formInfo.middleNames)
+                    TextField("Middle Names", text: $form.middleNames)
 
                     RoundedTextField(
                             "Last Name",
-                            text: $formInfo.lastNames,
-                            validation: formInfo.lastNamesValidation)
+                            text: $form.lastNames,
+                            validation: form.lastNamesValidation)
                 }
 
                 Section(header: Text("Password")) {
-                    TextField("Password", text: $formInfo.password)
-                            .validation(formInfo.passwordValidation)
-                    TextField("Confirm Password", text: $formInfo.confirmPassword)
+                    TextField("Password", text: $form.password)
+                            .validation(form.passwordValidation)
+                    TextField("Confirm Password", text: $form.confirmPassword)
                 }
 
                 Section(header: Text("Personal Information")) {
                     DatePicker(
-                            selection: $formInfo.birthday,
+                            selection: $form.birthday,
                             displayedComponents: [.date],
                             label: { Text("Birthday") }
-                    ).validation(formInfo.birthdayValidation)
+                    ).validation(form.birthdayValidation)
                 }
 
                 Section(header: Text("Address")) {
-                    TextField("Street Number or Name", text: $formInfo.street)
-                            .validation(formInfo.streetValidation)
+                    TextField("Street Number or Name", text: $form.street)
+                            .validation(form.streetValidation)
 
-                    TextField("First Line", text: $formInfo.firstLine)
-                            .validation(formInfo.firstLineValidation)
+                    TextField("First Line", text: $form.firstLine)
+                            .validation(form.firstLineValidation)
 
-                    TextField("Second Line", text: $formInfo.secondLine)
+                    TextField("Second Line", text: $form.secondLine)
 
-                    TextField("Country", text: $formInfo.country)
+                    TextField("Country", text: $form.country)
                 }
 
                 Button(action: {
-                    let valid = formInfo.form.triggerValidation()
+                    let valid = form.form.triggerValidation()
                     print("Form valid: \(valid)")
                 }, label: {
                     HStack {
@@ -72,11 +72,11 @@ struct ContentView: View {
             }
                     .navigationBarTitle("Form")
                     //                   observe the form validation and enable submit button only if it's valid
-                    .onReceive(formInfo.form.$allValid) { isValid in
+                    .onReceive(form.form.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
                     }
                     // React to validation messages changes
-                    .onReceive(formInfo.form.$validationMessages) { messages in
+                    .onReceive(form.form.$validationMessages) { messages in
                         print(messages)
                     }
 

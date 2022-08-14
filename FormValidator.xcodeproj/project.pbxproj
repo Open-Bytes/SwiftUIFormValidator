@@ -31,7 +31,7 @@
 		58B8386271F99AF0A033B367 /* NonEmptyValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83E886CCD8DA3A2A6546E /* NonEmptyValidator.swift */; };
 		58B838B3A903572E5882C531 /* SuffixValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83DE8202FBDF0A40ACA9B /* SuffixValidator.swift */; };
 		58B8396A333F32C146D56576 /* FormValidation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B832BC47434B13DE89247C /* FormValidation.swift */; };
-		58B839940D299D9BDAB7D5B3 /* FormInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B834377A485C8EFEE1169C /* FormInfo.swift */; };
+		58B839940D299D9BDAB7D5B3 /* ExampleForm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B834377A485C8EFEE1169C /* ExampleForm.swift */; };
 		58B839E462FDC9F34971145C /* NonEmptyValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B831473C305A7E5364B4FE /* NonEmptyValidatorTest.swift */; };
 		58B83A75130ACAB7547651E9 /* InlineValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83A4DA6E5858E3FECB853 /* InlineValidatorTest.swift */; };
 		58B83ADB585E63EB70CB030C /* SuffixValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83815876F920995EFC487 /* SuffixValidatorTest.swift */; };
@@ -111,7 +111,7 @@
 		58B8328AB1473F8691474D97 /* SwiftUIFormValidator.podspec */ = {isa = PBXFileReference; lastKnownFileType = file.podspec; path = SwiftUIFormValidator.podspec; sourceTree = "<group>"; };
 		58B832935B706489E6CE7074 /* String+OrIfEmpty.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "String+OrIfEmpty.swift"; sourceTree = "<group>"; };
 		58B832BC47434B13DE89247C /* FormValidation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormValidation.swift; sourceTree = "<group>"; };
-		58B834377A485C8EFEE1169C /* FormInfo.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormInfo.swift; sourceTree = "<group>"; };
+		58B834377A485C8EFEE1169C /* ExampleForm.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ExampleForm.swift; sourceTree = "<group>"; };
 		58B8357EDFC5549969138BB7 /* PatternValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternValidator.swift; sourceTree = "<group>"; };
 		58B835D5FA4F329648E4989F /* InlineValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineValidator.swift; sourceTree = "<group>"; };
 		58B836D5AAB70ECAD8B9576E /* Publisher+Validator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Publisher+Validator.swift"; sourceTree = "<group>"; };
@@ -233,7 +233,7 @@
 				04A4DE22239AD0CC00AA26B7 /* LaunchScreen.storyboard */,
 				04A4DE25239AD0CC00AA26B7 /* Info.plist */,
 				58B830DA36896C518BED3456 /* ContentView.swift */,
-				58B834377A485C8EFEE1169C /* FormInfo.swift */,
+				58B834377A485C8EFEE1169C /* ExampleForm.swift */,
 				1BCAC9C5E9CB4366B3B365A1 /* RoundedTextField.swift */,
 			);
 			path = Example;
@@ -464,7 +464,7 @@
 				04A4DE18239AD0C900AA26B7 /* AppDelegate.swift in Sources */,
 				04A4DE1A239AD0C900AA26B7 /* SceneDelegate.swift in Sources */,
 				58B83DE02BE0B0E074465F1E /* ContentView.swift in Sources */,
-				58B839940D299D9BDAB7D5B3 /* FormInfo.swift in Sources */,
+				58B839940D299D9BDAB7D5B3 /* ExampleForm.swift in Sources */,
 				1BCACA8AD345E8EF2C91C173 /* RoundedTextField.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -620,9 +620,11 @@
 		04A4DDF2239AB0C900AA26B7 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = XKJKXVFT76;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -647,9 +649,11 @@
 		04A4DDF3239AB0C900AA26B7 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = XKJKXVFT76;
 				DYLIB_COMPATIBILITY_VERSION = 1;
 				DYLIB_CURRENT_VERSION = 1;
 				DYLIB_INSTALL_NAME_BASE = "@rpath";
@@ -714,7 +718,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3HJH4SSKC5;
+				DEVELOPMENT_TEAM = XKJKXVFT76;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -733,7 +737,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 3HJH4SSKC5;
+				DEVELOPMENT_TEAM = XKJKXVFT76;
 				INFOPLIST_FILE = Example/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
