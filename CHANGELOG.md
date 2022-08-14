@@ -1,4 +1,8 @@
 
+## Version 0.15.0
+
+- [ ] Add ValidationType.silent to allow handling the errors by library user.
+
 ## Version 0.14.0
 
 - [ ] Provide an option for customizing the error view.
