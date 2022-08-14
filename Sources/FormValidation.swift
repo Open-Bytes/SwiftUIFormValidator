@@ -109,7 +109,7 @@ public class FormValidation: ObservableObject {
 public extension FormValidation {
 
     /// Form validation type
-    /// It includes 2 cases:
+    /// It includes 3 cases:
     ///  1) immediate: the validation is triggered every time the field is changed. An error
     ///     message will be shown in case the value is invalid.
     ///  2) deferred: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
