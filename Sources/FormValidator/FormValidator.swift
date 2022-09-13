@@ -11,6 +11,7 @@ public typealias OnValidationChange = (Validation) -> Void
 /// A protocol representing a form validator.
 public protocol Validatable {
     func validate() -> Validation
+    var isEmpty: Bool { get }
 
     var errorMessage: StringProducerClosure { get set }
 

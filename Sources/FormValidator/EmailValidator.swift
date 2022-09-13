@@ -30,4 +30,7 @@ public class EmailValidator: StringValidator {
         return patternValidator.validate()
     }
 
+    public var isEmpty: Bool {
+        value.isEmpty
+    }
 }

@@ -53,4 +53,8 @@ public class CountValidator: StringValidator {
         case greaterThan
         case greaterThanOrEquals
     }
+
+    public var isEmpty: Bool {
+        value.isEmpty
+    }
 }

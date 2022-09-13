@@ -30,4 +30,8 @@ public class DateValidator: FormValidator {
                 Validation.success :
                 Validation.failure(message: errorMessage())
     }
+
+    public var isEmpty: Bool {
+        false
+    }
 }

@@ -28,4 +28,7 @@ public class InlineValidator: StringValidator {
         condition(value) ? .success : .failure(message: errorMessage())
     }
 
+    public var isEmpty: Bool {
+        value.isEmpty
+    }
 }

@@ -58,6 +58,18 @@ public class FormValidation: ObservableObject {
         validationMessages = allValidationMessages()
     }
 
+    /// Checks if all form fields are filled with text.
+    /// This means that there's a text in the field but doesn't mean it's valid.
+    /// Note: This function checks only string-based values. For example: it checks if there's string or not in the
+    /// value. But other values like Date are not validated.
+    ///
+    /// - Returns: Bool true if filled.
+    public func isAllFilled() -> Bool {
+        validators.allSatisfy {
+            !$0.validator.isEmpty
+        }
+    }
+
     /// Checks if all form fields are valid.
     ///
     /// - Returns: Bool

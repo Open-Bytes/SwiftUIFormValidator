@@ -72,5 +72,9 @@ public class PasswordMatchValidator: FormValidator {
         return patternValidator.validate().isSuccess
     }
 
-
+    public var isEmpty: Bool {
+        let p1 = value.type == 0 ? value.password : firstPassword()
+        let p2 = value.type == 1 ? value.password : secondPassword()
+        return !p1.isEmpty && !p2.isEmpty
+    }
 }

@@ -31,4 +31,7 @@ public class PatternValidator: StringValidator {
         return .success
     }
 
+    public var isEmpty: Bool {
+        value.isEmpty
+    }
 }

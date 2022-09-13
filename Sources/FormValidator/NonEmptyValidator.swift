@@ -26,4 +26,8 @@ public class NonEmptyValidator: StringValidator {
         return .success
     }
 
+    public var isEmpty: Bool {
+        value.isEmpty
+    }
+
 }
