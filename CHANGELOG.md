@@ -5,7 +5,6 @@
 
 ## Version 0.16.0
 
-- [ ] Add FormValidation.isAllFiled() to get a description for all errors messages separated with new line.
 - [ ] Add FormValidation.errorsDescription() to get a description for all errors messages separated with new line.
 - 
 ## Version 0.15.0
