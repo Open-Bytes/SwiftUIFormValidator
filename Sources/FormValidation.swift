@@ -20,6 +20,7 @@ public class FormValidation: ObservableObject {
     /// Indicates all form fields valid or not.
     /// You can observe using $allValid
     @Published public var allValid: Bool = false
+    @Published public var allFilled: Bool = false
 
     /// All validation error messages.
     /// You can observe using $validationMessages
@@ -55,6 +56,7 @@ public class FormValidation: ObservableObject {
     /// - Parameter validation: Validation
     private func onChanged(validation: Validation) {
         allValid = isAllValid()
+        allFilled = isAllFilled()
         validationMessages = allValidationMessages()
     }
 
