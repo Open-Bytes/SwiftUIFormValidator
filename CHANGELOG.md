@@ -1,7 +1,7 @@
 
 ## Version 0.17.0
 
-- [ ] Add FormValidation.isAllFiled() for checking all fields are filled
+- [ ] Add FormValidation.isAllFiled() for checking all fields are filled.
 
 ## Version 0.16.0
 
