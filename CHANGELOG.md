@@ -1,4 +1,9 @@
 
+
+## Version 0.18.1
+
+- [ ] Provide FormValidation.allFilled as a publisher.
+
 ## Version 0.18.0
 
 - [ ] Provide FormValidation.allFilled as a publisher.
