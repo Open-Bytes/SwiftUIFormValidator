@@ -68,7 +68,7 @@ public class FormValidation: ObservableObject {
     /// - Returns: Bool true if filled.
     public func isAllFilled() -> Bool {
         validators.allSatisfy {
-            !$0.validator.isEmpty
+            $0.validator.validate().isSuccess || !$0.validator.isEmpty
         }
     }
 
