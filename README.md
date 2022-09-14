@@ -163,7 +163,7 @@ SwiftUIFormValidator` as a package dependency in your `Package.swift` file:
 let package = Package(
         //...
         dependencies: [
-            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.14.0"))
+            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.18.1"))
         ]
         //...
 )
