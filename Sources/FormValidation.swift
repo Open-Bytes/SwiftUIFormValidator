@@ -64,8 +64,8 @@ public class FormValidation: ObservableObject {
     private func onChanged(validation: Validation) {
         allValid = isAllValid()
         allFilled = isAllFilled()
-        // Its' important to be async to allow the wrapped value of the publisher to be changed.
         validationMessages = allValidationMessages()
+        // Its' important to be async to allow the wrapped value of the publisher to be changed.
         DispatchQueue.main.async {
             self.onFormChanged?(self)
         }
