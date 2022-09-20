@@ -10,6 +10,7 @@ public struct ValidatorContainer {
     let disableValidation: DisableValidationClosure
 }
 
+
 /// You can use to control the validation form.
 /// For example, you can trigger the validation manually. And
 /// choose a validation type. And check if the form is valid.
@@ -33,15 +34,20 @@ public class FormValidation: ObservableObject {
     /// You can override `DefaultValidationMessages` or implement `ValidationMessagesProtocol`.
     public var messages: ValidationMessagesProtocol = DefaultValidationMessages()
 
+    private let onFormChanged: ((FormValidation) -> Void)?
+
     /// The initialized used to create an instance of this class.
     ///
     /// - Parameters:
     ///   - validationType: ValidationType enum.
     ///   - messages: ValidationMessagesProtocol implementation.
+    ///   - onFormChanged: called when any filed changes in the form
     public init(validationType: ValidationType,
-                messages: ValidationMessagesProtocol = DefaultValidationMessages()) {
+                messages: ValidationMessagesProtocol = DefaultValidationMessages(),
+                onFormChanged: ((FormValidation) -> Void)? = nil) {
         self.validationType = validationType
         self.messages = messages
+        self.onFormChanged = onFormChanged
     }
 
     /// Used internally for adding a validator
@@ -58,6 +64,7 @@ public class FormValidation: ObservableObject {
         allValid = isAllValid()
         allFilled = isAllFilled()
         validationMessages = allValidationMessages()
+        onFormChanged?(self)
     }
 
     /// Checks if all form fields are filled with text.
