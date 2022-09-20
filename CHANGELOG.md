@@ -1,4 +1,8 @@
 
+## Version 0.19.2
+
+- [ ] Add onFormChanged to FormValidation to act to form changes.
+- 
 ## Version 0.19.1
 
 - [ ] Add onFormChanged to FormValidation to act to form changes.
