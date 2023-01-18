@@ -12,6 +12,7 @@ import Combine
 public typealias ValidationPublisher = AnyPublisher<Validation, Never>
 public typealias ValidationSubject = PassthroughSubject<Validation, Never>
 public typealias DisableValidationClosure = () -> Bool
+public typealias OnValidate = (Validation) -> Void
 
 /// Create ValidationContainer object to
 /// be passed to validation modifier
@@ -23,6 +24,7 @@ public class ValidationPublishers {
     ///   - form: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
+    ///   - disableValidation: disable validation conditionally
     ///   - errorMessage: The error string
     /// - Returns: ValidationContainer
     public static func create<VALIDATOR: FormValidator>(
@@ -32,13 +34,15 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure,
+            onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
                 validator: validator,
                 for: publisher,
                 disableValidation: disableValidation,
-                errorMessage: errorMessage()
+                errorMessage: errorMessage(),
+                onValidate: onValidate
         ) { (value: VALIDATOR.VALUE) in
             var val = validator
             val.errorMessage = errorMessage
@@ -61,13 +65,15 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure,
+            onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
                 validator: validator,
                 for: publisher,
                 disableValidation: disableValidation,
-                errorMessage: errorMessage()
+                errorMessage: errorMessage(),
+                onValidate: onValidate
         ) { (value: String) in
             var val = validator
             val.errorMessage = errorMessage
@@ -91,6 +97,7 @@ public class ValidationPublishers {
                 false
             },
             errorMessage: @autoclosure @escaping StringProducerClosure,
+            onValidate: OnValidate?,
             setupValidator: @escaping (VALUE) -> Void
     ) -> ValidationContainer {
         form.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
@@ -102,6 +109,8 @@ public class ValidationPublishers {
                     guard !disableValidation() else {
                         return .success
                     }
+
+                    onValidate?(validation)
 
                     switch form.validationType {
                     case .immediate:
@@ -125,7 +134,8 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure
+            errorMessage: @autoclosure @escaping StringProducerClosure,
+            onValidate: OnValidate?
     ) -> ValidationContainer {
         validators.forEach {
             form.append(ValidatorContainer(validator: $0, disableValidation: disableValidation))
@@ -141,6 +151,8 @@ public class ValidationPublishers {
                     guard !disableValidation() else {
                         return .success
                     }
+
+                    onValidate?(validation)
 
                     switch form.validationType {
                     case .immediate:

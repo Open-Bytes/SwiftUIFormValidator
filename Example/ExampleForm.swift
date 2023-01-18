@@ -8,6 +8,7 @@ import UIKit
 import FormValidator
 
 // 1
+
 class ExampleForm: ObservableObject {
     @Published var firstName: String = ""
     @Published var middleNames: String = ""
@@ -52,7 +53,18 @@ class ExampleForm: ObservableObject {
     }()
 
     lazy var firstLineValidation: ValidationContainer = {
-        $firstLine.countValidator(form: form, count: 6, type: .greaterThanOrEquals)
+        $firstLine.countValidator(
+                form: form,
+                count: 6,
+                type: .greaterThanOrEquals,
+                onValidate: { validation in
+                    switch validation {
+                    case .success:
+                        print("Success")
+                    case .failure(let error):
+                        print("Failure: \(error)")
+                    }
+                })
     }()
 
     lazy var passwordValidation: ValidationContainer = {
