@@ -36,7 +36,7 @@ class ExampleForm: ObservableObject {
 
     lazy var lastNamesValidation: ValidationContainer = {
         $lastNames.inlineValidator(form: validation) { value in
-            !value.isEmpty
+            value.isEmpty ? "This field is required" : nil
         }
     }()
 

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public typealias ValidationCallback = (String) -> Bool
+public typealias ValidationCallback = (String) -> String?
 
 /// This validator validates if a condition is valid or not.
 public class InlineValidator: StringValidator {
@@ -25,7 +25,10 @@ public class InlineValidator: StringValidator {
     public var value: String = ""
 
     public func validate() -> Validation {
-        condition(value) ? .success : .failure(message: errorMessage())
+        guard let error = condition(value) else {
+            return .success
+        }
+        return .failure(message: error)
     }
 
     public var isEmpty: Bool {
