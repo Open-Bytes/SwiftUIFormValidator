@@ -23,7 +23,7 @@ class ExampleForm: ObservableObject {
     @Published var confirmPassword: String = ""
 
     // 2
-    @Published var form = FormValidation(validationType: .immediate, messages: ValidationMessages())
+    @Published var validation = FormValidation(validationType: .immediate, messages: ValidationMessages())
 
     // 3
     lazy var firstNameValidation: ValidationContainer = {
@@ -31,17 +31,17 @@ class ExampleForm: ObservableObject {
             CountValidator(count: 6, type: .greaterThanOrEquals),
             PrefixValidator(prefix: "st.")
         ]
-        return $firstName.allValid(validators: validators, form: form)
+        return $firstName.allValid(validators: validators, form: validation)
     }()
 
     lazy var lastNamesValidation: ValidationContainer = {
-        $lastNames.inlineValidator(form: form) { value in
+        $lastNames.inlineValidator(form: validation) { value in
             !value.isEmpty
         }
     }()
 
     lazy var birthdayValidation: ValidationContainer = {
-        $birthday.dateValidator(form: form, before: Date(), errorMessage: "Date must be before today")
+        $birthday.dateValidator(form: validation, before: Date(), errorMessage: "Date must be before today")
     }()
 
     lazy var streetValidation: ValidationContainer = {
@@ -49,12 +49,12 @@ class ExampleForm: ObservableObject {
             CountValidator(count: 6, type: .greaterThanOrEquals),
             PrefixValidator(prefix: "st.")
         ]
-        return $street.allValid(validators: validators, form: form)
+        return $street.allValid(validators: validators, form: validation)
     }()
 
     lazy var firstLineValidation: ValidationContainer = {
         $firstLine.countValidator(
-                form: form,
+                form: validation,
                 count: 6,
                 type: .greaterThanOrEquals,
                 onValidate: { validation in
@@ -69,7 +69,7 @@ class ExampleForm: ObservableObject {
 
     lazy var passwordValidation: ValidationContainer = {
         $password.passwordMatchValidator(
-                form: form,
+                form: validation,
                 firstPassword: self.password,
                 secondPassword: self.confirmPassword,
                 secondPasswordPublisher: self.$confirmPassword)
