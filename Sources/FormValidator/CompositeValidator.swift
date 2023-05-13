@@ -5,17 +5,26 @@
 
 import Foundation
 
+/// This strategy allows you to choose between displaying all validation messages at once
+/// or displaying them one by one.
+public enum CompositeValidationMessagesStrategy {
+    case all
+    case onByOne
+}
+
 public class CompositeValidator: StringValidator {
     private let validators: [StringValidator]
     private let type: ValidationType
+    public let strategy: CompositeValidationMessagesStrategy
 
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public init(validators: [StringValidator], type: ValidationType) {
+    public init(validators: [StringValidator], type: ValidationType, strategy: CompositeValidationMessagesStrategy) {
         self.validators = validators
         self.type = type
+        self.strategy = strategy
     }
 
     public let message: StringProducerClosure = {
@@ -36,7 +45,7 @@ public class CompositeValidator: StringValidator {
         }
         switch type {
         case .all:
-            return errors.isEmpty ? .success : .failure(message: ErrorFormatter.format(errors: errors))
+            break
         case .any:
             for validator in validators {
                 let validation = validator.validate()
@@ -50,7 +59,19 @@ public class CompositeValidator: StringValidator {
             }
         }
 
-        return errors.isEmpty ? .success : .failure(message: ErrorFormatter.format(errors: errors))
+        guard !errors.isEmpty else {
+            return .success
+        }
+
+        switch strategy {
+        case .all:
+            return .failure(message: ErrorFormatter.format(errors: errors))
+        case .onByOne:
+            guard let error = errors.first else {
+                return .success
+            }
+            return .failure(message: ErrorFormatter.format(errors: [error]))
+        }
     }
 
     public var isEmpty: Bool {

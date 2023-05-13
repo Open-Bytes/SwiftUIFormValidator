@@ -18,12 +18,14 @@ public extension Published.Publisher where Value == String {
     ///
     /// - Parameters:
     ///   - validators: the individual validators
+    ///   - strategy: Choose between displaying all validation messages at once or displaying them one by one.
     ///   - form: the FormValidation instance
     ///   - disableValidation: disable validation conditionally
     ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
     func anyValid(
             validators: [StringValidator],
+            strategy: CompositeValidationMessagesStrategy = .all,
             form: FormValidation,
             disableValidation: @escaping DisableValidationClosure = {
                 false
@@ -34,6 +36,7 @@ public extension Published.Publisher where Value == String {
                 form: form,
                 validators: validators,
                 type: .any,
+                strategy: strategy,
                 for: self.eraseToAnyPublisher(),
                 disableValidation: disableValidation,
                 onValidate: onValidate)
@@ -47,12 +50,14 @@ public extension Published.Publisher where Value == String {
     ///
     /// - Parameters:
     ///   - validators: the individual validators
+    ///   - strategy: Choose between displaying all validation messages at once or displaying them one by one.
     ///   - form: the FormValidation instance
     ///   - disableValidation: disable validation conditionally
     ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
     func allValid(
             validators: [StringValidator],
+            strategy: CompositeValidationMessagesStrategy = .all,
             form: FormValidation,
             disableValidation: @escaping DisableValidationClosure = {
                 false
@@ -63,6 +68,7 @@ public extension Published.Publisher where Value == String {
                 form: form,
                 validators: validators,
                 type: .all,
+                strategy: strategy,
                 for: self.eraseToAnyPublisher(),
                 disableValidation: disableValidation,
                 onValidate: onValidate)

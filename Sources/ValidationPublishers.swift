@@ -120,11 +120,12 @@ public class ValidationPublishers {
             form: FormValidation,
             validators: [StringValidator],
             type: CompositeValidator.ValidationType,
+            strategy: CompositeValidationMessagesStrategy,
             for publisher: AnyPublisher<String, Never>,
             disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
-        let compositeValidator = CompositeValidator(validators: validators, type: type)
+        let compositeValidator = CompositeValidator(validators: validators, type: type, strategy: strategy)
         form.append(ValidatorContainer(validator: compositeValidator, disableValidation: disableValidation))
         let pub: ValidationPublisher = publisher.map { value in
                     compositeValidator.value = value
