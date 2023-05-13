@@ -21,7 +21,9 @@ public class CompositeValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public init(validators: [StringValidator], type: ValidationType, strategy: CompositeValidationMessagesStrategy) {
+    public init(validators: [StringValidator],
+                type: ValidationType,
+                strategy: CompositeValidationMessagesStrategy) {
         self.validators = validators
         self.type = type
         self.strategy = strategy

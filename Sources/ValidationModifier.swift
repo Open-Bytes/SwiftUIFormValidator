@@ -23,7 +23,8 @@ public extension View {
     /// and propagated to this view.
     /// In case it's invalid, an error message will be displayed under the view
     ///
-    /// - Parameter container: the validation container
+    /// - Parameter container: the validation container.
+    /// - Parameter errorView: the view displaying the validation message.
     ///   - errorView: a custom error view
     /// - Returns: a view after applying the validation modifier
     func validation<ErrorView: View>(
@@ -86,7 +87,7 @@ public struct ValidationModifier<ErrorView: View>: ViewModifier {
             guard let view = errorView?(message) else {
                 let text = Text(message)
                         .foregroundColor(Color.red)
-                        .font(.caption)
+                        .font(.system(size: 14))
                 return text.eraseToAnyView()
             }
             return view.eraseToAnyView()

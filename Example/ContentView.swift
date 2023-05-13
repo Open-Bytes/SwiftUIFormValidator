@@ -14,61 +14,15 @@ struct ContentView: View {
         NavigationView {
             Form {
 
-                Section(header: Text("Name")) {
-                    TextField("First Name", text: $form.firstName)
-                            .validation(form.firstNameValidation) { message in
-                                // Optionally provide your own custom error view.
-                                Text(message.uppercased())
-                                        .foregroundColor(Color.red)
-                                        .font(.caption)
-                            } // 5
+                RequiredFieldsValidationSection()
+                CountValidationSection()
+                CompositeValidationAllSection()
+                CompositeValidationAnySection()
+                PasswordMatchingSection()
+                DateValidationSection()
+                CustomFieldUISection()
 
-                    TextField("Middle Names", text: $form.middleNames)
-
-                    RoundedTextField(
-                            "Last Name",
-                            text: $form.lastNames,
-                            validation: form.lastNamesValidation)
-                }
-
-                Section(header: Text("Password")) {
-                    TextField("Password", text: $form.password)
-                            .validation(form.passwordValidation)
-                    TextField("Confirm Password", text: $form.confirmPassword)
-                }
-
-                Section(header: Text("Personal Information")) {
-                    DatePicker(
-                            selection: $form.birthday,
-                            displayedComponents: [.date],
-                            label: { Text("Birthday") }
-                    ).validation(form.birthdayValidation)
-                }
-
-                Section(header: Text("Address")) {
-                    TextField("Street Number or Name", text: $form.street)
-                            .validation(form.streetValidation)
-
-                    TextField("First Line", text: $form.firstLine)
-                            .validation(form.firstLineValidation)
-
-                    TextField("Second Line", text: $form.secondLine)
-
-                    TextField("Country", text: $form.country)
-                }
-
-                Button(action: {
-                    let valid = form.validation.triggerValidation()
-                    print("Form valid: \(valid)")
-                }, label: {
-                    HStack {
-                        Text("Submit")
-                        Spacer()
-                        Image(systemName: "checkmark.circle.fill")
-                    }
-                })
-//                You can disable the button, and only enable it when the form is valid
-//                        .disabled(isSaveDisabled)
+                SubmitButton()
             }
                     .navigationBarTitle("Form")
                     //                   observe the form validation and enable submit button only if it's valid
@@ -82,6 +36,86 @@ struct ContentView: View {
 
         }
     }
+
+    private func RequiredFieldsValidationSection() -> some View {
+        Section(header: Text("Required Fields Validation")) {
+            TextField("First Name", text: $form.firstName)
+                    .validation(form.firstNameValidation) { message in
+                        // Optionally provide your own custom error view.
+                        Text(message.uppercased())
+                                .foregroundColor(Color.red)
+                                .font(.caption)
+                    } // 5
+        }
+    }
+
+    private func CustomFieldUISection() -> some View {
+        Section(header: Text("Customizing the UI for TextField validation")) {
+            RoundedTextField(
+                    "Last Name",
+                    text: $form.lastNames,
+                    validation: form.lastNamesValidation)
+        }
+    }
+
+    private func PasswordMatchingSection() -> some View {
+        Section(header: Text("Password Matching Validation")) {
+            TextField("Password", text: $form.password)
+                    .validation(form.passwordValidation)
+            TextField("Confirm Password", text: $form.confirmPassword)
+        }
+    }
+
+    private func DateValidationSection() -> some View {
+        Section(header: Text("Date Validation")) {
+            DatePicker(
+                    selection: $form.birthday,
+                    displayedComponents: [.date],
+                    label: { Text("Birthday") }
+            ).validation(form.birthdayValidation)
+        }
+    }
+
+    private func CountValidationSection() -> some View {
+        Section(header: Text("Count Validation")) {
+            TextField("First Line", text: $form.firstLine)
+                    .validation(form.firstLineValidation)
+        }
+    }
+
+    private func CompositeValidationAllSection() -> some View {
+        Section(header: Text("Composite Validation (All)")) {
+            Text("All validations are required. The field must start with the letter 'n' and be at least 6 characters long.")
+                    .foregroundColor(Color.green)
+            TextField("Address", text: $form.address)
+                    .validation(form.addressValidation)
+        }
+    }
+
+    private func CompositeValidationAnySection() -> some View {
+        Section(header: Text("Composite Validation (Any)")) {
+            Text("At least one validation is required. The field must start with the letter 'n' or be at least 6 characters long.")
+                    .foregroundColor(Color.green)
+            TextField("Street", text: $form.street)
+                    .validation(form.streetValidation)
+        }
+    }
+
+    private func SubmitButton() -> some View {
+        Button(action: {
+            let valid = form.validation.triggerValidation()
+            print("Form valid: \(valid)")
+        }, label: {
+            HStack {
+                Text("Submit")
+                Spacer()
+                Image(systemName: "checkmark.circle.fill")
+            }
+        })
+//                You can disable the button, and only enable it when the form is valid
+//                        .disabled(isSaveDisabled)
+    }
+
 }
 
 

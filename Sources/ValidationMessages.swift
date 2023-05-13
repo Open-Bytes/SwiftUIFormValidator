@@ -49,7 +49,7 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
     }
 
     open var anyValidTitle: String? {
-        "A least one of the following is required."
+        "At least one of the following is required:"
     }
 
     open func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String {
