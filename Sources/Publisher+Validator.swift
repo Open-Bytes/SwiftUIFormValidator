@@ -248,7 +248,7 @@ public extension Published.Publisher where Value == String {
     ///   - message: the error message.
     ///   - disableValidation: disable validation conditionally
     ///   - onValidate: a closure invoked when validation changes
-    /// - Returns:
+    /// - Returns: ValidationContainer
     func emailValidator(
             form: FormValidation,
             message: @autoclosure @escaping StringProducerClosure = "",
@@ -279,7 +279,7 @@ public extension Published.Publisher where Value == String {
     ///   - message: the error message.
     ///   - disableValidation: disable validation conditionally.
     ///   - onValidate: a closure invoked when validation changes.
-    /// - Returns:
+    /// - Returns: ValidationContainer
     func countValidator(
             form: FormValidation,
             count: Int,
@@ -314,7 +314,7 @@ public extension Published.Publisher where Value == Date {
     ///   - message: the error message.
     ///   - disableValidation: disable validation conditionally.
     ///   - onValidate: a closure invoked when validation changes.
-    /// - Returns:
+    /// - Returns: ValidationContainer
     func dateValidator(
             form: FormValidation,
             before: Date = .distantFuture,
