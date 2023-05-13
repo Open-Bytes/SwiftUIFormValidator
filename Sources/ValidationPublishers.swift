@@ -25,6 +25,7 @@ public class ValidationPublishers {
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
     ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
     public static func create<VALIDATOR: FormValidator>(
             form: FormValidation,
@@ -52,6 +53,8 @@ public class ValidationPublishers {
     ///   - form: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
     public static func create(
             form: FormValidation,
@@ -79,6 +82,9 @@ public class ValidationPublishers {
     ///   - form: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
+    ///   - disableValidation:
+    ///   - onValidate: a closure invoked when validation changes
+    ///   - setupValidator: apply changes to the validator
     /// - Returns: ValidationContainer
     public static func create<VALUE>(
             form: FormValidation,

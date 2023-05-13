@@ -9,9 +9,19 @@
 import Combine
 import Foundation
 
-/// These extensions include simple functions for
-/// different validators creation
+/// These extensions provide convenient functions for
+/// creating various types of validators.
 public extension Published.Publisher where Value == String {
+
+    /// A composite validator that validates an input only if any of
+    /// the individual validators provided as input is valid.
+    ///
+    /// - Parameters:
+    ///   - validators: the individual validators
+    ///   - form: the FormValidation instance
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func anyValid(
             validators: [StringValidator],
             form: FormValidation,
@@ -31,6 +41,16 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// A composite validator that validates an input only if all of
+    /// the individual validators provided as input are valid.
+    ///
+    /// - Parameters:
+    ///   - validators: the individual validators
+    ///   - form: the FormValidation instance
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func allValid(
             validators: [StringValidator],
             form: FormValidation,
@@ -50,6 +70,16 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the input string matches the specified pattern.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance
+    ///   - pattern: the patterns, default: Regex.password
+    ///   - message: the error message
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func passwordValidator(
             form: FormValidation,
             pattern: String = Regex.password.rawValue,
@@ -68,6 +98,19 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the two password fields are matching
+    /// with the possibility to match the specified pattern.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - firstPassword: the first field.
+    ///   - secondPassword: the second field.
+    ///   - secondPasswordPublisher: the second field publisher.
+    ///   - pattern: the patterns, default: nil.
+    ///   - message: the error message
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func passwordMatchValidator(
             form: FormValidation,
             firstPassword: @autoclosure @escaping StringProducerClosure,
@@ -102,6 +145,15 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator enables you to apply customized validation conditions using the provided closure.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - message: the error message
+    ///   - onValidate: a closure invoked when validation changes
+    ///   - callback: the closure that provides the customized condition
+    /// - Returns: ValidationContainer
     func inlineValidator(
             form: FormValidation,
             message: @autoclosure @escaping StringProducerClosure = "",
@@ -117,6 +169,15 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the field is empty or not.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - message: the error message
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func nonEmptyValidator(
             form: FormValidation,
             message: @autoclosure @escaping StringProducerClosure = "",
@@ -136,6 +197,16 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the input string matches the specified pattern.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - pattern: the pattern to validate.
+    ///   - message: the error message
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns: ValidationContainer
     func patternValidator(
             form: FormValidation,
             pattern: String,
@@ -158,6 +229,15 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the input string matches the email pattern.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - message: the error message.
+    ///   - disableValidation: disable validation conditionally
+    ///   - onValidate: a closure invoked when validation changes
+    /// - Returns:
     func emailValidator(
             form: FormValidation,
             message: @autoclosure @escaping StringProducerClosure = "",
@@ -176,7 +256,19 @@ public extension Published.Publisher where Value == String {
     }
 }
 
+
 public extension Published.Publisher where Value == String {
+
+    /// This validator checks whether the input string matches the specified count.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - count: the count.
+    ///   - type: CountValidator.ValidationType
+    ///   - message: the error message.
+    ///   - disableValidation: disable validation conditionally.
+    ///   - onValidate: a closure invoked when validation changes.
+    /// - Returns:
     func countValidator(
             form: FormValidation,
             count: Int,
@@ -201,6 +293,17 @@ public extension Published.Publisher where Value == String {
 }
 
 public extension Published.Publisher where Value == Date {
+
+    /// This validator verifies whether the input date falls within a specified date range.
+    ///
+    /// - Parameters:
+    ///   - form: the FormValidation instance.
+    ///   - before: the first date before the input.
+    ///   - after: the second date after the input.
+    ///   - message: the error message.
+    ///   - disableValidation: disable validation conditionally.
+    ///   - onValidate: a closure invoked when validation changes.
+    /// - Returns:
     func dateValidator(
             form: FormValidation,
             before: Date = .distantFuture,
