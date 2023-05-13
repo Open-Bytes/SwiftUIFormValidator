@@ -15,24 +15,18 @@ class InlineValidatorTest: XCTestCase {
 
     func testValidator_shouldBeValid() {
         validator = InlineValidator { value in
-            value == "sh3ban.kamel@gmail.com"
+            value == "sha.kamel.eng@gmail.com" ? nil : "invalid"
         }
-        validator.value = "sh3ban.kamel@gmail.com"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng@gmail.com"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_shouldNotBeValid() {
         validator = InlineValidator { value in
-            value == "x"
+            value == "x" ? nil : "invalid"
         }
-        validator.value = "sh3ban.kamel"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng"
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

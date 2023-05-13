@@ -28,8 +28,8 @@ class ExampleForm: ObservableObject {
     // 3
     lazy var firstNameValidation: ValidationContainer = {
         let validators: [StringValidator] = [
-            CountValidator(count: 6, type: .greaterThanOrEquals),
-            PrefixValidator(prefix: "st.")
+            CountValidator(count: 6, type: .greaterThanOrEquals, errorMessage: "Should be at leas 6 characters."),
+            PrefixValidator(prefix: "n", errorMessage: "Should start with n")
         ]
         return $firstName.allValid(validators: validators, form: validation)
     }()
@@ -46,10 +46,10 @@ class ExampleForm: ObservableObject {
 
     lazy var streetValidation: ValidationContainer = {
         let validators: [StringValidator] = [
-            CountValidator(count: 6, type: .greaterThanOrEquals),
-            PrefixValidator(prefix: "st.")
+            CountValidator(count: 6, type: .greaterThanOrEquals, errorMessage: "Should be at leas 6 characters."),
+            PrefixValidator(prefix: "st.", errorMessage: "Should start with st.")
         ]
-        return $street.allValid(validators: validators, form: validation)
+        return $street.anyValid(validators: validators, form: validation)
     }()
 
     lazy var firstLineValidation: ValidationContainer = {

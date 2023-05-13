@@ -33,7 +33,7 @@ public class FormValidation: ObservableObject {
 
     /// This protocol contains all the messages used by the `FormValidators` provided by the library.
     /// You can override `DefaultValidationMessages` or implement `ValidationMessagesProtocol`.
-    public var messages: ValidationMessagesProtocol = DefaultValidationMessages()
+    public static var messages: ValidationMessagesProtocol = DefaultValidationMessages()
 
     private let onFormChanged: ((FormValidation) -> Void)?
 
@@ -47,7 +47,7 @@ public class FormValidation: ObservableObject {
                 messages: ValidationMessagesProtocol = DefaultValidationMessages(),
                 onFormChanged: ((FormValidation) -> Void)? = nil) {
         self.validationType = validationType
-        self.messages = messages
+        Self.messages = messages
         self.onFormChanged = onFormChanged
     }
 
@@ -95,13 +95,6 @@ public class FormValidation: ObservableObject {
         } == nil
     }
 
-    /// Returns a multiline string with all validation errors.
-    ///
-    /// - Returns: String
-    public func allValidationMessagesString() -> String {
-        allValidationMessages().joined(separator: "\n")
-    }
-
     /// Returns all validation errors.
     ///
     /// - Returns: String array
@@ -111,8 +104,10 @@ public class FormValidation: ObservableObject {
                 return nil
             }
             switch $0.validator.validate() {
-            case .success: return nil
-            case .failure(let message): return message.isEmpty ? nil : message
+            case .success:
+                return nil
+            case .failure(let message):
+                return message.isEmpty ? nil : message
             }
         }
     }
@@ -131,15 +126,7 @@ public class FormValidation: ObservableObject {
     }
 
     public func errorsDescription() -> String {
-        guard !validationMessages.isEmpty else {
-            return ""
-        }
-        return validationMessages.reduce("") { partialResult, s in
-            if partialResult.isEmpty {
-                return s
-            }
-            return "\(partialResult)\n\(s)"
-        }
+        ErrorFormatter.format(errors: validationMessages)
     }
 }
 

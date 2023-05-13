@@ -18,9 +18,12 @@ public class CountValidator: StringValidator {
     public var count: Int
     public let type: ValidationType
 
-    public init(count: Int, type: ValidationType) {
+    public init(count: Int,
+                type: ValidationType,
+                errorMessage: @autoclosure @escaping StringProducerClosure) {
         self.count = count
         self.type = type
+        self.errorMessage = errorMessage
     }
 
     public func validate() -> Validation {

@@ -15,7 +15,8 @@ public class EmailValidator: StringValidator {
             pattern: Regex.email.rawValue,
             options: .caseInsensitive)
 
-    public init() {
+    public init(errorMessage: @autoclosure @escaping StringProducerClosure) {
+        self.errorMessage = errorMessage
     }
 
     public var errorMessage: StringProducerClosure = {
@@ -24,9 +25,8 @@ public class EmailValidator: StringValidator {
     public var value: String = ""
 
     public func validate() -> Validation {
-        let patternValidator = PatternValidator(pattern: regex)
+        let patternValidator = PatternValidator(pattern: regex, errorMessage: self.errorMessage())
         patternValidator.value = value
-        patternValidator.errorMessage = errorMessage
         return patternValidator.validate()
     }
 

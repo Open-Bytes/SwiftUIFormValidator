@@ -8,7 +8,7 @@ DESC
 
   s.homepage         = 'https://github.com/ShabanKamell/SwiftUIFormValidator'
   s.license          = { :type => 'Apache 2.0', :file => 'LICENSE' }
-  s.author           = { 'ShabanKamell' => 'sh3ban.kamel@gmail.com' }
+  s.author           = { 'ShabanKamell' => 'sha.kamel.eng@gmail.com' }
   s.source           = { :git => 'https://github.com/ShabanKamell/SwiftUIFormValidator.git', :tag => s.version.to_s }
   s.social_media_url = 'https://twitter.com/ShaAhKa'
 

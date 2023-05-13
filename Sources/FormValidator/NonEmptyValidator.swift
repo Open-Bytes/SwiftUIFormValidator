@@ -11,7 +11,8 @@ public class NonEmptyValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public init() {
+    public init(errorMessage: @autoclosure @escaping StringProducerClosure) {
+        self.errorMessage = errorMessage
     }
 
     public var errorMessage: StringProducerClosure = {

@@ -10,23 +10,17 @@ class EmailValidatorTest: XCTestCase {
     private var validator: EmailValidator!
 
     override func setUp() {
-        validator = EmailValidator()
+        validator = EmailValidator(errorMessage: "invalid")
     }
 
     func testValidator_shouldBeValid() {
-        validator.value = "sh3ban.kamel@gmail.com"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng@gmail.com"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_shouldNotBeValid() {
-        validator.value = "sh3ban.kamel"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng"
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

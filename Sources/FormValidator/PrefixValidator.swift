@@ -18,9 +18,12 @@ public class PrefixValidator: StringValidator {
     public var prefix: String = ""
     public var ignoreCase: Bool
 
-    public init(prefix: String, ignoreCase: Bool = true) {
+    public init(prefix: String,
+                ignoreCase: Bool = true,
+                errorMessage: @autoclosure @escaping StringProducerClosure) {
         self.ignoreCase = ignoreCase
         self.prefix = ignoreCase ? prefix.lowercased() : prefix
+        self.errorMessage = errorMessage
     }
 
     public func validate() -> Validation {

@@ -14,8 +14,9 @@ public class PatternValidator: StringValidator {
 
     private let pattern: NSRegularExpression
 
-    public init(pattern: NSRegularExpression) {
+    public init(pattern: NSRegularExpression, errorMessage: @autoclosure @escaping StringProducerClosure) {
         self.pattern = pattern
+        self.errorMessage = errorMessage
     }
 
     public var errorMessage: StringProducerClosure = {

@@ -10,23 +10,17 @@ class PatternValidatorTest: XCTestCase {
     private var validator: PatternValidator!
 
     override func setUp() {
-        validator = PatternValidator(pattern: createPattern())
+        validator = PatternValidator(pattern: createPattern(), errorMessage: "invalid")
     }
 
     func testValidator_shouldBeValid() {
-        validator.value = "sh3ban.kamel@gmail.com"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng@gmail.com"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_shouldNotBeValid() {
-        validator.value = "sh3ban.kamel"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng"
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

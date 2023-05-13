@@ -10,14 +10,11 @@ class DateValidatorTest: XCTestCase {
     private var validator: DateValidator!
 
     override func setUp() {
-        validator = DateValidator(before: Date().dayAfter, after: Date().dayBefore)
+        validator = DateValidator(before: Date().dayAfter, after: Date().dayBefore, errorMessage: "invalid")
     }
 
     func testValidator_shouldBeValid() {
         validator.value = Date()
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
@@ -25,9 +22,6 @@ class DateValidatorTest: XCTestCase {
     func testValidator_shouldNotBeValid() {
         let date = Calendar.current.date(byAdding: .day, value: -2, to: Date())!
         validator.value = date
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

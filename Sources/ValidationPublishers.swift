@@ -25,7 +25,6 @@ public class ValidationPublishers {
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
     ///   - disableValidation: disable validation conditionally
-    ///   - errorMessage: The error string
     /// - Returns: ValidationContainer
     public static func create<VALIDATOR: FormValidator>(
             form: FormValidation,
@@ -34,18 +33,15 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
                 validator: validator,
                 for: publisher,
                 disableValidation: disableValidation,
-                errorMessage: errorMessage(),
                 onValidate: onValidate
         ) { (value: VALIDATOR.VALUE) in
             var val = validator
-            val.errorMessage = errorMessage
             val.value = value
         }
     }
@@ -56,7 +52,6 @@ public class ValidationPublishers {
     ///   - form: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
-    ///   - errorMessage: The error string
     /// - Returns: ValidationContainer
     public static func create(
             form: FormValidation,
@@ -65,18 +60,15 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
                 validator: validator,
                 for: publisher,
                 disableValidation: disableValidation,
-                errorMessage: errorMessage(),
                 onValidate: onValidate
         ) { (value: String) in
             var val = validator
-            val.errorMessage = errorMessage
             val.value = value
         }
     }
@@ -87,7 +79,6 @@ public class ValidationPublishers {
     ///   - form: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
-    ///   - errorMessage: The error string
     /// - Returns: ValidationContainer
     public static func create<VALUE>(
             form: FormValidation,
@@ -96,7 +87,6 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure,
             onValidate: OnValidate?,
             setupValidator: @escaping (VALUE) -> Void
     ) -> ValidationContainer {
@@ -134,19 +124,13 @@ public class ValidationPublishers {
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            errorMessage: @autoclosure @escaping StringProducerClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
-        validators.forEach {
-            form.append(ValidatorContainer(validator: $0, disableValidation: disableValidation))
-        }
-        let compositeValidator = CompositeValidator()
+        let compositeValidator = CompositeValidator(validators: validators, type: type)
+        form.append(ValidatorContainer(validator: compositeValidator, disableValidation: disableValidation))
         let pub: ValidationPublisher = publisher.map { value in
-                    let validation = compositeValidator.validate(
-                            value: value,
-                            validators: validators,
-                            type: type,
-                            errorMessage: errorMessage())
+                    compositeValidator.value = value
+                    let validation = compositeValidator.validate()
 
                     guard !disableValidation() else {
                         return .success

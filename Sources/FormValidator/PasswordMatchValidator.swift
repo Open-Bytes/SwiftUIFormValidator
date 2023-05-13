@@ -32,10 +32,12 @@ public class PasswordMatchValidator: FormValidator {
 
     public init(firstPassword: @autoclosure @escaping StringProducerClosure,
                 secondPassword: @autoclosure @escaping StringProducerClosure,
-                pattern: NSRegularExpression? = nil) {
+                pattern: NSRegularExpression? = nil,
+                errorMessage: @autoclosure @escaping StringProducerClosure) {
         self.firstPassword = firstPassword
         self.secondPassword = secondPassword
         self.pattern = pattern
+        self.errorMessage = errorMessage
     }
 
     public var errorMessage: StringProducerClosure = {
@@ -67,7 +69,7 @@ public class PasswordMatchValidator: FormValidator {
         guard let pattern = pattern else {
             return true
         }
-        let patternValidator = PatternValidator(pattern: pattern)
+        let patternValidator = PatternValidator(pattern: pattern, errorMessage: self.errorMessage())
         patternValidator.value = value.password
         return patternValidator.validate().isSuccess
     }

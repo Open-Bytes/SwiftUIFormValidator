@@ -10,23 +10,17 @@ class NonEmptyValidatorTest: XCTestCase {
     private var validator: NonEmptyValidator!
 
     override func setUp() {
-        validator = NonEmptyValidator()
+        validator = NonEmptyValidator(errorMessage: "invalid")
     }
 
     func testValidator_shouldBeValid() {
-        validator.value = "sh3ban.kamel@gmail.com"
-        validator.errorMessage = {
-            "invalid"
-        }
+        validator.value = "sha.kamel.eng@gmail.com"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_shouldNotBeValid() {
         validator.value = ""
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

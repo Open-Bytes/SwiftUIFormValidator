@@ -18,9 +18,13 @@ public enum Validation: Equatable {
     }
 
     public var isSuccess: Bool {
+        error == nil
+    }
+
+    public var error: String? {
         switch self {
-        case .success: return true
-        case .failure: return false
+        case .success: return nil
+        case .failure(let error): return error
         }
     }
 

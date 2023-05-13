@@ -10,41 +10,29 @@ class PrefixValidatorTest: XCTestCase {
     private var validator: PrefixValidator!
 
     func testValidator_shouldBeValid() {
-        validator = PrefixValidator(prefix: "x")
+        validator = PrefixValidator(prefix: "x", errorMessage: "invalid")
         validator.value = "xcode"
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_noIgnoreCase_shouldBeValid() {
-        validator = PrefixValidator(prefix: "x", ignoreCase: false)
+        validator = PrefixValidator(prefix: "x", ignoreCase: false, errorMessage: "invalid")
         validator.value = "xcode"
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_noIgnoreCase_shouldNotBeValid() {
-        validator = PrefixValidator(prefix: "x", ignoreCase: false)
+        validator = PrefixValidator(prefix: "x", ignoreCase: false, errorMessage: "invalid")
         validator.value = "Xcode"
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }
 
     func testValidator_shouldNotBeValid() {
-        validator = PrefixValidator(prefix: "x")
+        validator = PrefixValidator(prefix: "x", errorMessage: "invalid")
         validator.value = "code"
-        validator.errorMessage = {
-            "invalid"
-        }
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }

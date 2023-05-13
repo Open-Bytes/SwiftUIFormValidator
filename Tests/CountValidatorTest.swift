@@ -60,11 +60,8 @@ class CountValidatorTest: XCTestCase {
     }
 
     private func validate(value: String, count: Int, type: CountValidator.ValidationType) -> Validation {
-        validator = CountValidator(count: count, type: type)
+        validator = CountValidator(count: count, type: type, errorMessage: "invalid")
         validator.value = value
-        validator.errorMessage = {
-            "invalid"
-        }
         return validator.validate()
     }
 }

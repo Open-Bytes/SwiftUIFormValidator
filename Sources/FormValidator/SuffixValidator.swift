@@ -18,9 +18,12 @@ public class SuffixValidator: StringValidator {
     public var suffix: String = ""
     public var ignoreCase: Bool
 
-    public init(suffix: String, ignoreCase: Bool = true) {
+    public init(suffix: String,
+                ignoreCase: Bool = true,
+                errorMessage: @autoclosure @escaping StringProducerClosure) {
         self.ignoreCase = ignoreCase
         self.suffix = ignoreCase ? suffix.lowercased() : suffix
+        self.errorMessage = errorMessage
     }
 
     public func validate() -> Validation {
