@@ -77,8 +77,8 @@ public extension Published.Publisher where Value == String {
     ///   - form: the FormValidation instance
     ///   - pattern: the patterns, default: Regex.password
     ///   - message: the error message
-    ///   - disableValidation: disable validation conditionally
-    ///   - onValidate: a closure invoked when validation changes
+    ///   - disableValidation: disable validation conditionally.
+    ///   - onValidate: a closure invoked when validation changes.
     /// - Returns: ValidationContainer
     func passwordValidator(
             form: FormValidation,
@@ -93,6 +93,7 @@ public extension Published.Publisher where Value == String {
                 form: form,
                 pattern: pattern,
                 message: message().orIfEmpty(FormValidation.messages.passwordRegexDescription),
+                disableValidation: disableValidation,
                 onValidate: onValidate)
     }
 }
@@ -109,6 +110,7 @@ public extension Published.Publisher where Value == String {
     ///   - secondPasswordPublisher: the second field publisher.
     ///   - pattern: the patterns, default: nil.
     ///   - message: the error message
+    ///   - disableValidation: disable validation conditionally.
     ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
     func passwordMatchValidator(
@@ -118,6 +120,9 @@ public extension Published.Publisher where Value == String {
             secondPasswordPublisher: Published<String>.Publisher,
             pattern: NSRegularExpression? = nil,
             message: @autoclosure @escaping StringProducerClosure = "",
+            disableValidation: @escaping DisableValidationClosure = {
+                false
+            },
             onValidate: OnValidate? = nil
     ) -> ValidationContainer {
         let pub1 = self.map {
@@ -140,6 +145,7 @@ public extension Published.Publisher where Value == String {
                 form: form,
                 validator: validator,
                 for: merged,
+                disableValidation: disableValidation,
                 onValidate: onValidate)
     }
 }
@@ -151,12 +157,16 @@ public extension Published.Publisher where Value == String {
     /// - Parameters:
     ///   - form: the FormValidation instance.
     ///   - message: the error message
+    ///   - disableValidation: disable validation conditionally.
     ///   - onValidate: a closure invoked when validation changes
     ///   - callback: the closure that provides the customized condition
     /// - Returns: ValidationContainer
     func inlineValidator(
             form: FormValidation,
             message: @autoclosure @escaping StringProducerClosure = "",
+            disableValidation: @escaping DisableValidationClosure = {
+                false
+            },
             onValidate: OnValidate? = nil,
             callback: @escaping ValidationCallback) -> ValidationContainer {
         let validator = InlineValidator(condition: callback)
@@ -164,6 +174,7 @@ public extension Published.Publisher where Value == String {
                 form: form,
                 validator: validator,
                 for: self.eraseToAnyPublisher(),
+                disableValidation: disableValidation,
                 onValidate: onValidate)
     }
 }

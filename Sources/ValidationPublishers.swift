@@ -31,9 +31,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: VALIDATOR,
             for publisher: AnyPublisher<VALIDATOR.VALUE, Never>,
-            disableValidation: @escaping DisableValidationClosure = {
-                false
-            },
+            disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
@@ -60,9 +58,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: StringValidator,
             for publisher: AnyPublisher<String, Never>,
-            disableValidation: @escaping DisableValidationClosure = {
-                false
-            },
+            disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
         create(form: form,
@@ -90,9 +86,7 @@ public class ValidationPublishers {
             form: FormValidation,
             validator: Validatable,
             for publisher: AnyPublisher<VALUE, Never>,
-            disableValidation: @escaping DisableValidationClosure = {
-                false
-            },
+            disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?,
             setupValidator: @escaping (VALUE) -> Void
     ) -> ValidationContainer {
@@ -127,9 +121,7 @@ public class ValidationPublishers {
             validators: [StringValidator],
             type: CompositeValidator.ValidationType,
             for publisher: AnyPublisher<String, Never>,
-            disableValidation: @escaping DisableValidationClosure = {
-                false
-            },
+            disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
         let compositeValidator = CompositeValidator(validators: validators, type: type)
