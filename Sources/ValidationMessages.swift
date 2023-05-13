@@ -55,15 +55,15 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
     open func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String {
         switch type {
         case .equals:
-            return "This field must be  exactly \(count)"
+            return "This fields's length must be exactly \(count)."
         case .lessThan:
-            return "This field must be < \(count)"
+            return "This fields's length must be < \(count)."
         case .lessThanOrEquals:
-            return "This field must be ≤ \(count)"
+            return "This fields's length must be ≤ \(count)."
         case .greaterThan:
-            return "This field must be > \(count)"
+            return "This fields's length must be > \(count)."
         case .greaterThanOrEquals:
-            return "This field must be ≥ \(count)"
+            return "This fields's length must be ≥ \(count)."
         }
     }
 
