@@ -45,7 +45,9 @@ public class CompositeValidator: StringValidator {
                     return .success
                 }
             }
-            errors = [FormValidation.messages.anyValidTitle] + errors
+            if let title = FormValidation.messages.anyValidTitle {
+                errors = [title] + errors
+            }
         }
 
         return errors.isEmpty ? .success : .failure(message: ErrorFormatter.format(errors: errors))
