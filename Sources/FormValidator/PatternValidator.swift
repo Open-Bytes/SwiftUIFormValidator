@@ -14,20 +14,19 @@ public class PatternValidator: StringValidator {
 
     private let pattern: NSRegularExpression
 
-    public init(pattern: NSRegularExpression, errorMessage: @autoclosure @escaping StringProducerClosure) {
+    public init(pattern: NSRegularExpression, message: @autoclosure @escaping StringProducerClosure) {
         self.pattern = pattern
-        self.errorMessage = errorMessage
+        self.message = message
     }
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
 
     public func validate() -> Validation {
         let range = NSRange(location: 0, length: value.count)
         guard pattern.firstMatch(in: value, options: [], range: range) != nil else {
-            return .failure(message: errorMessage())
+            return .failure(message: message())
         }
         return .success
     }

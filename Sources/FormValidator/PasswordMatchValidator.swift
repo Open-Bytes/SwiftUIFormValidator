@@ -33,16 +33,15 @@ public class PasswordMatchValidator: FormValidator {
     public init(firstPassword: @autoclosure @escaping StringProducerClosure,
                 secondPassword: @autoclosure @escaping StringProducerClosure,
                 pattern: NSRegularExpression? = nil,
-                errorMessage: @autoclosure @escaping StringProducerClosure) {
+                message: @autoclosure @escaping StringProducerClosure) {
         self.firstPassword = firstPassword
         self.secondPassword = secondPassword
         self.pattern = pattern
-        self.errorMessage = errorMessage
+        self.message = message
     }
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: ValidatedPassword = ValidatedPassword(password: "", type: 0)
 
     public func validate() -> Validation {
@@ -50,7 +49,7 @@ public class PasswordMatchValidator: FormValidator {
         let isPatternValid = validatePattern()
 
         let isValid = isMatching && isPatternValid
-        return isValid ? .success : .failure(message: errorMessage())
+        return isValid ? .success : .failure(message: message())
     }
 
     private func validateMatching() -> Bool {
@@ -69,7 +68,7 @@ public class PasswordMatchValidator: FormValidator {
         guard let pattern = pattern else {
             return true
         }
-        let patternValidator = PatternValidator(pattern: pattern, errorMessage: self.errorMessage())
+        let patternValidator = PatternValidator(pattern: pattern, message: self.message())
         patternValidator.value = value.password
         return patternValidator.validate().isSuccess
     }

@@ -28,8 +28,8 @@ class ExampleForm: ObservableObject {
     // 3
     lazy var firstNameValidation: ValidationContainer = {
         let validators: [StringValidator] = [
-            CountValidator(count: 6, type: .greaterThanOrEquals, errorMessage: "Should be at leas 6 characters."),
-            PrefixValidator(prefix: "n", errorMessage: "Should start with n")
+            CountValidator(count: 6, type: .greaterThanOrEquals, message: "Should be at leas 6 characters."),
+            PrefixValidator(prefix: "n", message: "Should start with n")
         ]
         return $firstName.allValid(validators: validators, form: validation)
     }()
@@ -41,13 +41,13 @@ class ExampleForm: ObservableObject {
     }()
 
     lazy var birthdayValidation: ValidationContainer = {
-        $birthday.dateValidator(form: validation, before: Date(), errorMessage: "Date must be before today")
+        $birthday.dateValidator(form: validation, before: Date(), message: "Date must be before today")
     }()
 
     lazy var streetValidation: ValidationContainer = {
         let validators: [StringValidator] = [
-            CountValidator(count: 6, type: .greaterThanOrEquals, errorMessage: "Should be at leas 6 characters."),
-            PrefixValidator(prefix: "st.", errorMessage: "Should start with st.")
+            CountValidator(count: 6, type: .greaterThanOrEquals, message: "Should be at leas 6 characters."),
+            PrefixValidator(prefix: "st.", message: "Should start with st.")
         ]
         return $street.anyValid(validators: validators, form: validation)
     }()

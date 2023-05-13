@@ -10,7 +10,7 @@ class NonEmptyValidatorTest: XCTestCase {
     private var validator: NonEmptyValidator!
 
     override func setUp() {
-        validator = NonEmptyValidator(errorMessage: "invalid")
+        validator = NonEmptyValidator(message: "invalid")
     }
 
     func testValidator_shouldBeValid() {

@@ -10,7 +10,7 @@ class PatternValidatorTest: XCTestCase {
     private var validator: PatternValidator!
 
     override func setUp() {
-        validator = PatternValidator(pattern: createPattern(), errorMessage: "invalid")
+        validator = PatternValidator(pattern: createPattern(), message: "invalid")
     }
 
     func testValidator_shouldBeValid() {

@@ -18,7 +18,7 @@ public class CompositeValidator: StringValidator {
         self.type = type
     }
 
-    public var errorMessage: StringProducerClosure = {
+    public let message: StringProducerClosure = {
         ""
     }
     public var value: String = ""

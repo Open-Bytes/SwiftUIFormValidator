@@ -19,9 +19,10 @@ public class InlineValidator: StringValidator {
         self.condition = condition
     }
 
-    public var errorMessage: StringProducerClosure = {
+    public let message: StringProducerClosure = {
         ""
     }
+
     public var value: String = ""
 
     public func validate() -> Validation {

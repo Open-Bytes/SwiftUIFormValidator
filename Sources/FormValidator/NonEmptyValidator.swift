@@ -11,18 +11,17 @@ public class NonEmptyValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public init(errorMessage: @autoclosure @escaping StringProducerClosure) {
-        self.errorMessage = errorMessage
+    public init(message: @autoclosure @escaping StringProducerClosure) {
+        self.message = message
     }
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
 
     public func validate() -> Validation {
         if value.trimmingCharacters(in: .whitespaces).isEmpty {
-            return .failure(message: errorMessage())
+            return .failure(message: message())
         }
         return .success
     }

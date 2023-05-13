@@ -10,7 +10,10 @@ class DateValidatorTest: XCTestCase {
     private var validator: DateValidator!
 
     override func setUp() {
-        validator = DateValidator(before: Date().dayAfter, after: Date().dayBefore, errorMessage: "invalid")
+        validator = DateValidator(
+                before: Date().dayAfter,
+                after: Date().dayBefore,
+                message: "invalid")
     }
 
     func testValidator_shouldBeValid() {

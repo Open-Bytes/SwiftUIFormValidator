@@ -13,7 +13,7 @@ public protocol Validatable {
     func validate() -> Validation
     var isEmpty: Bool { get }
 
-    var errorMessage: StringProducerClosure { get set }
+    var message: StringProducerClosure { get }
 
     // The root published whose value is validated.
     // For example: when the used edits the value of a TextFiled,
@@ -70,7 +70,7 @@ public protocol FormValidator: Validatable {
     ///
     /// - Parameters:
     ///   - value: The value type.
-    ///   - errorMessage: The error message.
+    ///   - message: The error message.
     /// - Returns: Validation object.
     func validate() -> Validation
 }
@@ -84,7 +84,7 @@ public protocol StringValidator: Validatable {
     ///
     /// - Parameters:
     ///   - value: The value type.
-    ///   - errorMessage: The error message.
+    ///   - message: The error message.
     /// - Returns: Validation object.
     func validate() -> Validation
 }

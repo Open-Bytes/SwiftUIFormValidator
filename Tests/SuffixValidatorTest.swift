@@ -10,28 +10,28 @@ class SuffixValidatorTest: XCTestCase {
     private var validator: SuffixValidator!
 
     func testValidator_shouldBeValid() {
-        validator = SuffixValidator(suffix: "e", errorMessage: "invalid")
+        validator = SuffixValidator(suffix: "e", message: "invalid")
         validator.value = "xcode"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_noIgnoreCase_shouldBeValid() {
-        validator = SuffixValidator(suffix: "e", ignoreCase: false, errorMessage: "invalid")
+        validator = SuffixValidator(suffix: "e", ignoreCase: false, message: "invalid")
         validator.value = "xcode"
         let valid = validator.validate()
         XCTAssertEqual(valid, .success)
     }
 
     func testValidator_noIgnoreCase_shouldNotBeValid() {
-        validator = SuffixValidator(suffix: "e", ignoreCase: false, errorMessage: "invalid")
+        validator = SuffixValidator(suffix: "e", ignoreCase: false, message: "invalid")
         validator.value = "XcodE"
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))
     }
 
     func testValidator_shouldNotBeValid() {
-        validator = SuffixValidator(suffix: "e", errorMessage: "invalid")
+        validator = SuffixValidator(suffix: "e", message: "invalid")
         validator.value = "Xcodes"
         let valid = validator.validate()
         XCTAssertEqual(valid, .failure(message: "invalid"))

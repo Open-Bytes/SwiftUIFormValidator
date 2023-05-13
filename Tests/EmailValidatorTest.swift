@@ -10,7 +10,7 @@ class EmailValidatorTest: XCTestCase {
     private var validator: EmailValidator!
 
     override func setUp() {
-        validator = EmailValidator(errorMessage: "invalid")
+        validator = EmailValidator(message: "invalid")
     }
 
     func testValidator_shouldBeValid() {

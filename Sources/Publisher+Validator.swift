@@ -53,7 +53,7 @@ public extension Published.Publisher where Value == String {
     func passwordValidator(
             form: FormValidation,
             pattern: String = Regex.password.rawValue,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
@@ -62,7 +62,7 @@ public extension Published.Publisher where Value == String {
         patternValidator(
                 form: form,
                 pattern: pattern,
-                errorMessage: errorMessage().orIfEmpty(FormValidation.messages.passwordRegexDescription),
+                message: message().orIfEmpty(FormValidation.messages.passwordRegexDescription),
                 onValidate: onValidate)
     }
 }
@@ -74,7 +74,7 @@ public extension Published.Publisher where Value == String {
             secondPassword: @autoclosure @escaping StringProducerClosure,
             secondPasswordPublisher: Published<String>.Publisher,
             pattern: NSRegularExpression? = nil,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             onValidate: OnValidate? = nil
     ) -> ValidationContainer {
         let pub1 = self.map {
@@ -91,7 +91,7 @@ public extension Published.Publisher where Value == String {
                 firstPassword: firstPassword(),
                 secondPassword: secondPassword(),
                 pattern: pattern,
-                errorMessage: errorMessage().orIfEmpty(FormValidation.messages.passwordsNotMatching)
+                message: message().orIfEmpty(FormValidation.messages.passwordsNotMatching)
         )
         return ValidationPublishers.create(
                 form: form,
@@ -104,7 +104,7 @@ public extension Published.Publisher where Value == String {
 public extension Published.Publisher where Value == String {
     func inlineValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             onValidate: OnValidate? = nil,
             callback: @escaping ValidationCallback) -> ValidationContainer {
         let validator = InlineValidator(condition: callback)
@@ -119,13 +119,13 @@ public extension Published.Publisher where Value == String {
 public extension Published.Publisher where Value == String {
     func nonEmptyValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             onValidate: OnValidate? = nil
     ) -> ValidationContainer {
-        let validator = NonEmptyValidator(errorMessage: errorMessage().orIfEmpty(FormValidation.messages.required))
+        let validator = NonEmptyValidator(message: message().orIfEmpty(FormValidation.messages.required))
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
@@ -139,7 +139,7 @@ public extension Published.Publisher where Value == String {
     func patternValidator(
             form: FormValidation,
             pattern: String,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
@@ -147,7 +147,7 @@ public extension Published.Publisher where Value == String {
     ) -> ValidationContainer {
         let validator = PatternValidator(
                 pattern: try! NSRegularExpression(pattern: pattern),
-                errorMessage: errorMessage().orIfEmpty(FormValidation.messages.invalidPattern))
+                message: message().orIfEmpty(FormValidation.messages.invalidPattern))
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
@@ -160,13 +160,13 @@ public extension Published.Publisher where Value == String {
 public extension Published.Publisher where Value == String {
     func emailValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             onValidate: OnValidate? = nil
     ) -> ValidationContainer {
-        let validator = EmailValidator(errorMessage: errorMessage().orIfEmpty(FormValidation.messages.invalidEmailAddress))
+        let validator = EmailValidator(message: message().orIfEmpty(FormValidation.messages.invalidEmailAddress))
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
@@ -181,7 +181,7 @@ public extension Published.Publisher where Value == String {
             form: FormValidation,
             count: Int,
             type: CountValidator.ValidationType,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
@@ -190,7 +190,7 @@ public extension Published.Publisher where Value == String {
         let validator = CountValidator(
                 count: count,
                 type: type,
-                errorMessage: errorMessage().orIfEmpty(FormValidation.messages.invalidCount(count, type: type)))
+                message: message().orIfEmpty(FormValidation.messages.invalidCount(count, type: type)))
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
@@ -205,7 +205,7 @@ public extension Published.Publisher where Value == Date {
             form: FormValidation,
             before: Date = .distantFuture,
             after: Date = .distantPast,
-            errorMessage: @autoclosure @escaping StringProducerClosure = "",
+            message: @autoclosure @escaping StringProducerClosure = "",
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
@@ -214,7 +214,7 @@ public extension Published.Publisher where Value == Date {
         let validator = DateValidator(
                 before: before,
                 after: after,
-                errorMessage: errorMessage().orIfEmpty(FormValidation.messages.invalidDate))
+                message: message().orIfEmpty(FormValidation.messages.invalidDate))
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,

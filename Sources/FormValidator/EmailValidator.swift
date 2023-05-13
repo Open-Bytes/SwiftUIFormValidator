@@ -15,17 +15,16 @@ public class EmailValidator: StringValidator {
             pattern: Regex.email.rawValue,
             options: .caseInsensitive)
 
-    public init(errorMessage: @autoclosure @escaping StringProducerClosure) {
-        self.errorMessage = errorMessage
+    public init(message: @autoclosure @escaping StringProducerClosure) {
+        self.message = message
     }
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
 
     public func validate() -> Validation {
-        let patternValidator = PatternValidator(pattern: regex, errorMessage: self.errorMessage())
+        let patternValidator = PatternValidator(pattern: regex, message: self.message())
         patternValidator.value = value
         return patternValidator.validate()
     }

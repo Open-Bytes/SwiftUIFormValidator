@@ -63,7 +63,7 @@ class FormInfo: ObservableObject {
     }()
     // 4
     lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+        $firstName.nonEmptyValidator(form: form, message: "First name is not valid")
     }()
 }
 
@@ -243,14 +243,13 @@ public class NonEmptyValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
 
     public func validate() -> Validation {
         if value.trimmingCharacters(in: .whitespaces).isEmpty {
-            return .failure(message: errorMessage())
+            return .failure(message: message())
         }
         return .success
     }
@@ -260,15 +259,15 @@ public class NonEmptyValidator: StringValidator {
 extension Published.Publisher where Value == String {
     func nonEmptyValidator(
             form: FormValidation,
-            errorMessage: @autoclosure @escaping StringProducerClosure = ""
+            message: @autoclosure @escaping StringProducerClosure = ""
     ) -> ValidationContainer {
         let validator = NonEmptyValidator()
-        let message = errorMessage()
+        let message = message()
         return ValidationPublishers.create(
                 form: form,
                 validator: validator,
                 for: self.eraseToAnyPublisher(),
-                errorMessage: !message.isEmpty ? message : form.messages.required)
+                message: !message.isEmpty ? message : form.messages.required)
     }
 }
 ```
@@ -282,10 +281,10 @@ extension Published.Publisher where Value == String {
 
 ## Validation Messages
 
-You can provide a validation message for every field by providing `errorMessage`
+You can provide a validation message for every field by providing `message`
 
 ```swift
-$firstName.nonEmptyValidator(form: form, errorMessage: "First name is not valid")
+$firstName.nonEmptyValidator(form: form, message: "First name is not valid")
 ```
 
 If you don't provide a message, a default one will be used for built-in providers. All default messages are located

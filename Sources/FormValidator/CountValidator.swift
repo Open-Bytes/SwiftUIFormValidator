@@ -11,19 +11,18 @@ public class CountValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
     public var count: Int
     public let type: ValidationType
 
     public init(count: Int,
                 type: ValidationType,
-                errorMessage: @autoclosure @escaping StringProducerClosure) {
+                message: @autoclosure @escaping StringProducerClosure) {
         self.count = count
         self.type = type
-        self.errorMessage = errorMessage
+        self.message = message
     }
 
     public func validate() -> Validation {
@@ -43,7 +42,7 @@ public class CountValidator: StringValidator {
         }
 
         guard isValid else {
-            return .failure(message: errorMessage())
+            return .failure(message: message())
         }
 
         return .success

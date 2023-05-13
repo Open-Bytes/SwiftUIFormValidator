@@ -11,25 +11,24 @@ public class SuffixValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: String = ""
     public var suffix: String = ""
     public var ignoreCase: Bool
 
     public init(suffix: String,
                 ignoreCase: Bool = true,
-                errorMessage: @autoclosure @escaping StringProducerClosure) {
+                message: @autoclosure @escaping StringProducerClosure) {
         self.ignoreCase = ignoreCase
         self.suffix = ignoreCase ? suffix.lowercased() : suffix
-        self.errorMessage = errorMessage
+        self.message = message
     }
 
     public func validate() -> Validation {
         let text = ignoreCase ? value.lowercased() : value
         guard text.hasSuffix(suffix) else {
-            return .failure(message: errorMessage())
+            return .failure(message: message())
         }
         return .success
     }

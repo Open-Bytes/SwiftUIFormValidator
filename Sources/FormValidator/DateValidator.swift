@@ -15,21 +15,20 @@ public class DateValidator: FormValidator {
     private let before: Date
     private let after: Date
 
-    public init(before: Date, after: Date, errorMessage: @autoclosure @escaping StringProducerClosure) {
+    public init(before: Date, after: Date, message: @autoclosure @escaping StringProducerClosure) {
         self.before = before
         self.after = after
-        self.errorMessage = errorMessage
+        self.message = message
     }
 
-    public var errorMessage: StringProducerClosure = {
-        ""
-    }
+    public let message: StringProducerClosure
+
     public var value: Date = Date()
 
     public func validate() -> Validation {
         value < before && value > after ?
                 Validation.success :
-                Validation.failure(message: errorMessage())
+                Validation.failure(message: message())
     }
 
     public var isEmpty: Bool {
