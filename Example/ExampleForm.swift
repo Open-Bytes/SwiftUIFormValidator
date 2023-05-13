@@ -77,6 +77,10 @@ class ExampleForm: ObservableObject {
 
 }
 
+/// All validation messages are included in DefaultValidationMessages, which allows you to easily access
+/// and customize any message as needed. By overriding a specific message, you can provide your own
+/// custom message for that validation rule, giving you greater control and flexibility
+/// over the validation process.
 class ValidationMessages: DefaultValidationMessages {
     public override var required: String {
         "Required field"
