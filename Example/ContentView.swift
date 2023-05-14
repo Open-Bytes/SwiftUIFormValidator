@@ -25,7 +25,7 @@ struct ContentView: View {
 
                 SubmitButton()
             }
-                    .navigationBarTitle("Form")
+                    .navigationBarTitle("Form Validator")
                     //                   observe the form validation and enable submit button only if it's valid
                     .onReceive(form.validation.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
