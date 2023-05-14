@@ -59,7 +59,7 @@ public class PasswordFormField {
                 secondPassword: other.value,
                 pattern: pattern,
                 message: self.message)
-        return ValidationPublishers.create(
+        return ValidationFactory.create(
                 form: form,
                 validator: validator,
                 for: merged,

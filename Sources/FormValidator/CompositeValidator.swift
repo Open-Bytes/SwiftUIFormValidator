@@ -12,8 +12,8 @@ public enum CompositeValidationMessagesStrategy {
     case onByOne
 }
 
-public class CompositeValidator: StringValidator {
-    private let validators: [StringValidator]
+public class CompositeValidator: StringValidator{
+    private let validators: [any StringValidator]
     private let type: ValidationType
     public let strategy: CompositeValidationMessagesStrategy
 
@@ -21,7 +21,7 @@ public class CompositeValidator: StringValidator {
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    public init(validators: [StringValidator],
+    public init(validators: [any StringValidator],
                 type: ValidationType,
                 strategy: CompositeValidationMessagesStrategy) {
         self.validators = validators

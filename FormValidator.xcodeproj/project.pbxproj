@@ -24,7 +24,7 @@
 		58B83138A3D492279FD3FC07 /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83EE7469D4140E4DB51E2 /* EmailValidator.swift */; };
 		58B832066C3E41860F1F26FE /* PasswordMatchValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83C286955EE1D7945CDBC /* PasswordMatchValidator.swift */; };
 		58B83373BC29743A4D3345A2 /* EmailValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B838A86C55E00E90D309E4 /* EmailValidatorTest.swift */; };
-		58B835FE128C83280DCCBFB6 /* ValidationPublishers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B839D588E65961A4C46A41 /* ValidationPublishers.swift */; };
+		58B835FE128C83280DCCBFB6 /* ValidationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B839D588E65961A4C46A41 /* ValidationFactory.swift */; };
 		58B8365026E0FDD6461BFEAB /* PasswordFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83E409E4CAAE0CCDDA492 /* PasswordFormField.swift */; };
 		58B836C998BEDB8F4B263D66 /* ValidationMessages.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B837435C87E5781B4A2B13 /* ValidationMessages.swift */; };
 		58B83725E0C7E8CB4F7A2A00 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B8382DC558A643347A4ECB /* ErrorFormatter.swift */; };
@@ -125,7 +125,7 @@
 		58B838A86C55E00E90D309E4 /* EmailValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EmailValidatorTest.swift; sourceTree = "<group>"; };
 		58B839B0DAA91E96F52595BA /* CountValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CountValidator.swift; sourceTree = "<group>"; };
 		58B839C6445E579B0C8E379E /* CompositeValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CompositeValidator.swift; sourceTree = "<group>"; };
-		58B839D588E65961A4C46A41 /* ValidationPublishers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationPublishers.swift; sourceTree = "<group>"; };
+		58B839D588E65961A4C46A41 /* ValidationFactory.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ValidationFactory.swift; sourceTree = "<group>"; };
 		58B83A4DA6E5858E3FECB853 /* InlineValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InlineValidatorTest.swift; sourceTree = "<group>"; };
 		58B83A5C0EE7D35DBCEF98B7 /* PatternValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PatternValidatorTest.swift; sourceTree = "<group>"; };
 		58B83C286955EE1D7945CDBC /* PasswordMatchValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordMatchValidator.swift; sourceTree = "<group>"; };
@@ -199,7 +199,7 @@
 				58B837EE09BA5B7C1F00013E /* FormValidator */,
 				58B832BC47434B13DE89247C /* FormValidation.swift */,
 				58B832019A26ECC1E3962F88 /* Validation.swift */,
-				58B839D588E65961A4C46A41 /* ValidationPublishers.swift */,
+				58B839D588E65961A4C46A41 /* ValidationFactory.swift */,
 				58B837435C87E5781B4A2B13 /* ValidationMessages.swift */,
 				58B83B1F2DEA771E5DEC2CF6 /* Extension */,
 				58B83F17FB767B7F6D9E7A31 /* Regex.swift */,
@@ -444,7 +444,7 @@
 				58B8386271F99AF0A033B367 /* NonEmptyValidator.swift in Sources */,
 				58B8396A333F32C146D56576 /* FormValidation.swift in Sources */,
 				58B83796F5DDC779D04AF3A1 /* Validation.swift in Sources */,
-				58B835FE128C83280DCCBFB6 /* ValidationPublishers.swift in Sources */,
+				58B835FE128C83280DCCBFB6 /* ValidationFactory.swift in Sources */,
 				58B830AE69E75C4BE0039AEE /* InlineValidator.swift in Sources */,
 				58B836C998BEDB8F4B263D66 /* ValidationMessages.swift in Sources */,
 				58B83E3C5D7607536300AF48 /* CompositeValidator.swift in Sources */,

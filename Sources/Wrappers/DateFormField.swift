@@ -48,7 +48,7 @@ public class DateFormField {
                 after: after,
                 message: self.message)
         let pub: AnyPublisher<Date, Never> = $value.eraseToAnyPublisher()
-        return ValidationPublishers.create(
+        return ValidationFactory.create(
                 form: form,
                 validator: validator,
                 for: pub,

@@ -6,16 +6,16 @@
 import Combine
 
 @propertyWrapper
-public class FormField {
+public class FormField<Value, Validator: Validatable> where Value == Validator.Value {
     @Published
-    private var value: String
-    private let validator: StringValidator
+    private var value: Value
+    private let validator: Validator
 
-    public var projectedValue: AnyPublisher<String, Never> {
+    public var projectedValue: AnyPublisher<Value, Never> {
         $value.eraseToAnyPublisher()
     }
 
-    public var wrappedValue: String {
+    public var wrappedValue: Value {
         get {
             value
         }
@@ -24,17 +24,17 @@ public class FormField {
         }
     }
 
-    public init(wrappedValue value: String, validator: () -> StringValidator) {
+    public init(wrappedValue value: Value, validator: () -> Validator) {
         self.value = value
         self.validator = validator()
     }
 
-    public init(wrappedValue value: String, validator: StringValidator) {
+    public init(wrappedValue value: Value, validator: Validator) {
         self.value = value
         self.validator = validator
     }
 
-    public init(initialValue value: String, validator: () -> StringValidator) {
+    public init(initialValue value: Value, validator: () -> Validator) {
         self.value = value
         self.validator = validator()
     }
@@ -45,8 +45,8 @@ public class FormField {
                 false
             },
             onValidate: OnValidate? = nil) -> ValidationContainer {
-        let pub: AnyPublisher<String, Never> = $value.eraseToAnyPublisher()
-        return ValidationPublishers.create(
+        let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
+        return ValidationFactory.create(
                 form: form,
                 validator: validator,
                 for: pub,

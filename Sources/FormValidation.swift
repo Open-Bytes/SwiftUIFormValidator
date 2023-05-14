@@ -7,7 +7,7 @@ import Combine
 import Foundation
 
 public struct ValidatorContainer {
-    let validator: Validatable
+    let validator: any Validatable
     let disableValidation: DisableValidationClosure
 }
 

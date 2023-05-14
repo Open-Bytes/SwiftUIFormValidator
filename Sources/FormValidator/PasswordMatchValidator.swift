@@ -21,7 +21,7 @@ public struct PasswordInfo {
 }
 
 /// This validator validates if a condition is valid or not.
-public class PasswordMatchValidator: FormValidator {
+public class PasswordMatchValidator: Validatable {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []

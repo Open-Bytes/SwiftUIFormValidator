@@ -10,6 +10,9 @@ public typealias OnValidationChange = (Validation) -> Void
 
 /// A protocol representing a form validator.
 public protocol Validatable {
+    associatedtype Value
+    var value: Value { get set }
+
     func validate() -> Validation
     var isEmpty: Bool { get }
 
@@ -60,31 +63,8 @@ public extension Validatable {
     }
 }
 
-/// A protocol representing a form validator.
-public protocol FormValidator: Validatable {
-    /// The value type of this validator
-    associatedtype Value
-    var value: Value { get set }
-
-    /// This functions is called internally to trigger validation.
-    ///
-    /// - Parameters:
-    ///   - value: The value type.
-    ///   - message: The error message.
-    /// - Returns: Validation object.
-    func validate() -> Validation
-}
-
-/// A protocol representing a form validator.
+///// A protocol representing a form validator.
 public protocol StringValidator: Validatable {
     /// The value type of this validator
     var value: String { get set }
-
-    /// This functions is called internally to trigger validation.
-    ///
-    /// - Parameters:
-    ///   - value: The value type.
-    ///   - message: The error message.
-    /// - Returns: Validation object.
-    func validate() -> Validation
 }

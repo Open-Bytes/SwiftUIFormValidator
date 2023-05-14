@@ -28,7 +28,7 @@ class ExampleForm: ObservableObject {
     var firstLine: String = ""
 
     @FormField(validator: {
-        let validators: [StringValidator] = [
+        let validators: [any StringValidator] = [
             PrefixValidator(prefix: "n", message: "Must start with (n)."),
             CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
         ]
@@ -40,12 +40,11 @@ class ExampleForm: ObservableObject {
     var address: String = ""
 
     @FormField(validator: {
-        let validators: [StringValidator] = [
-            PrefixValidator(prefix: "n", message: "Must start with (n)."),
-            CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
-        ]
-        return CompositeValidator(
-                validators: validators,
+         CompositeValidator(
+                validators: [
+                    PrefixValidator(prefix: "n", message: "Must start with (n)."),
+                    CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
+                ],
                 type: .any,
                 strategy: .all)
     })
