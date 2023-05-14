@@ -40,12 +40,7 @@ struct ContentView: View {
     private func RequiredFieldsValidationSection() -> some View {
         Section(header: Text("Required Fields Validation")) {
             TextField("First Name", text: $form.firstName)
-                    .validation(form.firstNameValidation) { message in
-                        // Optionally provide your own custom error view.
-                        Text(message.uppercased())
-                                .foregroundColor(Color.red)
-                                .font(.caption)
-                    } // 5
+                    .validation(form.firstNameValidation)
         }
     }
 

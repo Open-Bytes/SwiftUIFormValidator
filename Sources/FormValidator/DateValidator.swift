@@ -15,7 +15,9 @@ public class DateValidator: FormValidator {
     private let before: Date
     private let after: Date
 
-    public init(before: Date, after: Date, message: @autoclosure @escaping StringProducerClosure) {
+    public init(before: Date = .distantFuture,
+                after: Date = .distantPast,
+                message: @autoclosure @escaping StringProducerClosure) {
         self.before = before
         self.after = after
         self.message = message

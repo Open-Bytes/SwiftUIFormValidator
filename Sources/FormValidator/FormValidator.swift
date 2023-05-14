@@ -63,8 +63,8 @@ public extension Validatable {
 /// A protocol representing a form validator.
 public protocol FormValidator: Validatable {
     /// The value type of this validator
-    associatedtype VALUE
-    var value: VALUE { get set }
+    associatedtype Value
+    var value: Value { get set }
 
     /// This functions is called internally to trigger validation.
     ///

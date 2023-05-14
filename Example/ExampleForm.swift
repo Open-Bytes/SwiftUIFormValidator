@@ -7,72 +7,75 @@ import Combine
 import UIKit
 import FormValidator
 
-
 class ExampleForm: ObservableObject {
-    @Published var firstName: String = ""
-    @Published var lastNames: String = ""
-    @Published var firstLine: String = ""
-    @Published var address: String = ""
-    @Published var street: String = ""
-    @Published var password: String = ""
-    @Published var confirmPassword: String = ""
-    @Published var birthday: Date = Date()
 
-    @Published var validation = FormValidation(validationType: .immediate, messages: ValidationMessages())
+    @FormField(validator: NonEmptyValidator(message: "This field is required!"))
+    var firstName: String = ""
 
-    lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: validation)
-    }()
-
-    lazy var lastNamesValidation: ValidationContainer = {
-        $lastNames.inlineValidator(form: validation) { value in
+    @FormField(validator: {
+        InlineValidator { value in
             value.isEmpty ? "This field is required" : nil
         }
-    }()
+    })
+    var lastNames: String = ""
 
-    lazy var firstLineValidation: ValidationContainer = {
-        $firstLine.countValidator(
-                form: validation,
+    @FormField(validator: {
+        CountValidator(
                 count: 6,
                 type: .greaterThanOrEquals,
-                onValidate: { validation in
-                    switch validation {
-                    case .success:
-                        print("Success")
-                    case .failure(let error):
-                        print("Failure: \(error)")
-                    }
-                })
-    }()
+                message: "This fields's length must be ≥ 6")
+    })
+    var firstLine: String = ""
 
-    lazy var addressValidation: ValidationContainer = {
+    @FormField(validator: {
         let validators: [StringValidator] = [
             PrefixValidator(prefix: "n", message: "Must start with (n)."),
             CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
         ]
-        return $address.allValid(validators: validators, form: validation)
-    }()
+        return CompositeValidator(
+                validators: validators,
+                type: .all,
+                strategy: .all)
+    })
+    var address: String = ""
 
-    lazy var streetValidation: ValidationContainer = {
+    @FormField(validator: {
         let validators: [StringValidator] = [
-            PrefixValidator(prefix: "st.", message: "Must start with (st.)."),
+            PrefixValidator(prefix: "n", message: "Must start with (n)."),
             CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
         ]
-        return $street.anyValid(validators: validators, form: validation)
-    }()
+        return CompositeValidator(
+                validators: validators,
+                type: .any,
+                strategy: .all)
+    })
+    var street: String = ""
 
-    lazy var passwordValidation: ValidationContainer = {
-        $password.passwordMatchValidator(
-                form: validation,
-                firstPassword: self.password,
-                secondPassword: self.confirmPassword,
-                secondPasswordPublisher: self.$confirmPassword)
-    }()
 
-    lazy var birthdayValidation: ValidationContainer = {
-        $birthday.dateValidator(form: validation, before: Date(), message: "Date must be before today")
-    }()
+    @PasswordFormField(message: "The passwords do not match.")
+    var password: String = ""
+    @PasswordFormField(message: "The passwords do not match.")
+    var confirmPassword: String = ""
 
+    @DateFormField(message: "Date can not be in the future!")
+    var birthday: Date = Date()
+
+    @Published
+    var validation = FormValidation(validationType: .immediate, messages: ValidationMessages())
+
+    lazy var firstNameValidation = _firstName.validation(form: validation)
+
+    lazy var lastNamesValidation = _lastNames.validation(form: validation)
+
+    lazy var firstLineValidation = _firstLine.validation(form: validation)
+
+    lazy var addressValidation = _address.validation(form: validation)
+
+    lazy var streetValidation = _street.validation(form: validation)
+
+    lazy var passwordValidation = _password.validation(form: validation, other: _confirmPassword)
+
+    lazy var birthdayValidation = _birthday.validation(form: validation, before: Date())
 }
 
 /// All validation messages are included in DefaultValidationMessages, which allows you to easily access

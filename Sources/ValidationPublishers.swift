@@ -27,10 +27,10 @@ public class ValidationPublishers {
     ///   - disableValidation: disable validation conditionally
     ///   - onValidate: a closure invoked when validation changes
     /// - Returns: ValidationContainer
-    public static func create<VALIDATOR: FormValidator>(
+    public static func create<Validator: FormValidator>(
             form: FormValidation,
-            validator: VALIDATOR,
-            for publisher: AnyPublisher<VALIDATOR.VALUE, Never>,
+            validator: Validator,
+            for publisher: AnyPublisher<Validator.Value, Never>,
             disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer {
@@ -39,7 +39,7 @@ public class ValidationPublishers {
                 for: publisher,
                 disableValidation: disableValidation,
                 onValidate: onValidate
-        ) { (value: VALIDATOR.VALUE) in
+        ) { (value: Validator.Value) in
             var val = validator
             val.value = value
         }
@@ -82,13 +82,13 @@ public class ValidationPublishers {
     ///   - onValidate: a closure invoked when validation changes
     ///   - setupValidator: apply changes to the validator
     /// - Returns: ValidationContainer
-    public static func create<VALUE>(
+    public static func create<Value>(
             form: FormValidation,
             validator: Validatable,
-            for publisher: AnyPublisher<VALUE, Never>,
+            for publisher: AnyPublisher<Value, Never>,
             disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?,
-            setupValidator: @escaping (VALUE) -> Void
+            setupValidator: @escaping (Value) -> Void
     ) -> ValidationContainer {
         form.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
         let pub: ValidationPublisher = publisher.map { value in
@@ -114,56 +114,6 @@ public class ValidationPublishers {
                 .dropFirst()
                 .eraseToAnyPublisher()
         return ValidationContainer(publisher: pub, subject: validator.subject)
-    }
-
-    public static func create(
-            form: FormValidation,
-            validators: [StringValidator],
-            type: CompositeValidator.ValidationType,
-            strategy: CompositeValidationMessagesStrategy,
-            for publisher: AnyPublisher<String, Never>,
-            disableValidation: @escaping DisableValidationClosure,
-            onValidate: OnValidate?
-    ) -> ValidationContainer {
-        let compositeValidator = CompositeValidator(validators: validators, type: type, strategy: strategy)
-        form.append(ValidatorContainer(validator: compositeValidator, disableValidation: disableValidation))
-        let pub: ValidationPublisher = publisher.map { value in
-                    compositeValidator.value = value
-                    let validation = compositeValidator.validate()
-
-                    guard !disableValidation() else {
-                        return .success
-                    }
-
-                    onValidate?(validation)
-
-                    switch form.validationType {
-                    case .immediate:
-                        return validation
-                    case .deferred,
-                         .silent:
-                        // Send success to simulate deferred validation
-                        return .success
-                    }
-                }
-                .dropFirst()
-                .eraseToAnyPublisher()
-        let subject = ValidationSubject()
-
-        // Send each validator's subject value to our subject
-        // to notify the view with the validation
-        switch form.validationType {
-        case .immediate:
-            for var validator in validators {
-                validator.observeChange { value in
-                    subject.send(value)
-                }
-            }
-        case .deferred,
-             .silent:
-            break
-        }
-        return ValidationContainer(publisher: pub, subject: subject)
     }
 
 }
