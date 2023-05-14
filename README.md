@@ -1,4 +1,4 @@
-<p align="center"><a href="https://github.com/ShabanKamell/SwiftUIFormValidator"><img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/logo.png?raw=true" alt="Gray shape shifter" height="200"/></a></p>
+<p align="center"><a href="https://github.com/ShabanKamell/SwiftUIFormValidator"><img src="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/blob/logo2.jpeg?raw=true" alt="Gray shape shifter" height="200"/></a></p>
 <h1 align="center">SwiftUIFormValidator</h1>
 <p align="center">Simple and clean approach to form validation</p>
 
