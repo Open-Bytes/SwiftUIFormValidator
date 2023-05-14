@@ -21,7 +21,7 @@ Introducing a clean, simple, and customizable approach to declarative form valid
 
 **Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
 
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="600">
+<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form.PNG?raw=true" height="600" alt="Form Screenshot">
 
 # Table of contents
 
