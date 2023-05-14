@@ -17,7 +17,7 @@
 
 # SwiftUIFormValidator
 
-A declarative **SwiftUI** form validation. Clean, simple, and customizable.
+Introducing a clean, simple, and customizable approach to declarative form validation in SwiftUI. With our solution, you can easily validate user input and provide feedback in real-time, all while maintaining a sleek and intuitive user interface.
 
 **Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
 
@@ -221,16 +221,16 @@ explained [over at Carthage](https://github.com/Carthage/Carthage#adding-framewo
 
 ## Validators
 
-|       **Validator**       |                    **Description**                         |
-| ------------------------- | -----------------------------------------------------------|
-|   **NonEmptyValidator**   | Validates if a string is empty or blank                    |
-|   **EmailValidator**      | Validates if the email is valid.                           |
-|   **DateValidator**       | Validates if a date falls within `after` & `before` dates. |
-|   **PatternValidator**    | Validates if a patten is matched.                          |
-|   **InlineValidator**     | Validates if a condition is valid.                         |
-|   **PasswordValidator**   | Validates if a password is valid.                          |
-|   **PrefixValidator**     | Validates if the text has a prefix.                          |
-|   **SuffixValidator**     | Validates if the text has a suffix.                          |
+| **Validator**         | **Description**                                            |
+|-----------------------|------------------------------------------------------------|
+| **NonEmptyValidator** | Validates if a string is empty or blank                    |
+| **EmailValidator**    | Validates if the email is valid.                           |
+| **DateValidator**     | Validates if a date falls within `after` & `before` dates. |
+| **PatternValidator**  | Validates if a patten is matched.                          |
+| **InlineValidator**   | Validates if a condition is valid.                         |
+| **PasswordValidator** | Validates if a password is valid.                          |
+| **PrefixValidator**   | Validates if the text has a prefix.                        |
+| **SuffixValidator**   | Validates if the text has a suffix.                        |
 
 ## Custom Validators
 
