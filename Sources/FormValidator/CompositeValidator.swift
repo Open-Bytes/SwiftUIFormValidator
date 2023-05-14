@@ -12,7 +12,7 @@ public enum CompositeValidationMessagesStrategy {
     case onByOne
 }
 
-public class CompositeValidator: StringValidator{
+public class CompositeValidator: StringValidator {
     private let validators: [any StringValidator]
     private let type: ValidationType
     public let strategy: CompositeValidationMessagesStrategy
