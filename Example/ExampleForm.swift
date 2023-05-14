@@ -8,6 +8,8 @@ import UIKit
 import FormValidator
 
 class ExampleForm: ObservableObject {
+    @Published
+    var manager = FormManager(validationType: .immediate)
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var firstName: String = ""
@@ -73,9 +75,6 @@ class ExampleForm: ObservableObject {
 
     @DateFormField(message: "Date can not be in the future!")
     var birthday: Date = Date()
-
-    @Published
-    var manager = FormManager(validationType: .immediate)
 
     lazy var firstNameValidation = _firstName.validation(manager: manager)
 
