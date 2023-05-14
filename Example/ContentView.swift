@@ -6,7 +6,6 @@
 import SwiftUI
 
 struct ContentView: View {
-    // 4
     @ObservedObject var form = ExampleForm()
     @State var isSaveDisabled = true
 

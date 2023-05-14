@@ -13,9 +13,11 @@ class ExampleForm: ObservableObject {
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var firstName: String = ""
+    lazy var firstNameValidation = _firstName.validation(manager: manager)
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var lastName: String = ""
+    lazy var lastNameValidation = _lastName.validation(manager: manager)
 
     @FormField(inlineValidator: { value in
         guard value > 0 else {
@@ -27,6 +29,7 @@ class ExampleForm: ObservableObject {
         return nil
     })
     var age: Int = 0
+    lazy var ageValidation = _age.validation(manager: manager)
 
     @FormField(validator: {
         CountValidator(
@@ -35,6 +38,7 @@ class ExampleForm: ObservableObject {
                 message: "This fields's length must be ≥ 6")
     })
     var firstLine: String = ""
+    lazy var firstLineValidation = _firstLine.validation(manager: manager)
 
     @FormField(validator: {
         let validators: [any StringValidator] = [
@@ -47,6 +51,7 @@ class ExampleForm: ObservableObject {
                 strategy: .all)
     })
     var address: String = ""
+    lazy var addressValidation = _address.validation(manager: manager)
 
     @FormField(validator: {
          CompositeValidator(
@@ -58,9 +63,11 @@ class ExampleForm: ObservableObject {
                  strategy: .all)
     })
     var street: String = ""
+    lazy var streetValidation = _street.validation(manager: manager)
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var city: String = ""
+    lazy var cityValidation = _city.validation(manager: manager)
 
     @PasswordFormField(message: (
             empty: "This field is required!",
@@ -72,24 +79,6 @@ class ExampleForm: ObservableObject {
             notMatching: "The passwords do not match!",
             invalidPattern: "Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."))
     var confirmPassword: String = ""
-
-    @DateFormField(message: "Date can not be in the future!")
-    var birthday: Date = Date()
-
-    lazy var firstNameValidation = _firstName.validation(manager: manager)
-
-    lazy var cityValidation = _city.validation(manager: manager)
-
-    lazy var ageValidation = _age.validation(manager: manager)
-
-    lazy var lastNameValidation = _lastName.validation(manager: manager)
-
-    lazy var firstLineValidation = _firstLine.validation(manager: manager)
-
-    lazy var addressValidation = _address.validation(manager: manager)
-
-    lazy var streetValidation = _street.validation(manager: manager)
-
     lazy var passwordValidation = _password.validation(
             manager: manager,
             other: _confirmPassword,
@@ -98,5 +87,7 @@ class ExampleForm: ObservableObject {
                     options: .caseInsensitive)
     )
 
+    @DateFormField(message: "Date can not be in the future!")
+    var birthday: Date = Date()
     lazy var birthdayValidation = _birthday.validation(manager: manager, before: Date())
 }
