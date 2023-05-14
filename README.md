@@ -17,21 +17,25 @@
 
 # SwiftUIFormValidator
 
-Introducing a clean, simple, and customizable approach to declarative form validation in SwiftUI. With our solution, you can easily validate user input and provide feedback in real-time, all while maintaining a sleek and intuitive user interface.
+Introducing a clean, simple, and customizable approach to declarative form validation in SwiftUI. With our solution, you
+can easily validate user input and provide feedback in real-time, all while maintaining a sleek and intuitive user
+interface.
 
 **Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
 
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form2.jpeg?raw=true" height="600" alt="Form Screenshot">
+<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/demo.gif?raw=true" alt="SwiftUINavigator Demo" width="300" height="700" border="#1111"/>
+<br/>
+<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form2.jpeg?raw=true" width="300"  height="600" alt="Form Screenshot">
 
 # Table of contents
 
 - [Usage](#usage)
-    - [Basic Setup](#basic-setup)
-    - [Validators](#validators)
-    - [Custom Validators](#custom-validators)
-    - [Custom Error View](#customizing-the-error-view)
-    - [Inline Validation](#inline-validation)
-    - [Validation Types](#validation-types)
+  - [Basic Setup](#basic-setup)
+  - [Validators](#validators)
+  - [Custom Validators](#custom-validators)
+  - [Custom Error View](#customizing-the-error-view)
+  - [Inline Validation](#inline-validation)
+  - [Validation Types](#validation-types)
     - [Triggering Validation](#triggering-validation)
     - [React to Validation Change](#react-to-validation-change)
 - [Installation](#tada-installation)
