@@ -35,7 +35,7 @@ public class DateFormField {
     }
 
     public func validation(
-            form: FormValidation,
+            manager: FormManager,
             before: Date = .distantFuture,
             after: Date = .distantPast,
             disableValidation: @escaping DisableValidationClosure = {
@@ -49,7 +49,7 @@ public class DateFormField {
                 message: self.message)
         let pub: AnyPublisher<Date, Never> = $value.eraseToAnyPublisher()
         return ValidationFactory.create(
-                form: form,
+                manager: manager,
                 validator: validator,
                 for: pub,
                 disableValidation: disableValidation,

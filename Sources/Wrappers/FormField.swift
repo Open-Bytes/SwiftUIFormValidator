@@ -40,14 +40,14 @@ public class FormField<Value, Validator: Validatable> where Value == Validator.V
     }
 
     public func validation(
-            form: FormValidation,
+            manager: FormManager,
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
             onValidate: OnValidate? = nil) -> ValidationContainer {
         let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
         return ValidationFactory.create(
-                form: form,
+                manager: manager,
                 validator: validator,
                 for: pub,
                 disableValidation: disableValidation,

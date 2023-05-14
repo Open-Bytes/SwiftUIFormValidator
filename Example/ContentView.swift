@@ -27,11 +27,11 @@ struct ContentView: View {
             }
                     .navigationBarTitle("Form Validator")
                     //                   observe the form validation and enable submit button only if it's valid
-                    .onReceive(form.validation.$allValid) { isValid in
+                    .onReceive(form.manager.$allValid) { isValid in
                         self.isSaveDisabled = !isValid
                     }
                     // React to validation messages changes
-                    .onReceive(form.validation.$validationMessages) { messages in
+                    .onReceive(form.manager.$validationMessages) { messages in
                         print(messages)
                     }
 
@@ -120,7 +120,7 @@ struct ContentView: View {
 
     private func SubmitButton() -> some View {
         Button(action: {
-            let valid = form.validation.triggerValidation()
+            let valid = form.manager.triggerValidation()
             print("Form valid: \(valid)")
         }, label: {
             HStack {

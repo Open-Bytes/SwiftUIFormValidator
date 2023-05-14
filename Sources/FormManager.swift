@@ -15,7 +15,7 @@ public struct ValidatorContainer {
 /// You can use to control the validation form.
 /// For example, you can trigger the validation manually. And
 /// choose a validation type. And check if the form is valid.
-public class FormValidation: ObservableObject {
+public class FormManager: ObservableObject {
     /// All the validators added to the form.
     public var validators: [ValidatorContainer] = []
 
@@ -31,7 +31,7 @@ public class FormValidation: ObservableObject {
     /// Form validation type
     public let validationType: ValidationType
 
-    private let onFormChanged: ((FormValidation) -> Void)?
+    private let onFormChanged: ((FormManager) -> Void)?
 
     /// The initialized used to create an instance of this class.
     ///
@@ -40,7 +40,7 @@ public class FormValidation: ObservableObject {
     ///   - messages: ValidationMessagesProtocol implementation.
     ///   - onFormChanged: called when any filed changes in the form
     public init(validationType: ValidationType,
-                onFormChanged: ((FormValidation) -> Void)? = nil) {
+                onFormChanged: ((FormManager) -> Void)? = nil) {
         self.validationType = validationType
         self.onFormChanged = onFormChanged
     }
@@ -124,7 +124,7 @@ public class FormValidation: ObservableObject {
     }
 }
 
-public extension FormValidation {
+public extension FormManager {
 
     /// Form validation type
     /// It includes 3 cases:

@@ -37,7 +37,7 @@ public class PasswordFormField {
     }
 
     public func validation(
-            form: FormValidation,
+            manager: FormManager,
             other: PasswordFormField,
             pattern: NSRegularExpression? = nil,
             disableValidation: @escaping DisableValidationClosure = {
@@ -62,7 +62,7 @@ public class PasswordFormField {
                 pattern: pattern,
                 message: self.message())
         return ValidationFactory.create(
-                form: form,
+                manager: manager,
                 validator: validator,
                 for: merged,
                 disableValidation: disableValidation,

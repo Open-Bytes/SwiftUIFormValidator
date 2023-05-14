@@ -75,29 +75,29 @@ class ExampleForm: ObservableObject {
     var birthday: Date = Date()
 
     @Published
-    var validation = FormValidation(validationType: .immediate)
+    var manager = FormManager(validationType: .immediate)
 
-    lazy var firstNameValidation = _firstName.validation(form: validation)
+    lazy var firstNameValidation = _firstName.validation(manager: manager)
 
-    lazy var cityValidation = _city.validation(form: validation)
+    lazy var cityValidation = _city.validation(manager: manager)
 
-    lazy var ageValidation = _age.validation(form: validation)
+    lazy var ageValidation = _age.validation(manager: manager)
 
-    lazy var lastNameValidation = _lastName.validation(form: validation)
+    lazy var lastNameValidation = _lastName.validation(manager: manager)
 
-    lazy var firstLineValidation = _firstLine.validation(form: validation)
+    lazy var firstLineValidation = _firstLine.validation(manager: manager)
 
-    lazy var addressValidation = _address.validation(form: validation)
+    lazy var addressValidation = _address.validation(manager: manager)
 
-    lazy var streetValidation = _street.validation(form: validation)
+    lazy var streetValidation = _street.validation(manager: manager)
 
     lazy var passwordValidation = _password.validation(
-            form: validation,
+            manager: manager,
             other: _confirmPassword,
             pattern: try! NSRegularExpression(
                     pattern: Regex.password.rawValue,
                     options: .caseInsensitive)
     )
 
-    lazy var birthdayValidation = _birthday.validation(form: validation, before: Date())
+    lazy var birthdayValidation = _birthday.validation(manager: manager, before: Date())
 }

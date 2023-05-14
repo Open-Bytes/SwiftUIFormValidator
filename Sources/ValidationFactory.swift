@@ -21,7 +21,7 @@ public class ValidationFactory {
     /// Create ValidationContainer object to
     /// be passed to validation modifier
     /// - Parameters:
-    ///   - form: The FormValidation object
+    ///   - manager: The FormValidation object
     ///   - validator: The FormValidator concrete class
     ///   - publisher: The root publisher which is validated
     ///   - disableValidation:
@@ -29,13 +29,13 @@ public class ValidationFactory {
     ///   - setupValidator: apply changes to the validator
     /// - Returns: ValidationContainer
     public static func create<Value, Validator: Validatable>(
-            form: FormValidation,
+            manager: FormManager,
             validator: Validator,
             for publisher: AnyPublisher<Value, Never>,
             disableValidation: @escaping DisableValidationClosure,
             onValidate: OnValidate?
     ) -> ValidationContainer where Validator.Value == Value {
-        form.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
+        manager.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
         let pub: ValidationPublisher = publisher.map { value in
                     var val = validator
                     val.value = value
@@ -48,7 +48,7 @@ public class ValidationFactory {
 
                     onValidate?(validation)
 
-                    switch form.validationType {
+                    switch manager.validationType {
                     case .immediate:
                         return validation
                     case .deferred,
