@@ -1,6 +1,6 @@
 <p align="center"><a href="https://github.com/ShabanKamell/SwiftUIFormValidator"><img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/logo.png?raw=true" alt="Gray shape shifter" height="200"/></a></p>
 <h1 align="center">SwiftUIFormValidator</h1>
-<p align="center">The world's easiest, most clean SwiftUI form validation.</p>
+<p align="center">Simple and clean approach to form validation</p>
 
 <p align="center">
 <a href="https://twitter.com/intent/tweet?text=SwiftUIFormValidator,%20a%20declarative%20SwiftUI%20form%20validation.%20Clean,%20simple,%20and%20customizable&url=https://github.com/ShabanKamell/SwiftUIFormValidator&hashtags=swiftui,ios,macos,tvos,developers"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" height="20"/></a>
@@ -27,18 +27,18 @@ Introducing a clean, simple, and customizable approach to declarative form valid
 
 - [Usage](#usage)
     - [Basic Setup](#basic-setup)
-    - [Custom Error View](#custom-error-view)
-    - [Validation Types](#validation-types)
+    - [Validators](#validators)
+    - [Custom Validators](#custom-validators)
+    - [Custom Error View](#customizing-the-error-view)
     - [Inline Validation](#inline-validation)
-    - [Manual Validation](#manual-validation)
+    - [Validation Types](#validation-types)
+    - [Triggering Validation](#triggering-validation)
     - [React to Validation Change](#react-to-validation-change)
 - [Installation](#tada-installation)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
     - [Accio](#accio)
     - [Carthage](#carthage)
-- [Validators](#validators)
-- [Custom Validators](#custom-validators)
 - [Validation Messages](#validation-messages)
 - [Contribution](#contribution)
 - [Changelog](#changelog)
@@ -52,95 +52,177 @@ Introducing a clean, simple, and customizable approach to declarative form valid
   // 1 
 import FormValidator
 
-// 2
-class FormInfo: ObservableObject {
-    @Published var firstName: String = ""
+class ExampleForm: ObservableObject {
+    // 2
+    @Published
+    var manager = FormManager(validationType: .immediate)
+
     // 3
-    lazy var form = {
-        FormValidation(validationType: .immediate)
-    }()
-    // 4
-    lazy var firstNameValidation: ValidationContainer = {
-        $firstName.nonEmptyValidator(form: form, message: "First name is not valid")
-    }()
+    @FormField(validator: NonEmptyValidator(message: "This field is required!"))
+    var firstName: String = ""
 }
 
 struct ContentView: View {
-    // 5
-    @ObservedObject var formInfo = FormInfo()
+    @ObservedObject var form = ExampleForm()
+    @State var isSaveDisabled = true
 
     var body: some View {
-        TextField("First Name", text: $formInfo.firstName)
-                .validation(formInfo.firstNameValidation) // 6
+        Section(header: Text("Required Fields Validation")) {
+            TextField("First Name", text: $form.firstName)
+                    // 4
+                    .validation(form.firstNameValidation)
+        }
     }
 }
+
+
 ```
 
-1. Import `FormValidator`.
-2. Declare an `ObservableObject` for the form with any name, for example, FormInfo, LoginInfo, or any name.
-3. Declare `FormValidation` object and choose a validation type.
-4. Declare a `ValidationContainer` for the field you need to validate.
-5. In your view, declare the `FormValidation` object.
-6. Declare `validation(formInfo.firstNameValidation)` with the validation of the field.
-
-**Congratulation!!** your field is now validated for you!
-
-### Custom Error View
-
-You can provide your own custom error view by providing the view with the `validation` modifier
+- Import `FormValidator`. 
 
 ```swift
-TextField("First Name", text: $formInfo.firstName)
-        .validation(formInfo.firstNameValidation) { message in
+import FormValidator
+```
+
+- Declare `FormManager`
+```swift
+@Published
+var manager = FormManager(validationType: .immediate)
+```
+
+> FormManager is a powerful class for controlling form validation in your application. 
+> It allows you to trigger validation and listen to changes in the form, and gives you 
+> the flexibility to control how and when validation is shown to the user.
+
+
+- Specify the data type and validation rules for the input field
+
+```swift
+@FormField(validator: NonEmptyValidator(message: "This field is required!"))
+var firstName: String = ""
+```
+
+> The annotation `@FormField` along with a validator can be used to declare the field to be validated:
+
+- To specify validation for a TextField in a view, use `.validation()` modifier.
+
+```swift
+TextField("First Name", text: $form.firstName)
+        .validation(form.firstNameValidation)
+```
+
+
+Congratulations! Your field has now been validated. It's concise and simple!
+
+## Validators
+
+| **Validator**              | **Description**                                                                     |
+|----------------------------|-------------------------------------------------------------------------------------|
+| **CompositeValidator**     | To combine multiple validators together into a single validator.                    |
+| **CountValidator.swift**   | To validate whether a string is matching a spcecific length                         |
+| **NonEmptyValidator**      | To validate whether a string is empty or blank                                      |
+| **EmailValidator**         | To validate if an email is valid                                                    |
+| **DateValidator**          | To validate if a date falls within a range of dates                                 |
+| **PatternValidator**       | To validate if a pattern is matched                                                 |
+| **InlineValidator**        | To validate if a condition is valid inline                                          |
+| **PasswordValidator**      | To validate if a password is valid                                                  |
+| **PasswordMatchValidator** | To validate if two password fields match each other and/or match a specific pattern |
+| **PrefixValidator**        | To validate if a text has a prefix                                                  |
+| **SuffixValidator**        | To validate if a text has a suffix                                                  |
+
+## Custom Validators
+
+To add custom validation logic to your form, you can conform to the `Validatable` or `StringValidator`
+protocols depending on the type of data you want to validate.
+
+The `Validatable` protocol is used to validate any type of data, such as numbers, strings or dates.
+
+The StringValidator protocol is used to validate string data, such as email addresses or passwords.
+
+By adding custom validators that conform to these protocols, you can create highly
+specific and tailored validation logic that meets the unique needs of your form and its users.
+
+### Customizing the error view
+
+To create a customized error view, simply add the custom view to `validation` modifier. This will allow you to tailor the error messages to your specific needs and provide a more user-friendly experience.
+
+```swift
+TextField("City", text: $form.city)
+        .validation(form.cityValidation) { message in
             Text(message.uppercased())
-                    .foregroundColor(Color.red)
-                    .font(.caption)
+                    .foregroundColor(.red)
+                    .font(.system(size: 14))
         }
 ```
 
 ### Inline Validation
 
-For fast validation, you can use `InlineValidator` and provide your validation logic in line:
+If you need to perform quick validations, the InlineValidator can be a useful validator.
+It allows you to define your validation logic directly in the code, making it easy to write and maintain. 
+Simply add `@FormField(inlineValidator:)` annotation and define your validation rules inline to quickly and 
+efficiently validate the input field.
 
 ```swift
- lazy var lastNamesValidation: ValidationContainer = {
-    $lastNames.inlineValidator(form: form) { value in
-        // Put validation logic here
-        !value.isEmpty
+@FormField(inlineValidator: { value in
+    guard value > 0 else {
+        return "Age can not be ≤ 0"
     }
-}()
+    guard value <= 50 else {
+        return "Age can not be > 50"
+    }
+    return nil
+})
+var age: Int = 0
 ```
 
 ### Validation Types
 
-You can choose between 3 different validation types: `FormValidation(validationType: .immediate)`
-and `FormValidation(validationType: .deffered)` `FormValidation(validationType: .silent)`
+When using `FormManager`, you have the flexibility to choose between three different validation types based on your needs.
 
-1. **immediate**: the validation is triggered every time the field is changed. An error message will be shown in case
-   the value is invalid.
-2. **deferred**: in this case, the validation will be triggered manually only using `FormValidation.triggerValidation()`
-   The error messages will be displayed only after triggering the validation manually.
-3. **silent**: In this case, no validation message is displayed, and it's your responsibility to display them 
-   using `FormValidation.validationMessages()`.
+- If you want to immediately validate user input as they are entering it,
+use `FormManager(validationType: .immediate)`.
 
-### Manual Validation
+- If you want to validate the entire form after the user has finished entering all the data,
+use `FormManager(validationType: .deferred)`.
 
-You can trigger the form validation any time by calling `FormValidation.triggerValidation()`. After the validation, each
-field in the form will display error message if it's invalid.
+> To initiate validation in this scenario, you need to call `FormManager.triggerValidation()`.
+> This will trigger validation for all input fields in the form, 
+> based on the validation rules you have defined. Make sure to call this method at an appropriate time,
+> such as when the user submits the form or when they have finished entering all the required data.
+
+- If you want to perform validation silently in the background without displaying any error
+messages to the user, use `FormManager(validationType: .silent)`.
+
+> After triggering validation with `FormManager.triggerValidation()`, you can access the validation messages 
+> using `FormManager.validationMessages()`. It is important to note that displaying these 
+> messages to the user is your responsibility as the developer. 
+> You can choose to display the messages in a variety of ways, such as displaying them in a modal window. 
+> The goal is to provide clear and helpful feedback to the user so they can correct any errors 
+> and successfully submit the form.
+
+### Triggering Validation
+
+To initiate form validation at any time, you can simply call the FormManager.triggerValidation() method.
 
 ### React to Validation Change
 
-You can react to validation change using `FormValidation.$allValid` and `FormValidation.$validationMessages`
+If you need to react to changes in the validation status of your form, you can use the FormManager.$allValid and FormManager.$validationMessages properties.
+
+The `FormManager.$allValid` property is a boolean value that indicates whether all fields in the form
+currently contain valid data. You can observe changes to this property to perform actions such 
+as enabling or disabling the form's submit button based on its validation status.
+The `FormManager.$validationMessages` property is an array of error messages.
+
+By reacting to these validation status changes, you can create a more dynamic and responsive 
+user experience that helps guide the user towards successfully submitting the form.
 
 ```swift
-VStack {
-} // parent view of the form
-        .onReceive(formInfo.form.$allValid) { isValid in
-            self.isSaveDisabled = !isValid
-        }
-        .onReceive(formInfo.form.$validationMessages) { messages in
-            print(messages)
-        }
+.onReceive(form.manager.$allValid) { isValid in
+    self.isSaveDisabled = !isValid
+}
+.onReceive(form.manager.$validationMessages) { messages in 
+    print(messages)
+}
 ```
 
 ## :tada: Installation
@@ -161,7 +243,7 @@ SwiftUIFormValidator` as a package dependency in your `Package.swift` file:
 let package = Package(
         //...
         dependencies: [
-            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "0.18.1"))
+            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "1.0.0"))
         ]
         //...
 )
@@ -217,111 +299,21 @@ Then run `carthage update`.
 If this is your first time using Carthage in the project, you'll need to go through some additional steps as
 explained [over at Carthage](https://github.com/Carthage/Carthage#adding-frameworks-to-an-application).
 
-## Validators
-
-| **Validator**         | **Description**                                            |
-|-----------------------|------------------------------------------------------------|
-| **NonEmptyValidator** | Validates if a string is empty or blank                    |
-| **EmailValidator**    | Validates if the email is valid.                           |
-| **DateValidator**     | Validates if a date falls within `after` & `before` dates. |
-| **PatternValidator**  | Validates if a patten is matched.                          |
-| **InlineValidator**   | Validates if a condition is valid.                         |
-| **PasswordValidator** | Validates if a password is valid.                          |
-| **PrefixValidator**   | Validates if the text has a prefix.                        |
-| **SuffixValidator**   | Validates if the text has a suffix.                        |
-
-## Custom Validators
-
-In easy steps, you can add a custom validator:
-
-```swift
-// 1
-public class NonEmptyValidator: StringValidator {
-    public var publisher: ValidationPublisher!
-    public var subject: ValidationSubject = .init()
-    public var onChanged: [OnValidationChange] = []
-
-    public let message: StringProducerClosure
-
-    public var value: String = ""
-
-    public func validate() -> Validation {
-        if value.trimmingCharacters(in: .whitespaces).isEmpty {
-            return .failure(message: message())
-        }
-        return .success
-    }
-}
-
-// 2
-extension Published.Publisher where Value == String {
-    func nonEmptyValidator(
-            form: FormValidation,
-            message: @autoclosure @escaping StringProducerClosure = ""
-    ) -> ValidationContainer {
-        let validator = NonEmptyValidator()
-        let message = message()
-        return ValidationPublishers.create(
-                form: form,
-                validator: validator,
-                for: self.eraseToAnyPublisher(),
-                message: !message.isEmpty ? message : form.messages.required)
-    }
-}
-```
-
-1. Implement `FormValidator` protocol.
-2. Add the validator logic in an extension to `Published.Publisher`.
-
-#### Note
-
-`NonEmptyValidator` is a built-in validator in the library.
-
-## Validation Messages
-
-You can provide a validation message for every field by providing `message`
-
-```swift
-$firstName.nonEmptyValidator(form: form, message: "First name is not valid")
-```
-
-If you don't provide a message, a default one will be used for built-in providers. All default messages are located
-in `DefaultValidationMessages` class.
-
-```swift
-$firstName.nonEmptyValidator(form: form) // will use the default message
-```
-
-In this example, `DefaultValidationMessages.required` will be used.
-
-### Overriding Default Validation Messages
-
-You can override the default validation messages by inheriting from `DefaultValidationMessages`
-
-```swift
-class ValidationMessages: DefaultValidationMessages {
-    public override var required: String {
-        "Required field"
-    }
-    // Override any message ...
-}
-```
-
-Or if you need to override all the messages, you can implement `ValidationMessagesProtocol`.
-
-And provide the messages to `FormValidation`
-
-```swift
-FormValidation(validationType: .immediate, messages: ValidationMessages())
-```
-
 ## Credit
 
 [Validation with SwiftUI & Combine](https://newcombe.io/2020/03/05/validation-with-swiftui-combine-part-1/)
 
 ## :clap: Contribution
 
-All Pull Requests (PRs) are welcome. Help us make this library better.
+We welcome all Pull Requests (PRs) to help improve this library and appreciate any contributions towards making it better.
+To ensure a smooth contribution process, please follow these guidelines:
+
+- Ensure that your PR addresses an existing issue or proposes a new feature that is aligned with the library's goals.
+- Before submitting a PR, please check to make sure that your changes do not introduce any new bugs or conflicts with existing code.
+- Include a clear and concise description of your changes in your PR, along with any relevant documentation or tests.
+- Be responsive to feedback and review comments from the maintainers and community members.
+
+Thank you for your interest in contributing to our library and helping us make it better!
 
 ## Changelog
 

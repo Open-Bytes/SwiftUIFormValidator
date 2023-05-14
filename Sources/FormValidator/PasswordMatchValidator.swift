@@ -22,7 +22,6 @@ public struct PasswordInfo {
 
 public typealias PasswordMatchingMessage = () -> (empty: String, notMatching: String, invalidPattern: String)
 
-/// This validator validates if a condition is valid or not.
 public class PasswordMatchValidator: Validatable {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
