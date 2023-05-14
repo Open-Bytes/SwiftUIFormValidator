@@ -13,7 +13,7 @@ public class SuffixValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
     public var suffix: String = ""
     public var ignoreCase: Bool
 
@@ -26,6 +26,9 @@ public class SuffixValidator: StringValidator {
     }
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         let text = ignoreCase ? value.lowercased() : value
         guard text.hasSuffix(suffix) else {
             return .failure(message: message())
@@ -33,7 +36,4 @@ public class SuffixValidator: StringValidator {
         return .success
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }

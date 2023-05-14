@@ -12,7 +12,6 @@ public protocol ValidationMessagesProtocol {
     var invalidDate: String { get }
     var passwordRegexDescription: String { get }
     var passwordsNotMatching: String { get }
-    var anyValidTitle: String? { get }
     func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String
 }
 
@@ -46,10 +45,6 @@ open class DefaultValidationMessages: ValidationMessagesProtocol {
 
     open var passwordsNotMatching: String {
         "The passwords do not match."
-    }
-
-    open var anyValidTitle: String? {
-        "At least one of the following is required:"
     }
 
     open func invalidCount(_ count: Int, type: CountValidator.ValidationType) -> String {

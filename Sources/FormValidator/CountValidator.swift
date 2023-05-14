@@ -13,7 +13,7 @@ public class CountValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
     public var count: Int
     public let type: ValidationType
 
@@ -26,6 +26,9 @@ public class CountValidator: StringValidator {
     }
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         let val = value.trimmingCharacters(in: .whitespaces)
         var isValid: Bool
         switch type {
@@ -56,7 +59,4 @@ public class CountValidator: StringValidator {
         case greaterThanOrEquals
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }

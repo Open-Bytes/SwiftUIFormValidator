@@ -13,8 +13,8 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             Form {
-
                 RequiredFieldsValidationSection()
+                InlineValidationSection()
                 CountValidationSection()
                 CompositeValidationAllSection()
                 CompositeValidationAnySection()
@@ -44,12 +44,21 @@ struct ContentView: View {
         }
     }
 
+    private func InlineValidationSection() -> some View {
+        Section(header: Text("Inline Validation")) {
+            TextField("Age",
+                    value: $form.age,
+                    format: .number)
+                    .validation(form.ageValidation)
+        }
+    }
+
     private func CustomFieldUISection() -> some View {
         Section(header: Text("Customizing the UI for TextField validation")) {
             RoundedTextField(
                     "Last Name",
-                    text: $form.lastNames,
-                    validation: form.lastNamesValidation)
+                    text: $form.lastName,
+                    validation: form.lastNameValidation)
         }
     }
 

@@ -54,3 +54,11 @@ public class FormField<Value, Validator: Validatable> where Value == Validator.V
                 onValidate: onValidate)
     }
 }
+
+public extension FormField where Validator == InlineValidator<Value> {
+
+    convenience init(wrappedValue value: Value, inlineValidator: @escaping (Value) -> String?) {
+        self.init(wrappedValue: value, validator: InlineValidator(condition: inlineValidator))
+    }
+
+}

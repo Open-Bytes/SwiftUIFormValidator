@@ -25,15 +25,15 @@ public class DateValidator: Validatable {
 
     public let message: StringProducerClosure
 
-    public var value: Date = Date()
+    public var value: Date? = Date()
 
     public func validate() -> Validation {
-        value < before && value > after ?
+        guard let value else {
+            return .success
+        }
+        return value < before && value > after ?
                 Validation.success :
                 Validation.failure(message: message())
     }
 
-    public var isEmpty: Bool {
-        false
-    }
 }

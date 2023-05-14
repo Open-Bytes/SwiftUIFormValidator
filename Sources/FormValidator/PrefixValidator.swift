@@ -13,7 +13,7 @@ public class PrefixValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
     public var prefix: String = ""
     public var ignoreCase: Bool
 
@@ -26,6 +26,9 @@ public class PrefixValidator: StringValidator {
     }
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         let text = ignoreCase ? value.lowercased() : value
         guard text.hasPrefix(prefix) else {
             return .failure(message: message())
@@ -33,7 +36,4 @@ public class PrefixValidator: StringValidator {
         return .success
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }

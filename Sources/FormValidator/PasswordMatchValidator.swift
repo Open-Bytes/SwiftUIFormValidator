@@ -42,7 +42,7 @@ public class PasswordMatchValidator: Validatable {
 
     public let message: StringProducerClosure
 
-    public var value: ValidatedPassword = ValidatedPassword(password: "", type: 0)
+    public var value: ValidatedPassword? = ValidatedPassword(password: "", type: 0)
 
     public func validate() -> Validation {
         let isMatching = validateMatching()
@@ -53,6 +53,9 @@ public class PasswordMatchValidator: Validatable {
     }
 
     private func validateMatching() -> Bool {
+        guard let value else {
+            return true
+        }
         let p1 = value.type == 0 ? value.password : firstPassword()
         let p2 = value.type == 1 ? value.password : secondPassword()
         guard !p1.isEmpty else {
@@ -65,6 +68,9 @@ public class PasswordMatchValidator: Validatable {
     }
 
     private func validatePattern() -> Bool {
+        guard let value else {
+            return true
+        }
         guard let pattern = pattern else {
             return true
         }
@@ -73,9 +79,4 @@ public class PasswordMatchValidator: Validatable {
         return patternValidator.validate().isSuccess
     }
 
-    public var isEmpty: Bool {
-        let p1 = value.type == 0 ? value.password : firstPassword()
-        let p2 = value.type == 1 ? value.password : secondPassword()
-        return !p1.isEmpty && !p2.isEmpty
-    }
 }

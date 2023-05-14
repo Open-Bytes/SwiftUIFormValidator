@@ -12,12 +12,19 @@ class ExampleForm: ObservableObject {
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var firstName: String = ""
 
-    @FormField(validator: {
-        InlineValidator { value in
-            value.isEmpty ? "This field is required" : nil
+    @FormField(validator: NonEmptyValidator(message: "This field is required!"))
+    var lastName: String = ""
+
+    @FormField(inlineValidator: { value in
+        guard value > 0 else {
+            return "Age can not be ≤ 0"
         }
+        guard value <= 50 else {
+            return "Age can not be > 50"
+        }
+        return nil
     })
-    var lastNames: String = ""
+    var age: Int = 0
 
     @FormField(validator: {
         CountValidator(
@@ -45,7 +52,7 @@ class ExampleForm: ObservableObject {
                     PrefixValidator(prefix: "n", message: "Must start with (n)."),
                     CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
                 ],
-                type: .any,
+                type: .any(messageTitle: "At least one of the following is required:"),
                 strategy: .all)
     })
     var street: String = ""
@@ -64,7 +71,9 @@ class ExampleForm: ObservableObject {
 
     lazy var firstNameValidation = _firstName.validation(form: validation)
 
-    lazy var lastNamesValidation = _lastNames.validation(form: validation)
+    lazy var ageValidation = _age.validation(form: validation)
+
+    lazy var lastNameValidation = _lastName.validation(form: validation)
 
     lazy var firstLineValidation = _firstLine.validation(form: validation)
 

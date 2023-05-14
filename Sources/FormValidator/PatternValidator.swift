@@ -21,9 +21,12 @@ public class PatternValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         let range = NSRange(location: 0, length: value.count)
         guard pattern.firstMatch(in: value, options: [], range: range) != nil else {
             return .failure(message: message())
@@ -31,7 +34,4 @@ public class PatternValidator: StringValidator {
         return .success
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }

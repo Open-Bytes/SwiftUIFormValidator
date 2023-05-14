@@ -17,17 +17,16 @@ public class NonEmptyValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         if value.trimmingCharacters(in: .whitespaces).isEmpty {
             return .failure(message: message())
         }
         return .success
-    }
-
-    public var isEmpty: Bool {
-        value.isEmpty
     }
 
 }

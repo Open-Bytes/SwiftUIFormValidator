@@ -11,7 +11,7 @@ public typealias OnValidationChange = (Validation) -> Void
 /// A protocol representing a form validator.
 public protocol Validatable {
     associatedtype Value
-    var value: Value { get set }
+    var value: Value? { get set }
 
     func validate() -> Validation
     var isEmpty: Bool { get }
@@ -63,8 +63,21 @@ public extension Validatable {
     }
 }
 
+public extension Validatable {
+    var isEmpty: Bool {
+        guard let value else {
+            return true
+        }
+        if let string = value as? String {
+            return string.isEmpty
+        }
+        return false
+    }
+}
+
+
 ///// A protocol representing a form validator.
 public protocol StringValidator: Validatable {
     /// The value type of this validator
-    var value: String { get set }
+    var value: String? { get set }
 }

@@ -8,14 +8,14 @@ import Foundation
 public typealias ValidationCallback = (String) -> String?
 
 /// This validator validates if a condition is valid or not.
-public class InlineValidator: StringValidator {
+public class InlineValidator<Value>: Validatable {
     public var publisher: ValidationPublisher!
     public var subject: ValidationSubject = .init()
     public var onChanged: [OnValidationChange] = []
 
-    private let condition: ValidationCallback
+    private let condition: (Value) -> String?
 
-    public init(condition: @escaping ValidationCallback) {
+    public init(condition: @escaping (Value) -> String?) {
         self.condition = condition
     }
 
@@ -23,16 +23,16 @@ public class InlineValidator: StringValidator {
         ""
     }
 
-    public var value: String = ""
+    public var value: Value? = nil
 
     public func validate() -> Validation {
+        guard let value else {
+            return .success
+        }
         guard let error = condition(value) else {
             return .success
         }
         return .failure(message: error)
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }

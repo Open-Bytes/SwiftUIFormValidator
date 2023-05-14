@@ -32,7 +32,7 @@ public class CompositeValidator: StringValidator {
     public let message: StringProducerClosure = {
         ""
     }
-    public var value: String = ""
+    public var value: String? = ""
 
     public func validate() -> Validation {
         for item in validators {
@@ -48,7 +48,7 @@ public class CompositeValidator: StringValidator {
         switch type {
         case .all:
             break
-        case .any:
+        case .any(let messageTitle):
             for validator in validators {
                 let validation = validator.validate()
                 validator.valueChanged(validation)
@@ -56,8 +56,8 @@ public class CompositeValidator: StringValidator {
                     return .success
                 }
             }
-            if let title = FormValidation.messages.anyValidTitle {
-                errors = [title] + errors
+            if let messageTitle {
+                errors = [messageTitle] + errors
             }
         }
 
@@ -76,17 +76,13 @@ public class CompositeValidator: StringValidator {
         }
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
-
 }
 
 extension CompositeValidator {
 
     public enum ValidationType {
         case all
-        case any
+        case any(messageTitle: String?)
     }
 
 }

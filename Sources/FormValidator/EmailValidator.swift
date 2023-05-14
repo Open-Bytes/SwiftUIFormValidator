@@ -21,7 +21,7 @@ public class EmailValidator: StringValidator {
 
     public let message: StringProducerClosure
 
-    public var value: String = ""
+    public var value: String? = ""
 
     public func validate() -> Validation {
         let patternValidator = PatternValidator(pattern: regex, message: self.message())
@@ -29,7 +29,4 @@ public class EmailValidator: StringValidator {
         return patternValidator.validate()
     }
 
-    public var isEmpty: Bool {
-        value.isEmpty
-    }
 }
