@@ -7,7 +7,7 @@ import XCTest
 import FormValidator
 
 class InlineValidatorTest: XCTestCase {
-    private var validator: InlineValidator!
+    private var validator: InlineValidator<String>!
 
     override func setUp() {
 
