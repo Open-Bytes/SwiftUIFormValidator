@@ -9,7 +9,7 @@ import Combine
 public class PasswordFormField {
     @Published
     private var value: String
-    private let message: String
+    private let message: PasswordMatchingMessage
 
     public var projectedValue: AnyPublisher<String, Never> {
         $value.eraseToAnyPublisher()
@@ -24,12 +24,14 @@ public class PasswordFormField {
         }
     }
 
-    public init(wrappedValue value: String, message: String) {
+    public init(wrappedValue value: String,
+                message: @escaping @autoclosure PasswordMatchingMessage) {
         self.value = value
         self.message = message
     }
 
-    public init(initialValue value: String, message: String) {
+    public init(initialValue value: String,
+                message: @escaping @autoclosure PasswordMatchingMessage) {
         self.value = value
         self.message = message
     }
@@ -58,7 +60,7 @@ public class PasswordFormField {
                 firstPassword: self.value,
                 secondPassword: other.value,
                 pattern: pattern,
-                message: self.message)
+                message: self.message())
         return ValidationFactory.create(
                 form: form,
                 validator: validator,

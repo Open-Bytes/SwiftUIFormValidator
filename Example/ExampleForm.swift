@@ -48,21 +48,27 @@ class ExampleForm: ObservableObject {
 
     @FormField(validator: {
          CompositeValidator(
-                validators: [
-                    PrefixValidator(prefix: "n", message: "Must start with (n)."),
-                    CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
-                ],
-                type: .any(messageTitle: "At least one of the following is required:"),
-                strategy: .all)
+                 validators: [
+                     PrefixValidator(prefix: "n", message: "Must start with (n)."),
+                     CountValidator(count: 6, type: .greaterThanOrEquals, message: "Must be at least 6 characters.")
+                 ],
+                 type: .any(messageTitle: "At least one of the following is required:"),
+                 strategy: .all)
     })
     var street: String = ""
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var city: String = ""
 
-    @PasswordFormField(message: "The passwords do not match.")
+    @PasswordFormField(message: (
+            empty: "This field is required!",
+            notMatching: "The passwords do not match!",
+            invalidPattern: "Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."))
     var password: String = ""
-    @PasswordFormField(message: "The passwords do not match.")
+    @PasswordFormField(message: (
+            empty: "This field is required!",
+            notMatching: "The passwords do not match!",
+            invalidPattern: "Your password must be at least 8 characters long and include at least one uppercase letter, one lowercase letter, one number, and one special character."))
     var confirmPassword: String = ""
 
     @DateFormField(message: "Date can not be in the future!")
@@ -85,7 +91,13 @@ class ExampleForm: ObservableObject {
 
     lazy var streetValidation = _street.validation(form: validation)
 
-    lazy var passwordValidation = _password.validation(form: validation, other: _confirmPassword)
+    lazy var passwordValidation = _password.validation(
+            form: validation,
+            other: _confirmPassword,
+            pattern: try! NSRegularExpression(
+                    pattern: Regex.password.rawValue,
+                    options: .caseInsensitive)
+    )
 
     lazy var birthdayValidation = _birthday.validation(form: validation, before: Date())
 }

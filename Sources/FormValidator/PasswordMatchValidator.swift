@@ -20,6 +20,8 @@ public struct PasswordInfo {
     let pass2: String
 }
 
+public typealias PasswordMatchingMessage = () -> (empty: String, notMatching: String, invalidPattern: String)
+
 /// This validator validates if a condition is valid or not.
 public class PasswordMatchValidator: Validatable {
     public var publisher: ValidationPublisher!
@@ -30,53 +32,55 @@ public class PasswordMatchValidator: Validatable {
     private let secondPassword: StringProducerClosure
     private let pattern: NSRegularExpression?
 
-    public init(firstPassword: @autoclosure @escaping StringProducerClosure,
-                secondPassword: @autoclosure @escaping StringProducerClosure,
-                pattern: NSRegularExpression? = nil,
-                message: @autoclosure @escaping StringProducerClosure) {
-        self.firstPassword = firstPassword
-        self.secondPassword = secondPassword
-        self.pattern = pattern
-        self.message = message
-    }
-
-    public let message: StringProducerClosure
+    public let message: StringProducerClosure = {""}
+    public let validationMessage: PasswordMatchingMessage
 
     public var value: ValidatedPassword? = ValidatedPassword(password: "", type: 0)
 
-    public func validate() -> Validation {
-        let isMatching = validateMatching()
-        let isPatternValid = validatePattern()
-
-        let isValid = isMatching && isPatternValid
-        return isValid ? .success : .failure(message: message())
+    public init(firstPassword: @autoclosure @escaping StringProducerClosure,
+                secondPassword: @autoclosure @escaping StringProducerClosure,
+                pattern: NSRegularExpression? = nil,
+                message: @autoclosure @escaping PasswordMatchingMessage) {
+        self.firstPassword = firstPassword
+        self.secondPassword = secondPassword
+        self.pattern = pattern
+        validationMessage = message
     }
 
-    private func validateMatching() -> Bool {
+    public func validate() -> Validation {
+        if let matchingError = validateMatching() {
+            return .failure(message: matchingError)
+        }
+        if let patternError = validatePattern() {
+            return .failure(message: patternError)
+        }
+        return .success
+    }
+
+    private func validateMatching() -> String? {
         guard let value else {
-            return true
+            return nil
         }
         let p1 = value.type == 0 ? value.password : firstPassword()
         let p2 = value.type == 1 ? value.password : secondPassword()
-        guard !p1.isEmpty else {
-            return false
+
+        if p1.isEmpty, p2.isEmpty {
+            return validationMessage().empty
         }
-        guard !p2.isEmpty else {
-            return false
-        }
-        return p1 == p2
+
+        return p1 == p2 ? nil : validationMessage().notMatching
     }
 
-    private func validatePattern() -> Bool {
+    private func validatePattern() -> String? {
         guard let value else {
-            return true
+            return nil
         }
         guard let pattern = pattern else {
-            return true
+            return nil
         }
-        let patternValidator = PatternValidator(pattern: pattern, message: self.message())
+        let patternValidator = PatternValidator(pattern: pattern, message: self.validationMessage().invalidPattern)
         patternValidator.value = value.password
-        return patternValidator.validate().isSuccess
+        return patternValidator.validate().isSuccess ? nil : validationMessage().invalidPattern
     }
 
 }

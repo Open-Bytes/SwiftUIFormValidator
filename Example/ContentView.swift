@@ -59,6 +59,7 @@ struct ContentView: View {
             TextField("Password", text: $form.password)
                     .validation(form.passwordValidation)
             TextField("Confirm Password", text: $form.confirmPassword)
+                    .validation(form.passwordValidation)
         }
     }
 
