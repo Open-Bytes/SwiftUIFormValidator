@@ -7,7 +7,7 @@
 </p>
 
 <p align="center">
-	<a href="https://travis-ci.com/ShabanKamell/SwiftUIFormValidator"> <img src="https://travis-ci.com/ShabanKamell/SwiftUIFormValidator.svg?branch=master" height="20"/></a>
+	<a href="https://github.com/Open-Bytes/SwiftUIFormValidator"> <img src="https://github.com/Open-Bytes/SwiftUIFormValidator.svg?branch=master" height="20"/></a>
 	<a href=""><img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" height="20"/></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" height="20"/></a>
 	<a href="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/LICENSE"><img src="https://img.shields.io/badge/price-FREE-0098f7.svg" height="20"/></a>
