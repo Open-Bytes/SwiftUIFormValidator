@@ -14,6 +14,7 @@ public protocol Validatable {
     var value: Value? { get set }
 
     func validate() -> Validation
+
     var isEmpty: Bool { get }
 
     var message: StringProducerClosure { get }
