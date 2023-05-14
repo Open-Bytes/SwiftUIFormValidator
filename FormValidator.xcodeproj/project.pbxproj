@@ -24,6 +24,7 @@
 		58B83138A3D492279FD3FC07 /* EmailValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83EE7469D4140E4DB51E2 /* EmailValidator.swift */; };
 		58B832066C3E41860F1F26FE /* PasswordMatchValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83C286955EE1D7945CDBC /* PasswordMatchValidator.swift */; };
 		58B83373BC29743A4D3345A2 /* EmailValidatorTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B838A86C55E00E90D309E4 /* EmailValidatorTest.swift */; };
+		58B8343178F9ADB06D173F15 /* PasswordValidator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B830EE51D25F359B1D7CF2 /* PasswordValidator.swift */; };
 		58B835FE128C83280DCCBFB6 /* ValidationFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B839D588E65961A4C46A41 /* ValidationFactory.swift */; };
 		58B8365026E0FDD6461BFEAB /* PasswordFormField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B83E409E4CAAE0CCDDA492 /* PasswordFormField.swift */; };
 		58B83725E0C7E8CB4F7A2A00 /* ErrorFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 58B8382DC558A643347A4ECB /* ErrorFormatter.swift */; };
@@ -106,6 +107,7 @@
 		1BCAC9C5E9CB4366B3B365A1 /* RoundedTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
 		58B830B5AED428760D4FD47F /* DateValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DateValidatorTest.swift; sourceTree = "<group>"; };
 		58B830DA36896C518BED3456 /* ContentView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		58B830EE51D25F359B1D7CF2 /* PasswordValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasswordValidator.swift; sourceTree = "<group>"; };
 		58B831473C305A7E5364B4FE /* NonEmptyValidatorTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonEmptyValidatorTest.swift; sourceTree = "<group>"; };
 		58B8315BEA31212046F4C53C /* PrefixValidator.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrefixValidator.swift; sourceTree = "<group>"; };
 		58B8318160D6B73324806D01 /* FormField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FormField.swift; sourceTree = "<group>"; };
@@ -276,6 +278,7 @@
 				58B83DE8202FBDF0A40ACA9B /* SuffixValidator.swift */,
 				58B839B0DAA91E96F52595BA /* CountValidator.swift */,
 				58B83C286955EE1D7945CDBC /* PasswordMatchValidator.swift */,
+				58B830EE51D25F359B1D7CF2 /* PasswordValidator.swift */,
 			);
 			path = FormValidator;
 			sourceTree = "<group>";
@@ -455,6 +458,7 @@
 				58B83B6840112621790A5CC9 /* FormField.swift in Sources */,
 				58B83ECCD6DE35D715AD5374 /* DateFormField.swift in Sources */,
 				58B8365026E0FDD6461BFEAB /* PasswordFormField.swift in Sources */,
+				58B8343178F9ADB06D173F15 /* PasswordValidator.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -78,7 +78,7 @@ public class PasswordMatchValidator: Validatable {
         guard let pattern = pattern else {
             return nil
         }
-        let patternValidator = PatternValidator(pattern: pattern, message: self.validationMessage().invalidPattern)
+        let patternValidator = PasswordValidator(pattern: pattern, message: self.validationMessage().invalidPattern)
         patternValidator.value = value.password
         return patternValidator.validate().isSuccess ? nil : validationMessage().invalidPattern
     }
