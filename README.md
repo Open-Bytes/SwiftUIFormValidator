@@ -236,7 +236,7 @@ user experience that helps guide the user towards successfully submitting the fo
 ### Xcode Projects
 
 Select `File` -> `Swift Packages` -> `Add Package Dependency` and
-enter `https://github.com/ShabanKamell/SwiftUIFormValidator.git`.
+enter `https://github.com/Open-Bytes/SwiftUIFormValidator.git`.
 
 ### Swift Package Manager Projects
 
@@ -247,7 +247,7 @@ SwiftUIFormValidator` as a package dependency in your `Package.swift` file:
 let package = Package(
         //...
         dependencies: [
-            .package(url: "https://github.com/ShabanKamell/SwiftUIFormValidator.git", .upToNextMajor(from: "1.0.0"))
+            .package(url: "https://github.com/Open-Bytes/SwiftUIFormValidator.git", .upToNextMajor(from: "1.0.0"))
         ]
         //...
 )
