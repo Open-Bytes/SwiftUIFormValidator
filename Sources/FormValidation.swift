@@ -31,10 +31,6 @@ public class FormValidation: ObservableObject {
     /// Form validation type
     public let validationType: ValidationType
 
-    /// This protocol contains all the messages used by the `FormValidators` provided by the library.
-    /// You can override `DefaultValidationMessages` or implement `ValidationMessagesProtocol`.
-    public static var messages: ValidationMessagesProtocol = DefaultValidationMessages()
-
     private let onFormChanged: ((FormValidation) -> Void)?
 
     /// The initialized used to create an instance of this class.
@@ -44,10 +40,8 @@ public class FormValidation: ObservableObject {
     ///   - messages: ValidationMessagesProtocol implementation.
     ///   - onFormChanged: called when any filed changes in the form
     public init(validationType: ValidationType,
-                messages: ValidationMessagesProtocol = DefaultValidationMessages(),
                 onFormChanged: ((FormValidation) -> Void)? = nil) {
         self.validationType = validationType
-        Self.messages = messages
         self.onFormChanged = onFormChanged
     }
 

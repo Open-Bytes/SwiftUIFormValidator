@@ -20,6 +20,7 @@ struct ContentView: View {
                 CompositeValidationAnySection()
                 PasswordMatchingSection()
                 DateValidationSection()
+                CustomErrorViewSection()
                 CustomFieldUISection()
 
                 SubmitButton()
@@ -50,15 +51,6 @@ struct ContentView: View {
                     value: $form.age,
                     format: .number)
                     .validation(form.ageValidation)
-        }
-    }
-
-    private func CustomFieldUISection() -> some View {
-        Section(header: Text("Customizing the UI for TextField validation")) {
-            RoundedTextField(
-                    "Last Name",
-                    text: $form.lastName,
-                    validation: form.lastNameValidation)
         }
     }
 
@@ -102,6 +94,26 @@ struct ContentView: View {
                     .foregroundColor(Color.green)
             TextField("Street", text: $form.street)
                     .validation(form.streetValidation)
+        }
+    }
+
+    private func CustomErrorViewSection() -> some View {
+        Section(header: Text("Customizing the error view")) {
+            TextField("City", text: $form.city)
+                    .validation(form.cityValidation) { message in
+                        Text(message.uppercased())
+                                .foregroundColor(.red)
+                                .font(.system(size: 14))
+                    }
+        }
+    }
+
+    private func CustomFieldUISection() -> some View {
+        Section(header: Text("Customizing the UI for TextField validation")) {
+            RoundedTextField(
+                    "Last Name",
+                    text: $form.lastName,
+                    validation: form.lastNameValidation)
         }
     }
 

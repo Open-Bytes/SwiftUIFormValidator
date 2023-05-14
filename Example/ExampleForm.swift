@@ -57,6 +57,8 @@ class ExampleForm: ObservableObject {
     })
     var street: String = ""
 
+    @FormField(validator: NonEmptyValidator(message: "This field is required!"))
+    var city: String = ""
 
     @PasswordFormField(message: "The passwords do not match.")
     var password: String = ""
@@ -67,9 +69,11 @@ class ExampleForm: ObservableObject {
     var birthday: Date = Date()
 
     @Published
-    var validation = FormValidation(validationType: .immediate, messages: ValidationMessages())
+    var validation = FormValidation(validationType: .immediate)
 
     lazy var firstNameValidation = _firstName.validation(form: validation)
+
+    lazy var cityValidation = _city.validation(form: validation)
 
     lazy var ageValidation = _age.validation(form: validation)
 
@@ -84,14 +88,4 @@ class ExampleForm: ObservableObject {
     lazy var passwordValidation = _password.validation(form: validation, other: _confirmPassword)
 
     lazy var birthdayValidation = _birthday.validation(form: validation, before: Date())
-}
-
-/// All validation messages are included in DefaultValidationMessages, which allows you to easily access
-/// and customize any message as needed. By overriding a specific message, you can provide your own
-/// custom message for that validation rule, giving you greater control and flexibility
-/// over the validation process.
-class ValidationMessages: DefaultValidationMessages {
-    public override var required: String {
-        "This field is required."
-    }
 }
