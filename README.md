@@ -71,7 +71,6 @@ struct ContentView: View {
     var body: some View {
         Section(header: Text("Required Fields Validation")) {
             TextField("First Name", text: $form.firstName)
-                    // 4
                     .validation(form.firstNameValidation)
         }
     }
