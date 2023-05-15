@@ -4,6 +4,7 @@
 //
 
 import Combine
+import Foundation
 
 @propertyWrapper
 public class PasswordFormField {
