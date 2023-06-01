@@ -134,6 +134,10 @@ struct ContentView: View {
     private func validateForm() {
         let valid = form.manager.triggerValidation()
         print("Form valid: \(valid)")
+        print("Is all valid: \(form.manager.isAllValid())")
+        print("Is all filled: \(form.manager.isAllFilled())")
+        print("All validation messages array: \(form.manager.validationMessages)")
+        print("All validation messages string: \(form.manager.errorsDescription())")
     }
 
 }
