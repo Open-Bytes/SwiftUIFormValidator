@@ -119,8 +119,7 @@ struct ContentView: View {
 
     private func SubmitButton() -> some View {
         Button(action: {
-            let valid = form.manager.triggerValidation()
-            print("Form valid: \(valid)")
+            validateForm()
         }, label: {
             HStack {
                 Text("Submit")
@@ -130,6 +129,11 @@ struct ContentView: View {
         })
 //                You can disable the button, and only enable it when the form is valid
 //                        .disabled(isSaveDisabled)
+    }
+
+    private func validateForm() {
+        let valid = form.manager.triggerValidation()
+        print("Form valid: \(valid)")
     }
 
 }

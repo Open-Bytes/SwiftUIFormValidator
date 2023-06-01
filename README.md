@@ -28,14 +28,14 @@ interface.
 # Table of contents
 
 - [Usage](#usage)
-  - [Basic Setup](#basic-setup)
-  - [Validators](#validators)
-  - [Custom Validators](#custom-validators)
-  - [Custom Error View](#customizing-the-error-view)
-  - [Inline Validation](#inline-validation)
-  - [Validation Types](#validation-types)
-    - [Triggering Validation](#triggering-validation)
-    - [React to Validation Change](#react-to-validation-change)
+    - [Basic Setup](#basic-setup)
+    - [Validators](#validators)
+    - [Custom Validators](#custom-validators)
+    - [Custom Error View](#customizing-the-error-view)
+    - [Inline Validation](#inline-validation)
+    - [Validation Types](#validation-types)
+        - [Triggering Validation](#triggering-validation)
+        - [React to Validation Change](#react-to-validation-change)
 - [Installation](#tada-installation)
     - [Swift Package Manager](#swift-package-manager)
     - [CocoaPods](#cocoapods)
@@ -52,6 +52,7 @@ interface.
 
 ```swift
   // 1 
+
 import FormValidator
 
 class ExampleForm: ObservableObject {
@@ -62,6 +63,9 @@ class ExampleForm: ObservableObject {
     // 3
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var firstName: String = ""
+
+    // 4
+    lazy var firstNameValidation = _firstName.validation(manager: manager)
 }
 
 struct ContentView: View {
@@ -69,32 +73,36 @@ struct ContentView: View {
     @State var isSaveDisabled = true
 
     var body: some View {
-        Section(header: Text("Required Fields Validation")) {
-            TextField("First Name", text: $form.firstName)
-                    .validation(form.firstNameValidation)
-        }
+        TextField("First Name", text: $form.firstName)
+                .validation(form.firstNameValidation) // 5
+    }
+
+    private func validateForm() {
+        // 6
+        let valid = form.manager.triggerValidation()
+        print("Form valid: \(valid)")
     }
 }
 
 
 ```
 
-- Import `FormValidator`. 
+- Import `FormValidator`.
 
 ```swift
 import FormValidator
 ```
 
 - Declare `FormManager`
+
 ```swift
 @Published
 var manager = FormManager(validationType: .immediate)
 ```
 
-> FormManager is a powerful class for controlling form validation in your application. 
-> It allows you to trigger validation and listen to changes in the form, and gives you 
+> FormManager is a powerful class for controlling form validation in your application.
+> It allows you to trigger validation and listen to changes in the form, and gives you
 > the flexibility to control how and when validation is shown to the user.
-
 
 - Specify the data type and validation rules for the input field
 
@@ -111,7 +119,6 @@ var firstName: String = ""
 TextField("First Name", text: $form.firstName)
         .validation(form.firstNameValidation)
 ```
-
 
 Congratulations! Your field has now been validated. It's concise and simple!
 
@@ -145,7 +152,8 @@ specific and tailored validation logic that meets the unique needs of your form 
 
 ### Customizing the error view
 
-To create a customized error view, simply add the custom view to `validation` modifier. This will allow you to tailor the error messages to your specific needs and provide a more user-friendly experience.
+To create a customized error view, simply add the custom view to `validation` modifier. This will allow you to tailor
+the error messages to your specific needs and provide a more user-friendly experience.
 
 ```swift
 TextField("City", text: $form.city)
@@ -159,8 +167,8 @@ TextField("City", text: $form.city)
 ### Inline Validation
 
 If you need to perform quick validations, the InlineValidator can be a useful validator.
-It allows you to define your validation logic directly in the code, making it easy to write and maintain. 
-Simply add `@FormField(inlineValidator:)` annotation and define your validation rules inline to quickly and 
+It allows you to define your validation logic directly in the code, making it easy to write and maintain.
+Simply add `@FormField(inlineValidator:)` annotation and define your validation rules inline to quickly and
 efficiently validate the input field.
 
 ```swift
@@ -178,27 +186,28 @@ var age: Int = 0
 
 ### Validation Types
 
-When using `FormManager`, you have the flexibility to choose between three different validation types based on your needs.
+When using `FormManager`, you have the flexibility to choose between three different validation types based on your
+needs.
 
 - If you want to immediately validate user input as they are entering it,
-use `FormManager(validationType: .immediate)`.
+  use `FormManager(validationType: .immediate)`.
 
 - If you want to validate the entire form after the user has finished entering all the data,
-use `FormManager(validationType: .deferred)`.
+  use `FormManager(validationType: .deferred)`.
 
 > To initiate validation in this scenario, you need to call `FormManager.triggerValidation()`.
-> This will trigger validation for all input fields in the form, 
+> This will trigger validation for all input fields in the form,
 > based on the validation rules you have defined. Make sure to call this method at an appropriate time,
 > such as when the user submits the form or when they have finished entering all the required data.
 
 - If you want to perform validation silently in the background without displaying any error
-messages to the user, use `FormManager(validationType: .silent)`.
+  messages to the user, use `FormManager(validationType: .silent)`.
 
-> After triggering validation with `FormManager.triggerValidation()`, you can access the validation messages 
-> using `FormManager.validationMessages()`. It is important to note that displaying these 
-> messages to the user is your responsibility as the developer. 
-> You can choose to display the messages in a variety of ways, such as displaying them in a modal window. 
-> The goal is to provide clear and helpful feedback to the user so they can correct any errors 
+> After triggering validation with `FormManager.triggerValidation()`, you can access the validation messages
+> using `FormManager.validationMessages()`. It is important to note that displaying these
+> messages to the user is your responsibility as the developer.
+> You can choose to display the messages in a variety of ways, such as displaying them in a modal window.
+> The goal is to provide clear and helpful feedback to the user so they can correct any errors
 > and successfully submit the form.
 
 ### Triggering Validation
@@ -207,23 +216,24 @@ To initiate form validation at any time, you can simply call the FormManager.tri
 
 ### React to Validation Change
 
-If you need to react to changes in the validation status of your form, you can use the FormManager.$allValid and FormManager.$validationMessages properties.
+If you need to react to changes in the validation status of your form, you can use the FormManager.$allValid and
+FormManager.$validationMessages properties.
 
 The `FormManager.$allValid` property is a boolean value that indicates whether all fields in the form
-currently contain valid data. You can observe changes to this property to perform actions such 
+currently contain valid data. You can observe changes to this property to perform actions such
 as enabling or disabling the form's submit button based on its validation status.
 The `FormManager.$validationMessages` property is an array of error messages.
 
-By reacting to these validation status changes, you can create a more dynamic and responsive 
+By reacting to these validation status changes, you can create a more dynamic and responsive
 user experience that helps guide the user towards successfully submitting the form.
 
 ```swift
 .onReceive(form.manager.$allValid) { isValid in
     self.isSaveDisabled = !isValid
 }
-.onReceive(form.manager.$validationMessages) { messages in 
-    print(messages)
-}
+        .onReceive(form.manager.$validationMessages) { messages in
+            print(messages)
+        }
 ```
 
 ## :tada: Installation
@@ -306,11 +316,13 @@ explained [over at Carthage](https://github.com/Carthage/Carthage#adding-framewo
 
 ## :clap: Contribution
 
-We welcome all Pull Requests (PRs) to help improve this library and appreciate any contributions towards making it better.
+We welcome all Pull Requests (PRs) to help improve this library and appreciate any contributions towards making it
+better.
 To ensure a smooth contribution process, please follow these guidelines:
 
 - Ensure that your PR addresses an existing issue or proposes a new feature that is aligned with the library's goals.
-- Before submitting a PR, please check to make sure that your changes do not introduce any new bugs or conflicts with existing code.
+- Before submitting a PR, please check to make sure that your changes do not introduce any new bugs or conflicts with
+  existing code.
 - Include a clear and concise description of your changes in your PR, along with any relevant documentation or tests.
 - Be responsive to feedback and review comments from the maintainers and community members.
 
