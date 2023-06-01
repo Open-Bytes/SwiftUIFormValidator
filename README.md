@@ -82,6 +82,7 @@ struct ContentView: View {
     // Validation result.
     print("Form valid: \(valid)")
 
+    // Another way for checking validation.
     print("Is all valid: \(form.manager.isAllValid())")
 
     // Check if all fields have text. This is not validation check.
