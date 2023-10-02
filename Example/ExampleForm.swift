@@ -89,5 +89,13 @@ class ExampleForm: ObservableObject {
 
     @DateFormField(message: "Date can not be in the future!")
     var birthday: Date = Date()
-    lazy var birthdayValidation = _birthday.validation(manager: manager, before: Date())
+    lazy var birthdayValidation = _birthday.validation(
+            manager: manager,
+            before: Date(),
+            disableValidation: {
+                // You can add logic here to disable this field validation. If you return true, the field will be always valid
+                // and the validation will be ignored.
+                // This is useful when you need to apply OR validation (enter field A or field B).
+                false
+            })
 }
