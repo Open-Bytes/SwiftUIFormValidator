@@ -6,7 +6,7 @@
 import Combine
 
 @propertyWrapper
-public class FormField<Value, Validator: Validatable> where Value == Validator.Value {
+public class FormField<Value: Equatable, Validator: Validatable> where Value == Validator.Value {
     @Published
     private var value: Value
     private let validator: Validator
@@ -45,7 +45,7 @@ public class FormField<Value, Validator: Validatable> where Value == Validator.V
                 false
             },
             onValidate: OnValidate? = nil) -> ValidationContainer {
-        let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
+                let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
         return ValidationFactory.create(
                 manager: manager,
                 validator: validator,

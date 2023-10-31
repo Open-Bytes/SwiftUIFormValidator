@@ -28,7 +28,7 @@ public class ValidationFactory {
     ///   - onValidate: a closure invoked when validation changes
     ///   - setupValidator: apply changes to the validator
     /// - Returns: ValidationContainer
-    public static func create<Value, Validator: Validatable>(
+    public static func create<Value: Equatable, Validator: Validatable>(
             manager: FormManager,
             validator: Validator,
             for publisher: AnyPublisher<Value, Never>,
@@ -38,6 +38,10 @@ public class ValidationFactory {
         manager.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
         let pub: ValidationPublisher = publisher.map { value in
                     var val = validator
+
+                    let lastValue = val.value
+                    let lastValidation = val.validate()
+
                     val.value = value
                     let validation = validator.validate()
                     validator.valueChanged(validation)
@@ -46,7 +50,9 @@ public class ValidationFactory {
                         return .success
                     }
 
-                    onValidate?(validation)
+                    if val.value != lastValue, validation != lastValidation {
+                        onValidate?(validation)
+                    }
 
                     switch manager.validationType {
                     case .immediate:

@@ -5,7 +5,7 @@
 
 import Foundation
 
-public struct ValidatedPassword {
+public struct ValidatedPassword: Equatable {
     let password: String
     let type: Int
 
