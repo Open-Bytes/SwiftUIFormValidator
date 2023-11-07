@@ -12,8 +12,15 @@ import SwiftUI
 public typealias ValidationErrorView<ErrorView: View> = (_ message: String) -> ErrorView
 
 public struct ValidationContainer {
+    public let validator: any Validatable
     public let publisher: ValidationPublisher
     public let subject: ValidationSubject
+
+    public func validate(isDisabled: Bool = false, shouldShowError: Bool = true) {
+        validator.triggerValidation(
+                isDisabled: isDisabled,
+                shouldShowError: shouldShowError)
+    }
 }
 
 public extension View {

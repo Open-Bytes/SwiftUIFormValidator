@@ -4,6 +4,7 @@
 //
 
 import SwiftUI
+import FormValidator
 
 struct ContentView: View {
     @ObservedObject var form = ExampleForm()
@@ -21,6 +22,7 @@ struct ContentView: View {
                 DateValidationSection()
                 CustomErrorViewSection()
                 CustomFieldUISection()
+                CompanyField()
 
                 SubmitButton()
             }
@@ -117,6 +119,15 @@ struct ContentView: View {
         }
     }
 
+    private func CompanyField() -> some View {
+        Section(header: Text("Triggering validation on lose the focus of the text field")) {
+            FormTextField(
+                    text: $form.company,
+                    placeholder: "Company",
+                    validation: form.companyValidation)
+        }
+    }
+
     private func SubmitButton() -> some View {
         Button(action: {
             validateForm()
@@ -132,7 +143,11 @@ struct ContentView: View {
     }
 
     private func validateForm() {
+        // Validate the main form
         let valid = form.manager.triggerValidation()
+        // Validate company form
+        let isCompanyValid = form.companyFormManager.triggerValidation()
+
         // Validation result.
         print("Form valid: \(valid)")
 

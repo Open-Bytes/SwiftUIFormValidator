@@ -38,7 +38,7 @@ public protocol Validatable {
 }
 
 public extension Validatable {
-    // Default implementation of triggerValidation().
+    /// Default implementation of triggerValidation().
     func triggerValidation(isDisabled: Bool = false, shouldShowError: Bool = true) {
         guard !isDisabled else {
             subject.send(.success)

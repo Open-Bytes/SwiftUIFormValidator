@@ -65,7 +65,10 @@ public class ValidationFactory {
                 }
                 .dropFirst()
                 .eraseToAnyPublisher()
-        return ValidationContainer(publisher: pub, subject: validator.subject)
+        return ValidationContainer(
+                validator: validator,
+                publisher: pub,
+                subject: validator.subject)
     }
 
 }

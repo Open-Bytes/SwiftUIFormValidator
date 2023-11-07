@@ -10,6 +10,7 @@ import FormValidator
 class ExampleForm: ObservableObject {
     @Published
     var manager = FormManager(validationType: .immediate)
+    var companyFormManager = FormManager(validationType: .deferred)
 
     @FormField(validator: NonEmptyValidator(message: "This field is required!"))
     var firstName: String = ""
@@ -98,4 +99,12 @@ class ExampleForm: ObservableObject {
                 // This is useful when you need to apply OR validation (enter field A or field B).
                 false
             })
+
+    @FormField(validator: NonEmptyValidator(message: "This field is required!"))
+    var company: String = ""
+    lazy var companyValidation = _company.validation(
+        manager: companyFormManager,
+        onValidate:  { result in
+        print("On validate company: \(result)")
+    })
 }

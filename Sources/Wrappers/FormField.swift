@@ -44,8 +44,9 @@ public class FormField<Value: Equatable, Validator: Validatable> where Value == 
             disableValidation: @escaping DisableValidationClosure = {
                 false
             },
-            onValidate: OnValidate? = nil) -> ValidationContainer {
-                let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
+            onValidate: OnValidate? = nil
+    ) -> ValidationContainer {
+        let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
         return ValidationFactory.create(
                 manager: manager,
                 validator: validator,
