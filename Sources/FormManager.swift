@@ -48,7 +48,9 @@ public class FormManager: ObservableObject {
     /// Used internally for adding a validator
     public func append(_ validator: ValidatorContainer) {
         var val = validator.validator
-        val.observeChange(onChanged)
+        val.observeChange { [weak self] validation in
+          self?.onChanged(validation: validation)
+        }
         validators.append(validator)
     }
 
