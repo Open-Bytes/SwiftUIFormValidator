@@ -10,7 +10,7 @@
 	<a href="https://github.com/Open-Bytes/SwiftUIFormValidator"> <img src="https://github.com/Open-Bytes/SwiftUIFormValidator.svg?branch=master" height="20"/></a>
 	<a href=""><img src="https://img.shields.io/badge/platforms-iOS%20%7C%20macOS%20%7C%20tvOS%20%7C%20watchOS%20%7C%20Linux-333333.svg" height="20"/></a>
 	<a href="https://github.com/Carthage/Carthage"><img src="https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat" height="20"/></a>
-	<a href="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/LICENSE"><img src="https://img.shields.io/badge/price-FREE-0098f7.svg" height="20"/></a>
+	<a href="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/LICENSE"><img src="https://img.shields.io/badge/price-FREE-0098f7.svg" height="20"/></a>
 </p><br/><br/>
 
 # SwiftUIFormValidator
@@ -21,9 +21,9 @@ interface.
 
 **Discuss it on [Product Hunt](https://www.producthunt.com/posts/swiftuiformvalidator/maker-invite?code=AOyUTO) 🦄**
 
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/demo.gif?raw=true" alt="SwiftUINavigator Demo" width="300" height="700" border="#1111"/>
+<img src="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/blob/demo.gif?raw=true" alt="SwiftUINavigator Demo" width="300" height="700" border="#1111"/>
 <br/>
-<img src="https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/blob/form2.jpeg?raw=true" width="300"  height="600" alt="Form Screenshot">
+<img src="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/blob/form2.jpeg?raw=true" width="300"  height="600" alt="Form Screenshot">
 
 # Table of contents
 
@@ -342,7 +342,7 @@ Thank you for your interest in contributing to our library and helping us make i
 
 ## Changelog
 
-Look at [Changelog](https://github.com/ShabanKamell/SwiftUIFormValidator/blob/master/CHANGELOG.md) for release notes.
+Look at [Changelog](https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/CHANGELOG.md) for release notes.
 
 ## License
 
