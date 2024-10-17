@@ -1,9 +1,9 @@
-<p align="center"><a href="https://github.com/ShabanKamell/SwiftUIFormValidator"><img src="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/blob/logo/logo_white.png?raw=true" alt="Gray shape shifter" height="250"/></a></p>
+<p align="center"><a href="https://github.com/Open-Bytes/SwiftUIFormValidator"><img src="https://github.com/Open-Bytes/SwiftUIFormValidator/blob/master/blob/logo/logo_white.png?raw=true" alt="Gray shape shifter" height="250"/></a></p>
 <h1 align="center">SwiftUIFormValidator</h1>
 <p align="center">Simple and clean approach to form validation</p>
 
 <p align="center">
-<a href="https://twitter.com/intent/tweet?text=SwiftUIFormValidator,%20a%20declarative%20SwiftUI%20form%20validation.%20Clean,%20simple,%20and%20customizable&url=https://github.com/ShabanKamell/SwiftUIFormValidator&hashtags=swiftui,ios,macos,tvos,developers"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" height="20"/></a>
+<a href="https://twitter.com/intent/tweet?text=SwiftUIFormValidator,%20a%20declarative%20SwiftUI%20form%20validation.%20Clean,%20simple,%20and%20customizable&url=https://github.com/Open-Bytes/SwiftUIFormValidator=swiftui,ios,macos,tvos,developers"><img src="https://img.shields.io/twitter/url/http/shields.io.svg?style=social" height="20"/></a>
 </p>
 
 <p align="center">
@@ -314,7 +314,7 @@ Carthage users can point to this repository and use generated `SwiftUIFormValida
 Make the following entry in your Cartfile:
 
 ```rb
-github "ShabanKamell/SwiftUIFormValidator"
+github "Open-Bytes/SwiftUIFormValidator"
 ```
 
 Then run `carthage update`.
