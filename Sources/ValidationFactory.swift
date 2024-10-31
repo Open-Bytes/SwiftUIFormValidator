@@ -36,7 +36,9 @@ public class ValidationFactory {
             onValidate: OnValidate?
     ) -> ValidationContainer where Validator.Value == Value {
         manager.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
-        let pub: ValidationPublisher = publisher.map { value in
+        let pub: ValidationPublisher = publisher
+            .removeDuplicates()
+            .map { value in
                     var val = validator
 
                     let lastValue = val.value

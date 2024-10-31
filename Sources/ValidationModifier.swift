@@ -79,9 +79,9 @@ public struct ValidationModifier<ErrorView: View>: ViewModifier {
         VStack(alignment: .leading) {
             content
             validationMessage
-        }.onReceive(container.publisher) { validation in
+        }.onReceive(container.publisher.removeDuplicates()) { validation in
             self.latestValidation = validation
-        }.onReceive(container.subject) { validation in
+        }.onReceive(container.subject.removeDuplicates()) { validation in
             self.latestValidation = validation
         }
     }
