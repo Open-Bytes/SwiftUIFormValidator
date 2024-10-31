@@ -1,4 +1,8 @@
 
+## Version 1.2.0
+
+Optimize validation logic by eliminating unnecessary checks for duplicate values.
+
 ## Version 0.19.2
 
 - [ ] Add onFormChanged to FormValidation to act to form changes.
