@@ -5,38 +5,50 @@
 
 import Combine
 
+
 @propertyWrapper
 public class FormField<Value: Equatable, Validator: Validatable> where Value == Validator.Value {
-    @Published
-    private var value: Value
+    
+    private var subject: CurrentValueSubject<Value, Never>
     private let validator: Validator
-
-    public var projectedValue: AnyPublisher<Value, Never> {
-        $value.eraseToAnyPublisher()
-    }
 
     public var wrappedValue: Value {
         get {
-            value
+            subject.value
         }
         set {
-            value = newValue
+            subject.send(newValue)
         }
     }
 
     public init(wrappedValue value: Value, validator: () -> Validator) {
-        self.value = value
+        self.subject = CurrentValueSubject(value)
         self.validator = validator()
     }
 
     public init(wrappedValue value: Value, validator: Validator) {
-        self.value = value
+        self.subject = CurrentValueSubject(value)
         self.validator = validator
     }
 
     public init(initialValue value: Value, validator: () -> Validator) {
-        self.value = value
+        self.subject = CurrentValueSubject(value)
         self.validator = validator()
+    }
+    
+    public static subscript<EnclosingSelf>(
+        _enclosingInstance object: EnclosingSelf,
+        wrapped wrappedKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Value>,
+        storage storageKeyPath: ReferenceWritableKeyPath<EnclosingSelf, FormField>
+    ) -> Value {
+        get { object[keyPath: storageKeyPath].wrappedValue }
+        set {
+            if let observableObject = object as? (any ObservableObject),
+               let objectWillChange = (observableObject.objectWillChange as any Publisher) as? ObservableObjectPublisher {
+                objectWillChange.send()
+            }
+            object[keyPath: storageKeyPath].wrappedValue = newValue
+        }
     }
 
     public func validation(
@@ -46,7 +58,7 @@ public class FormField<Value: Equatable, Validator: Validatable> where Value == 
             },
             onValidate: OnValidate? = nil
     ) -> ValidationContainer {
-        let pub: AnyPublisher<Value, Never> = $value.eraseToAnyPublisher()
+        let pub: AnyPublisher<Value, Never> = subject.eraseToAnyPublisher()
         return ValidationFactory.create(
                 manager: manager,
                 validator: validator,
