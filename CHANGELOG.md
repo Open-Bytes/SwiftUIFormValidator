@@ -1,4 +1,10 @@
 
+## Version 1.2.1
+
+Resolved the issue with the FormField property wrapper not responding to changes from onChange or onReceive listeners.
+
+The version is contributed with love by Kemal Turk <kmltrk07@gmail.com>.
+
 ## Version 1.2.0
 
 Optimize validation logic by eliminating unnecessary checks for duplicate values.
