@@ -6,8 +6,8 @@
 //  Copyright © 2020 Sha. All rights reserved.
 //
 
-import Foundation
 import Combine
+import Foundation
 
 public typealias ValidationPublisher = AnyPublisher<Validation, Never>
 public typealias ValidationSubject = PassthroughSubject<Validation, Never>
@@ -29,48 +29,53 @@ public class ValidationFactory {
     ///   - setupValidator: apply changes to the validator
     /// - Returns: ValidationContainer
     public static func create<Value: Equatable, Validator: Validatable>(
-            manager: FormManager,
-            validator: Validator,
-            for publisher: AnyPublisher<Value, Never>,
-            disableValidation: @escaping DisableValidationClosure,
-            onValidate: OnValidate?
+        manager: FormManager,
+        validator: Validator,
+        for publisher: AnyPublisher<Value, Never>,
+        disableValidation: @escaping DisableValidationClosure,
+        onValidate: OnValidate?
     ) -> ValidationContainer where Validator.Value == Value {
         manager.append(ValidatorContainer(validator: validator, disableValidation: disableValidation))
-        let pub: ValidationPublisher = publisher
+        let pub: ValidationPublisher =
+            publisher
             .removeDuplicates()
             .map { value in
-                    var val = validator
+                var val = validator
 
-                    let lastValue = val.value
-                    let lastValidation = val.validate()
+                let lastValue = val.value
+                let lastValidation = val.validate()
 
-                    val.value = value
-                    let validation = validator.validate()
+                val.value = value
+                let validation = validator.validate()
+
+                // Use Task to handle state updates
+                Task { @MainActor in
                     validator.valueChanged(validation)
-
-                    guard !disableValidation() else {
-                        return .success
-                    }
 
                     if val.value != lastValue, validation != lastValidation {
                         onValidate?(validation)
                     }
-
-                    switch manager.validationType {
-                    case .immediate:
-                        return validation
-                    case .deferred,
-                         .silent:
-                        // Send success to simulate deferred validation
-                        return .success
-                    }
                 }
-                .dropFirst()
-                .eraseToAnyPublisher()
+
+                guard !disableValidation() else {
+                    return .success
+                }
+
+                switch manager.validationType {
+                case .immediate:
+                    return validation
+                case .deferred,
+                    .silent:
+                    // Send success to simulate deferred validation
+                    return .success
+                }
+            }
+            .dropFirst()
+            .eraseToAnyPublisher()
         return ValidationContainer(
-                validator: validator,
-                publisher: pub,
-                subject: validator.subject)
+            validator: validator,
+            publisher: pub,
+            subject: validator.subject)
     }
 
 }

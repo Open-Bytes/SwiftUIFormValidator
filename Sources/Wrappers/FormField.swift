@@ -5,10 +5,9 @@
 
 import Combine
 
-
 @propertyWrapper
 public class FormField<Value: Equatable, Validator: Validatable> where Value == Validator.Value {
-    
+
     private var subject: CurrentValueSubject<Value, Never>
     private let validator: Validator
 
@@ -35,7 +34,7 @@ public class FormField<Value: Equatable, Validator: Validatable> where Value == 
         self.subject = CurrentValueSubject(value)
         self.validator = validator()
     }
-    
+
     public static subscript<EnclosingSelf>(
         _enclosingInstance object: EnclosingSelf,
         wrapped wrappedKeyPath: ReferenceWritableKeyPath<EnclosingSelf, Value>,
@@ -44,33 +43,38 @@ public class FormField<Value: Equatable, Validator: Validatable> where Value == 
         get { object[keyPath: storageKeyPath].wrappedValue }
         set {
             if let observableObject = object as? (any ObservableObject),
-               let objectWillChange = (observableObject.objectWillChange as any Publisher) as? ObservableObjectPublisher {
-                objectWillChange.send()
+                let objectWillChange = (observableObject.objectWillChange as any Publisher) as? ObservableObjectPublisher
+            {
+                Task { @MainActor in
+                    objectWillChange.send()
+                    object[keyPath: storageKeyPath].wrappedValue = newValue
+                }
+            } else {
+                object[keyPath: storageKeyPath].wrappedValue = newValue
             }
-            object[keyPath: storageKeyPath].wrappedValue = newValue
         }
     }
 
     public func validation(
-            manager: FormManager,
-            disableValidation: @escaping DisableValidationClosure = {
-                false
-            },
-            onValidate: OnValidate? = nil
+        manager: FormManager,
+        disableValidation: @escaping DisableValidationClosure = {
+            false
+        },
+        onValidate: OnValidate? = nil
     ) -> ValidationContainer {
         let pub: AnyPublisher<Value, Never> = subject.eraseToAnyPublisher()
         return ValidationFactory.create(
-                manager: manager,
-                validator: validator,
-                for: pub,
-                disableValidation: disableValidation,
-                onValidate: onValidate)
+            manager: manager,
+            validator: validator,
+            for: pub,
+            disableValidation: disableValidation,
+            onValidate: onValidate)
     }
 }
 
-public extension FormField where Validator == InlineValidator<Value> {
+extension FormField where Validator == InlineValidator<Value> {
 
-    convenience init(wrappedValue value: Value, inlineValidator: @escaping (Value) -> String?) {
+    public convenience init(wrappedValue value: Value, inlineValidator: @escaping (Value) -> String?) {
         self.init(wrappedValue: value, validator: InlineValidator(condition: inlineValidator))
     }
 

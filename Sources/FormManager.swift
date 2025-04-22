@@ -39,8 +39,10 @@ public class FormManager: ObservableObject {
     ///   - validationType: ValidationType enum.
     ///   - messages: ValidationMessagesProtocol implementation.
     ///   - onFormChanged: called when any filed changes in the form
-    public init(validationType: ValidationType,
-                onFormChanged: ((FormManager) -> Void)? = nil) {
+    public init(
+        validationType: ValidationType,
+        onFormChanged: ((FormManager) -> Void)? = nil
+    ) {
         self.validationType = validationType
         self.onFormChanged = onFormChanged
     }
@@ -49,7 +51,7 @@ public class FormManager: ObservableObject {
     public func append(_ validator: ValidatorContainer) {
         var val = validator.validator
         val.observeChange { [weak self] validation in
-          self?.onChanged(validation: validation)
+            self?.onChanged(validation: validation)
         }
         validators.append(validator)
     }
@@ -58,12 +60,15 @@ public class FormManager: ObservableObject {
     ///
     /// - Parameter validation: Validation
     private func onChanged(validation: Validation) {
-        allValid = isAllValid()
-        allFilled = isAllFilled()
-        validationMessages = allValidationMessages()
-        // Its' important to be async to allow the wrapped value of the publisher to be changed.
-        DispatchQueue.main.async {
-            self.onFormChanged?(self)
+        Task { @MainActor in
+            allValid = isAllValid()
+            allFilled = isAllFilled()
+            validationMessages = allValidationMessages()
+
+            if let callback = onFormChanged {
+                // Schedule the callback on the next runloop to avoid SwiftUI view update conflicts
+                callback(self)
+            }
         }
     }
 
@@ -114,8 +119,8 @@ public class FormManager: ObservableObject {
     public func triggerValidation() -> Bool {
         validators.forEach {
             $0.validator.triggerValidation(
-                    isDisabled: $0.disableValidation(),
-                    shouldShowError: validationType.shouldShowError()
+                isDisabled: $0.disableValidation(),
+                shouldShowError: validationType.shouldShowError()
             )
         }
         return isAllValid()
@@ -126,7 +131,7 @@ public class FormManager: ObservableObject {
     }
 }
 
-public extension FormManager {
+extension FormManager {
 
     /// Form validation type
     /// It includes 3 cases:
@@ -136,7 +141,7 @@ public extension FormManager {
     ///     The error messages will be displayed only after triggering the validation manually.
     ///  3) silent: In this case, no validation message is displayed, and it's your responsibility to display them
     ///     using `FormValidation.validationMessages()`.
-    enum ValidationType {
+    public enum ValidationType {
         case immediate
         case deferred
         case silent
@@ -144,7 +149,7 @@ public extension FormManager {
         func shouldShowError() -> Bool {
             switch self {
             case .immediate,
-                 .deferred:
+                .deferred:
                 return true
             case .silent:
                 return false
